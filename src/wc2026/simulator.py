@@ -45,3 +45,24 @@ def simulate(model, teams, fmt: Format, n_sims: int = 10000, seed: int | None = 
     fmt   : a Format describing structure
     """
     raise NotImplementedError("simulator core to be implemented after angle lock-in")
+
+
+class Engine:
+    """Adapter the manipulability analysis consumes (see manipulability.py).
+
+    A built-out simulator instance must implement this contract so that, from a
+    partial tournament state, we can value a team's target result and detect
+    cross-group dependencies. Stubbed until the simulator core lands.
+    """
+
+    def advancement_value(self, team: str, state, target_result) -> float:
+        """Expected progression value for ``team`` if it aims for ``target_result``
+        from ``state`` (probability-weighted value of advancing, incl. the strength
+        of the likely knockout path). See THEORY.md sec. 2."""
+        raise NotImplementedError
+
+    def depends_on_other_groups(self, team: str, state) -> bool:
+        """True iff ``team``'s required result in ``state`` depends on results in
+        OTHER groups (the best-third-placed cross-group dependency that within-group
+        simultaneous kickoffs cannot neutralize)."""
+        raise NotImplementedError

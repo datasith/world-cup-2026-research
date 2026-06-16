@@ -21,9 +21,9 @@
 
 \newcommand{\todo}[1]{\textcolor{red}{[TODO: #1]}}
 
-\title{\bfseries A natural experiment in tournament design:\\
-how expanding the FIFA World Cup to 48 teams reshapes\\
-predictability, luck, and competitive stakes}
+\title{\bfseries The price of expansion is manipulability:\\
+enlarging the FIFA World Cup to 48 teams breaks\\
+the strategyproofness of the group stage}
 
 \author[1]{Author One}
 \author[1,2]{Author Two}
@@ -39,44 +39,52 @@ predictability, luck, and competitive stakes}
 % ---- Summary paragraph (Nature: ~200 words, fully referenced) --------
 \begin{abstract}
 \noindent
-\todo{~200-word summary paragraph. Lead with the broad question (how does the
-\emph{structure} of a competition, independent of the competitors, govern its
-predictability?), state the 2026 expansion as a prospective natural experiment,
-the metric (outcome entropy / surprisal + draw-luck attribution), the
-pre-registered live prediction, and the generalizable conclusion.}
+\todo{~200-word summary paragraph. Lead with the general mechanism-design question
+(does broadening access to a selection system necessarily cost strategyproofness?),
+introduce the 2026 expansion's best-third-placed rule as a concrete move across a
+breadth--fidelity--strategyproofness frontier, give the manipulable-match-state
+metric and the expansion manipulability multiplier, and the pre-registered live
+test on the group finale. Generalizable conclusion: the price of expansion is
+quantifiable manipulability.}
 \end{abstract}
 
 % =====================================================================
 \section*{Introduction}
-\todo{Frame the 48- vs 32-team change as a controlled perturbation to a complex
-competitive system. Position against operations-research work on tournament
-competitiveness (Csat\'o \& Gyimesi) and against ML match-prediction work; our
-contribution is a generalizable, pre-registered, information-theoretic account.}
+\todo{Open with mechanism design / strategyproofness (Gibbard--Satterthwaite
+lineage) and selection systems broadly. Narrate Gij\'on 1982 and FIFA's
+simultaneous-kickoff fix; show the best-third-placed rule creates a \emph{cross-group}
+dependency that simultaneity cannot remove. Position against OR competitiveness work
+(Csat\'o \& Gyimesi) and ML match-prediction work: our contribution is a general,
+pre-registered, game-theoretic result, not a forecast.}
 
 \section*{Results}
-\subsection*{The expansion paradox: format vs.\ predictability}
-\todo{Outcome entropy / surprisal under simulated 32- vs 48-team formats; share
-of stakeless matches. Figure 1.}
+\subsection*{Manipulable match-states and the expansion multiplier}
+\todo{Define manipulable states (Methods); report manipulability rate $\rho$ and mass
+$\bar\Delta$ under simulated 32- vs 48-team formats, and the simultaneity-irreducible
+(cross-group) share. Headline: $\rho(M_{48})/\rho(M_{32})$. Figure 1.}
 
-\subsection*{Decomposing merit and luck of the draw}
-\todo{Counterfactual re-draw simulation; title attributable to draw luck under
-each format. Figure 2.}
+\subsection*{The breadth--fidelity--strategyproofness frontier}
+\todo{Trace selection efficiency (P best team wins) and manipulability against
+breadth across formats; locate 2026 on the frontier. Figure 2.}
 
-\subsection*{Within-tournament stakes and competitiveness}
-\todo{Live win-probability volatility in stakes vs.\ dead-rubber matches. Figure 3.}
+\subsection*{Information collapse and the value of advancement}
+\todo{Entropy-collapse curve per matchday; used to value $V_{\text{adv}}$ and show how
+expansion redistributes where suspense concentrates. Figure 3.}
 
-\subsection*{Out-of-sample, pre-registered live validation}
-\todo{Score the locked predictions against the 2026 knockout results
-(Brier, log-loss, ranked probability score; calibration).}
+\subsection*{Pre-registered live test on the 2026 group finale}
+\todo{Pre-registered flagged manipulable MD3 states vs.\ observed play (passivity
+proxies: win-prob volatility, shot/press rates). Score predicted-vs-observed.}
 
 \section*{Discussion}
-\todo{Generalization beyond football: competition design as a tunable parameter
-of predictability/fairness in selection systems.}
+\todo{Generalization beyond football: broadening any selection system past a
+threshold trades strategyproofness for access. Limitations: passivity is
+confoundable; theoretical manipulable-state count is the rigorous core.}
 
 \section*{Methods}
-\todo{Elo / Bayesian Poisson strength model; ML calibration layer; Monte Carlo
-tournament simulator; metric definitions; pre-registration protocol (OSF);
-data sources and availability.}
+\todo{Elo / Bayesian Poisson strength model; ML calibration layer (benchmarked on
+Brier/log-loss/RPS, not accuracy); Monte Carlo tournament simulator; manipulable-state
+and $V_{\text{adv}}$ definitions; the trilemma statement; pre-registration protocol
+(OSF); data sources and availability.}
 
 % ---- Back matter ----
 \paragraph{Data availability.} \todo{repository + dataset DOIs.}

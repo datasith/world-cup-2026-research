@@ -1,7 +1,11 @@
 # World Cup 2026 — Research Design Plan
 
-**Working title (placeholder):** *A natural experiment in tournament design: how expanding the
-World Cup to 48 teams reshapes competitive balance, predictability, and upset dynamics.*
+**Working title (placeholder):** *The price of expansion is manipulability: how enlarging the
+World Cup to 48 teams breaks the strategyproofness of the group stage.*
+
+Lead result is the game-theoretic **manipulability / strategyproofness** analysis (angle #4),
+instrumented by the entropy/predictability machinery and tested live this month. Formal
+definitions live in [`THEORY.md`](THEORY.md).
 
 Status: scaffolding / idea selection. Last updated 2026-06-16.
 
@@ -51,32 +55,40 @@ thing that distinguishes us from every retrospective paper.
 
 ## 3. Candidate angles (catchy + novel), ranked
 
-### A. "The expansion paradox" — does adding weaker teams make the tournament *more* or *less* predictable? ⭐ lead
-Reframe the format change as a perturbation. Quantify, with one clean information-theoretic metric
-(e.g. tournament-outcome **entropy** / surprisal, and a "competitive balance" index), whether the
-48-team format increases the share of stakeless/foregone-conclusion matches (Csató's worry) **or**
-increases net upset surprise. Pre-register the prediction *before* the knockout stage and score it
-against the live 2026 results. Generalizable claim: structure, not field strength, sets the
-predictability of competitive systems.
+### ⭐ #4 (LEAD). "The price of expansion is manipulability" — strategyproofness of the format
+Game-theoretic / mechanism-design lead. The 48-team format advances the **8 best third-placed
+teams**, making a team's required group-finale result depend on **other groups** — a *cross-group*
+dependency that within-group simultaneous kickoffs (FIFA's post-Gijón fix) **cannot** remove. Define
+**manipulable match-states** (advancement-optimal action ≠ win-maximizing action), count their rate
+and stakes under 32 vs 48 via the simulator, and state the general **breadth–fidelity–
+strategyproofness trilemma**. Lineage: Gibbard–Satterthwaite / mechanism design (broad significance).
+Single striking number: the **expansion manipulability multiplier**. Live test: pre-register the
+flagged MD3 states (~2026-06-24) and observe whether implicated teams exploit them. Full formalism
+in [`THEORY.md`](THEORY.md). *This is the flagship-best angle: general theorem + crisp number +
+pre-registered live falsification.*
 
-### B. "Manufactured drama" — measuring the entertainment/competitiveness trade-off of the third-place qualifier
-The 48-team format advances 8 best third-placed teams, creating dead-rubber and collusion-risk
-games (cf. Disgrace of Gijón). Build a within-tournament causal contrast of match "competitiveness"
-(live win-probability volatility) in matches with vs. without qualification stakes. Novelty: a
-real-time **stakes** instrument.
+### #1 (support, reframed). The breadth–fidelity frontier of selection systems
+*Reframed away from "inclusivity/dilution" (politically loaded) to a neutral mechanism property.*
+Define **selection efficiency** = P(strongest entity actually wins) and trace where 32→48 moves the
+tournament on a breadth-vs-fidelity Pareto frontier. Generalizes to any selection system (grants,
+hiring, elections) without DEI-coded language. Provides the "why it matters beyond football" framing
+for #4.
 
-### C. "Path dependence & the luck of the draw" — how much does the bracket, not the team, decide the champion?
-Counterfactual re-draw simulation: hold team strengths fixed, resample the draw 10^5×, measure how
-much a title is attributable to draw luck under 32 vs 48 formats. Flagship hook: quantifying
-merit-vs-luck in a high-stakes selection system.
+### #2/#3 (instrument). Entropy / predictability machinery
+Outcome **entropy / surprisal**, competitive-balance index, and the **entropy-collapse curve** (how
+fast the champion distribution sharpens per matchday). This is the *measurement spine* used to value
+manipulable states ($V_{\text{adv}}$) and to quantify how expansion redistributes suspense. Also a
+clean live-trackable quantity for the pre-registration.
 
-### D. "Globalization of the game" — does expansion narrow or widen the strength gap between
-confederations? Test whether more slots accelerate competitive convergence (a development-economics
-flavored question). Pairs naturally with B/C.
+### (parked). "Luck of the draw" and "globalization/convergence"
+Draw-luck decomposition (title attributable to bracket luck, 32 vs 48) and confederation-gap
+convergence. Good supporting results or a second paper; not the lead.
 
-**Suggested spine:** Lead with **A** (the testable, pre-registered headline), support with **C**
-(the luck decomposition) and **B** (the within-tournament causal stakes contrast). That triad is a
-coherent, flagship-shaped story: *structure controls predictability, luck, and stakes.*
+**Spine:** Lead with **#4** (the theorem + the number + the live test), motivate significance with
+**#1 reframed** (breadth–fidelity of selection systems generally), measure everything with the
+**#2/#3** entropy instrument. Coherent flagship-shaped story: *expanding access to a competition has
+a quantifiable price in manipulability and meritocratic fidelity — the World Cup is the cleanest
+observed instance.*
 
 ## 4. Methods sketch
 
