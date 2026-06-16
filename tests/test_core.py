@@ -8,6 +8,17 @@ from src.wc2026.manipulability import (
     summarize,
     expansion_multiplier,
 )
+from src.wc2026.simulator import _seed_bracket
+
+
+# ----- bracket seeding (guards against the infinite-loop regression) -----
+
+def test_seed_bracket_is_permutation_and_separates_top_seeds():
+    for n in (16, 32):
+        b = _seed_bracket(list(range(n)))
+        assert sorted(b) == list(range(n))          # valid permutation
+        assert b[0] == 0 and b[1] == n - 1          # top seed meets bottom seed
+        assert 0 in b[: n // 2] and 1 in b[n // 2:]  # seeds 1 & 2 in opposite halves
 
 
 # ----- metrics -----------------------------------------------------------

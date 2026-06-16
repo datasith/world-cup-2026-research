@@ -46,17 +46,19 @@ def advancement_optimal(engine, team: str, state) -> tuple[TargetResult, float]:
     return best_action, best_val
 
 
-def is_manipulable(engine, team: str, state) -> ManipResult:
+def is_manipulable(engine, team: str, state, min_delta: float = 0.0) -> ManipResult:
     """Evaluate manipulability of ``state`` for ``team`` (see THEORY.md sec. 2).
 
     ``win_action`` is WIN by construction (winning the match is always the
     match-win-maximizing target); a state is manipulable when the
     progression-optimal action differs and yields strictly more value.
+    ``min_delta`` is a noise margin: when advancement values are Monte-Carlo
+    estimates, require the gain to exceed it before flagging manipulability.
     """
     adv_action, adv_val = advancement_optimal(engine, team, state)
     win_val = engine.advancement_value(team, state, TargetResult.WIN)
     delta = max(0.0, adv_val - win_val)
-    manipulable = adv_action is not TargetResult.WIN and delta > 0.0
+    manipulable = adv_action is not TargetResult.WIN and delta > min_delta
     cross_group = manipulable and engine.depends_on_other_groups(team, state)
     return ManipResult(
         team=team,
