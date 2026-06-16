@@ -45,10 +45,14 @@ def md12_snapshot(groups, sampler, rng):
 
 
 def evaluate_format(spec, field, strength_rank, sampler, n_snapshots, n_inner,
-                    min_delta, seed):
-    """Return per-state (manipulable, cross_group) boolean arrays for the format."""
+                    min_delta, seed, groups=None):
+    """Return per-state (manipulable, cross_group) boolean arrays for the format.
+
+    ``groups`` lets the caller pass the official draw; otherwise teams are
+    snake-drafted from ``field`` (matched-strength baseline)."""
     rng = np.random.default_rng(seed)
-    groups = assign_groups(field, spec)
+    if groups is None:
+        groups = assign_groups(field, spec)
     manip, cross = [], []
     for _ in range(n_snapshots):
         fixed = md12_snapshot(groups, sampler, rng)
@@ -92,6 +96,8 @@ def main():
     ap.add_argument("--inner", type=int, default=60)
     ap.add_argument("--margin", type=float, default=0.05, help="noise margin on delta")
     ap.add_argument("--seed", type=int, default=7)
+    ap.add_argument("--official", action="store_true",
+                    help="use the official 2026 draw for the 48-team arm")
     args = ap.parse_args()
 
     print("[1/3] fitting Elo on history ...")
@@ -99,15 +105,24 @@ def main():
     model, _ = fit_elo.fit(df)
     sampler = EloSampler(model)
 
+    official_groups = None
+    if args.official:
+        draw = data.load_draw()
+        official_groups = draw["groups"]
+        field48 = [t for g in official_groups for t in g]
+        r48 = {t: i for i, t in enumerate(sorted(field48, key=model.rating, reverse=True))}
+        print(f"    using OFFICIAL 2026 draw ({len(field48)} teams)")
+    else:
+        field48, r48 = build_field(model, 48)
+
     print("[2/3] evaluating 32-team format ...")
     f32, r32 = build_field(model, 32)
     m32, c32 = evaluate_format(SPEC_32, f32, r32, sampler, args.snapshots, args.inner,
                                args.margin, args.seed)
 
     print("[3/3] evaluating 48-team format ...")
-    f48, r48 = build_field(model, 48)
-    m48, c48 = evaluate_format(SPEC_48, f48, r48, sampler, args.snapshots, args.inner,
-                               args.margin, args.seed + 1)
+    m48, c48 = evaluate_format(SPEC_48, field48, r48, sampler, args.snapshots, args.inner,
+                               args.margin, args.seed + 1, groups=official_groups)
 
     boot = np.random.default_rng(args.seed + 99)
     print("\n=== manipulability (final-matchday decisions; 95% bootstrap CIs) ===")

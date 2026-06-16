@@ -1,0 +1,40 @@
+{
+  "_provenance": {
+    "source": "FIFA Final Draw (2025-12-05, Washington DC); compositions and matchday-1 results cross-checked via CBS Sports and Wikipedia per-group pages",
+    "retrieved": "2026-06-16",
+    "team_names": "normalized to martj42/international_results spellings (USA->United States, Czechia->Czech Republic, Cabo Verde->Cape Verde, Curacao->Curacao with cedilla)",
+    "notes": "Group ordering lists the Pot-1 seed first; intra-group positions (A1..A4) and the official matchday schedule are a pending refinement. Playoff winners resolved: Czech Republic (A), Bosnia and Herzegovina (B), Turkey (D), Iraq (I), DR Congo (K)."
+  },
+  "groups": {
+    "A": ["Mexico", "South Korea", "Czech Republic", "South Africa"],
+    "B": ["Canada", "Switzerland", "Qatar", "Bosnia and Herzegovina"],
+    "C": ["Brazil", "Morocco", "Scotland", "Haiti"],
+    "D": ["United States", "Paraguay", "Australia", "Turkey"],
+    "E": ["Germany", "Ivory Coast", "Ecuador", "Curaçao"],
+    "F": ["Netherlands", "Japan", "Sweden", "Tunisia"],
+    "G": ["Belgium", "Egypt", "Iran", "New Zealand"],
+    "H": ["Spain", "Uruguay", "Saudi Arabia", "Cape Verde"],
+    "I": ["France", "Senegal", "Norway", "Iraq"],
+    "J": ["Argentina", "Austria", "Algeria", "Jordan"],
+    "K": ["Portugal", "Colombia", "DR Congo", "Uzbekistan"],
+    "L": ["England", "Croatia", "Ghana", "Panama"]
+  },
+  "results": [
+    {"group": "A", "home": "Mexico", "away": "South Africa", "hg": 2, "ag": 0, "matchday": 1},
+    {"group": "A", "home": "South Korea", "away": "Czech Republic", "hg": 2, "ag": 1, "matchday": 1},
+    {"group": "B", "home": "Canada", "away": "Bosnia and Herzegovina", "hg": 1, "ag": 1, "matchday": 1},
+    {"group": "B", "home": "Qatar", "away": "Switzerland", "hg": 1, "ag": 1, "matchday": 1},
+    {"group": "C", "home": "Brazil", "away": "Morocco", "hg": 1, "ag": 1, "matchday": 1},
+    {"group": "C", "home": "Scotland", "away": "Haiti", "hg": 1, "ag": 0, "matchday": 1},
+    {"group": "D", "home": "United States", "away": "Paraguay", "hg": 4, "ag": 1, "matchday": 1},
+    {"group": "D", "home": "Australia", "away": "Turkey", "hg": 2, "ag": 0, "matchday": 1},
+    {"group": "E", "home": "Germany", "away": "Curaçao", "hg": 7, "ag": 1, "matchday": 1},
+    {"group": "E", "home": "Ivory Coast", "away": "Ecuador", "hg": 1, "ag": 0, "matchday": 1},
+    {"group": "F", "home": "Netherlands", "away": "Japan", "hg": 2, "ag": 2, "matchday": 1},
+    {"group": "F", "home": "Sweden", "away": "Tunisia", "hg": 5, "ag": 1, "matchday": 1},
+    {"group": "G", "home": "Belgium", "away": "Egypt", "hg": 1, "ag": 1, "matchday": 1},
+    {"group": "G", "home": "Iran", "away": "New Zealand", "hg": 2, "ag": 2, "matchday": 1},
+    {"group": "H", "home": "Spain", "away": "Cape Verde", "hg": 0, "ag": 0, "matchday": 1},
+    {"group": "H", "home": "Saudi Arabia", "away": "Uruguay", "hg": 1, "ag": 1, "matchday": 1}
+  ]
+}

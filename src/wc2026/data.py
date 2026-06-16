@@ -6,12 +6,15 @@ prior formats) and to filter the training window for the strength models.
 """
 from __future__ import annotations
 
+import json
 from pathlib import Path
 
 import pandas as pd
 
-RAW = Path(__file__).resolve().parents[2] / "data" / "raw"
+DATA = Path(__file__).resolve().parents[2] / "data"
+RAW = DATA / "raw"
 RESULTS_CSV = RAW / "international_results.csv"
+DRAW_2026 = DATA / "draw_2026.json"
 
 # Country-name aliases that drift across the historical record. Extend as needed
 # so a team's rating is continuous through renames.
@@ -56,6 +59,18 @@ def era_32_team(df: pd.DataFrame) -> pd.DataFrame:
     """World Cup matches in the 32-team era (1998-2022 inclusive)."""
     wc = world_cups(df)
     return wc[(wc["year"] >= 1998) & (wc["year"] <= 2022)].copy()
+
+
+def load_draw(path: Path = DRAW_2026) -> dict:
+    """Load the official 2026 draw: {'groups': {A: [...]}, 'results': [...]}.
+
+    Returns groups as an ordered list-of-lists (A..L) plus the played results as
+    MatchResult-shaped dicts, using martj42 team spellings.
+    """
+    with open(path) as fh:
+        raw = json.load(fh)
+    groups = [raw["groups"][k] for k in sorted(raw["groups"])]
+    return {"groups": groups, "results": raw["results"], "meta": raw.get("_provenance", {})}
 
 
 def training_window(df: pd.DataFrame, since: str = "2018-01-01",
