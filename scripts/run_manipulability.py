@@ -24,7 +24,6 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))  # make repo root i
 from src.wc2026 import data, fit_elo
 from src.wc2026.engine import SimEngine, DecisionState
 from src.wc2026.formats import SPEC_32, SPEC_48, assign_groups, group_matchdays
-from src.wc2026.manipulability import is_manipulable, summarize, expansion_multiplier
 from src.wc2026.samplers import EloSampler
 
 
@@ -47,9 +46,10 @@ def md12_snapshot(groups, sampler, rng):
 
 def evaluate_format(spec, field, strength_rank, sampler, n_snapshots, n_inner,
                     min_delta, seed):
+    """Return per-state (manipulable, cross_group) boolean arrays for the format."""
     rng = np.random.default_rng(seed)
     groups = assign_groups(field, spec)
-    results = []
+    manip, cross = [], []
     for _ in range(n_snapshots):
         fixed = md12_snapshot(groups, sampler, rng)
         eng = SimEngine(groups, spec, sampler, strength_rank,
@@ -58,8 +58,32 @@ def evaluate_format(spec, field, strength_rank, sampler, n_snapshots, n_inner,
             md3 = group_matchdays(teams)[2]
             for team in teams:
                 state = DecisionState(fixed=fixed, group_index=gi, team=team, md3=md3)
-                results.append(is_manipulable(eng, team, state, min_delta=min_delta))
-    return summarize(results)
+                r = eng.assess(team, state, min_delta=min_delta)
+                manip.append(r.manipulable)
+                cross.append(r.cross_group and r.manipulable)
+    return np.array(manip, dtype=float), np.array(cross, dtype=float)
+
+
+def bootstrap_ci(x, stat=np.mean, n_boot=2000, alpha=0.05, rng=None):
+    rng = rng or np.random.default_rng(0)
+    n = len(x)
+    boots = [stat(x[rng.integers(0, n, n)]) for _ in range(n_boot)]
+    lo, hi = np.percentile(boots, [100 * alpha / 2, 100 * (1 - alpha / 2)])
+    return stat(x), lo, hi
+
+
+def ratio_ci(num, den, n_boot=2000, alpha=0.05, rng=None):
+    """Bootstrap CI for rho(num)/rho(den) (manipulability-rate ratio)."""
+    rng = rng or np.random.default_rng(1)
+    nn, nd = len(num), len(den)
+    boots = []
+    for _ in range(n_boot):
+        rn = num[rng.integers(0, nn, nn)].mean()
+        rd = den[rng.integers(0, nd, nd)].mean()
+        boots.append(rn / rd if rd > 0 else np.inf)
+    point = num.mean() / den.mean() if den.mean() > 0 else np.inf
+    lo, hi = np.percentile([b for b in boots if np.isfinite(b)], [100 * alpha / 2, 100 * (1 - alpha / 2)])
+    return point, lo, hi
 
 
 def main():
@@ -77,20 +101,25 @@ def main():
 
     print("[2/3] evaluating 32-team format ...")
     f32, r32 = build_field(model, 32)
-    s32 = evaluate_format(SPEC_32, f32, r32, sampler, args.snapshots, args.inner,
-                          args.margin, args.seed)
+    m32, c32 = evaluate_format(SPEC_32, f32, r32, sampler, args.snapshots, args.inner,
+                               args.margin, args.seed)
 
     print("[3/3] evaluating 48-team format ...")
     f48, r48 = build_field(model, 48)
-    s48 = evaluate_format(SPEC_48, f48, r48, sampler, args.snapshots, args.inner,
-                          args.margin, args.seed + 1)
+    m48, c48 = evaluate_format(SPEC_48, f48, r48, sampler, args.snapshots, args.inner,
+                               args.margin, args.seed + 1)
 
-    print("\n=== manipulability (final-matchday decisions) ===")
+    boot = np.random.default_rng(args.seed + 99)
+    print("\n=== manipulability (final-matchday decisions; 95% bootstrap CIs) ===")
     print(f"snapshots={args.snapshots} inner={args.inner} margin={args.margin}")
-    for label, s in (("32-team", s32), ("48-team", s48)):
-        print(f"  {label}: rho={s.rho:.3f}  delta_bar={s.delta_bar:.3f}  "
-              f"cross_group_share={s.cross_group_share:.3f}  n_states={s.n_states}")
-    print(f"  EXPANSION MULTIPLIER rho(48)/rho(32) = {expansion_multiplier(s48, s32):.2f}")
+    for label, m, c in (("32-team", m32, c32), ("48-team", m48, c48)):
+        rho, rlo, rhi = bootstrap_ci(m, rng=boot)
+        # cross-group share = P(cross-group | manipulable)
+        cg = c.sum() / m.sum() if m.sum() > 0 else 0.0
+        print(f"  {label}: rho={rho:.3f} [{rlo:.3f}, {rhi:.3f}]  "
+              f"cross_group_share={cg:.3f}  n_states={len(m)}  n_manip={int(m.sum())}")
+    pt, lo, hi = ratio_ci(m48, m32, rng=boot)
+    print(f"  EXPANSION MULTIPLIER rho(48)/rho(32) = {pt:.2f} [{lo:.2f}, {hi:.2f}]")
 
 
 if __name__ == "__main__":

@@ -26,7 +26,7 @@ from .formats import (
     group_matchdays,
     rank_group,
 )
-from .manipulability import TargetResult
+from .manipulability import ManipResult, TargetResult
 from .samplers import MatchSampler
 from .simulator import play_knockout
 
@@ -85,8 +85,13 @@ class SimEngine:
                 return hg, ag
         return _FORCE[home_target]
 
-    def _simulate_remainder(self, state: DecisionState, team_score: tuple[int, int]) -> int:
-        """One full sub-simulation; return knockout rounds the team wins (>=0)."""
+    def _simulate_remainder(self, state: DecisionState,
+                            team_score: tuple[int, int]) -> tuple[int, bool]:
+        """One full sub-simulation.
+
+        Returns ``(knockout_depth, qualified_via_best_third)``: rounds the team
+        wins in the knockout, and whether it qualified as a best-third-placed team
+        (only possible in the 48-team format -- this is the cross-group route)."""
         results_by_group: list[list[MatchResult]] = []
         th, ta = self._team_md3_match(state)
         for gi, teams in enumerate(self.groups):
@@ -105,6 +110,7 @@ class SimEngine:
 
         # qualification
         quals, thirds = [], []
+        team_finished_third = False
         for gi, teams in enumerate(self.groups):
             ranked = rank_group(teams, results_by_group[gi], rng=self.rng)
             for pos, rec in enumerate(ranked):
@@ -112,14 +118,17 @@ class SimEngine:
                     quals.append(rec.team)
                 elif pos == self.spec.advance_top and self.spec.best_thirds:
                     thirds.append(rec)
+                    if rec.team == state.team:
+                        team_finished_third = True
         if self.spec.best_thirds:
             quals.extend(best_third_placed(thirds, self.spec.best_thirds))
 
         if state.team not in quals:
-            return 0
+            return 0, False
+        via_third = team_finished_third and state.team in quals
         seeded = sorted(quals, key=lambda t: self.strength_rank.get(t, 10**9))
         # expected knockout depth: replay bracket, count rounds the team survives
-        return self._knockout_depth(seeded, state.team)
+        return self._knockout_depth(seeded, state.team), via_third
 
     def _knockout_depth(self, qualifiers_seeded: list[str], team: str) -> int:
         from .simulator import _seed_bracket, _knockout_winner
@@ -135,17 +144,52 @@ class SimEngine:
         return depth
 
     # --- manipulability contract ----------------------------------------
+    def _evaluate_action(self, state: DecisionState, h: str, a: str,
+                         team_is_home: bool, action: TargetResult) -> tuple[float, float]:
+        """Return (mean knockout depth, P[qualify via best-third]) for one action."""
+        depth_sum = 0.0
+        third_sum = 0
+        for _ in range(self.n_inner):
+            score = self._sample_conditioned(h, a, action, team_is_home)
+            depth, via_third = self._simulate_remainder(state, score)
+            depth_sum += depth
+            third_sum += int(via_third)
+        return depth_sum / self.n_inner, third_sum / self.n_inner
+
     def advancement_value(self, team: str, state: DecisionState,
                           target_result: TargetResult) -> float:
+        """Generic-contract entry (manipulability.is_manipulable). ``assess`` is the
+        efficient single-pass path used in real runs and also measures cross-group."""
+        h, a = self._team_md3_match(state)
+        return self._evaluate_action(state, h, a, team == h, target_result)[0]
+
+    def assess(self, team: str, state: DecisionState, min_delta: float = 0.05,
+               q3_threshold: float = 0.05) -> ManipResult:
+        """Single-pass manipulability assessment with a *measured* cross-group flag.
+
+        A manipulable state is classified **cross-group** when, under the
+        advancement-optimal action, the team has non-trivial probability
+        (> ``q3_threshold``) of qualifying via the best-third-placed pool -- the
+        route that depends on other groups and that within-group simultaneity
+        cannot neutralize. In the 32-team format this probability is identically
+        zero (no best-third pool), so cross-group is structurally False there.
+        """
         h, a = self._team_md3_match(state)
         team_is_home = (team == h)
-        total = 0.0
-        for _ in range(self.n_inner):
-            score = self._sample_conditioned(h, a, target_result, team_is_home)
-            total += self._simulate_remainder(state, score)
-        return total / self.n_inner
-
-    def depends_on_other_groups(self, team: str, state: DecisionState) -> bool:
-        """True iff a third-place finish could still qualify the team (48-team
-        best-third pool). Structurally False for the 32-team format."""
-        return self.spec.best_thirds > 0
+        values: dict[TargetResult, float] = {}
+        q3: dict[TargetResult, float] = {}
+        for action in TargetResult:
+            values[action], q3[action] = self._evaluate_action(state, h, a, team_is_home, action)
+        adv_action = max(values, key=values.get)
+        win_val = values[TargetResult.WIN]
+        delta = max(0.0, values[adv_action] - win_val)
+        manipulable = adv_action is not TargetResult.WIN and delta > min_delta
+        cross_group = manipulable and q3[adv_action] > q3_threshold
+        return ManipResult(
+            team=team,
+            manipulable=manipulable,
+            win_action=TargetResult.WIN,
+            adv_action=adv_action,
+            delta=delta,
+            cross_group=cross_group,
+        )
