@@ -69,8 +69,11 @@ def load_draw(path: Path = DRAW_2026) -> dict:
     """
     with open(path) as fh:
         raw = json.load(fh)
-    groups = [raw["groups"][k] for k in sorted(raw["groups"])]
-    return {"groups": groups, "results": raw["results"], "meta": raw.get("_provenance", {})}
+    keys = sorted(raw["groups"])
+    groups = [raw["groups"][k] for k in keys]
+    schedule = {k: raw.get("schedule", {}).get(k) for k in keys}
+    return {"groups": groups, "results": raw["results"],
+            "schedule": schedule, "meta": raw.get("_provenance", {})}
 
 
 def training_window(df: pd.DataFrame, since: str = "2018-01-01",

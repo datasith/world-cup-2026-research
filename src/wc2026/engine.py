@@ -99,8 +99,10 @@ class SimEngine:
             res = []
             for md_idx, pairs in enumerate(mds):
                 for h, a in pairs:
-                    if (h, a) in state.fixed:                       # MD1-2 fixed
+                    if (h, a) in state.fixed:                       # MD1-2 fixed (as keyed)
                         hg, ag = state.fixed[(h, a)]
+                    elif (a, h) in state.fixed:                     # ... order-insensitive
+                        ag, hg = state.fixed[(a, h)]
                     elif gi == state.group_index and (h, a) == (th, ta):  # decision match
                         hg, ag = team_score
                     else:                                            # everything else sampled

@@ -66,3 +66,28 @@ structural mechanism in THEORY.md.
 n scaled ~10x. **Remaining caveats:** still a synthetic draw (not official 2026), Elo-only
 (owe Bayesian-Poisson robustness re-run), single q3 threshold (0.05) — should show
 sensitivity to it. These are the path to the freeze number.
+
+---
+
+## R3 — Official 2026 draw (2026-06-16)
+
+**Command:** `uv run python scripts/run_manipulability.py --official --snapshots 30 --inner 200 --margin 0.05`
+**Change vs R2:** the 48-team arm now uses the **real 2026 group draw** (12 official groups,
+48 teams) instead of a synthetic snake-draft. 32-team arm unchanged (matched-strength
+baseline). Elo sampler. Runtime ~4m. MD1-2 simulated (real results not yet conditioned on).
+
+| Format | ρ (manipulability rate) | cross-group share | n states |
+|--------|------------------------:|------------------:|---------:|
+| 32-team | 0.152 [0.131, 0.174] | 0.000 | 960 |
+| 48-team | 0.264 [0.240, 0.287] | 0.484 | 1440 |
+
+**Expansion multiplier ρ(48)/ρ(32) = 1.74 [1.48, 2.09].**
+
+**Reading:** the result **holds and slightly strengthens** on the real draw (1.74 vs R2's 1.64;
+CI still excludes 1.0). Consistent with FIFA's pot system producing strength-lopsided groups
+that breed more best-third / dead-rubber scenarios. ~48% of 48-team manipulable states are
+cross-group; structurally 0% under 32 teams.
+
+**Remaining for the freeze:** (a) condition on real results to date + use the official matchday
+schedule (in progress — MD3 pairings being added to the draw file); (b) Bayesian-Poisson
+robustness re-run; (c) q3-threshold sensitivity.
