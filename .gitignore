@@ -1,0 +1,34 @@
+# Data — keep raw/large data out of git; track only small processed/derived tables intentionally
+data/raw/
+data/external/
+data/processed/live/
+*.csv.gz
+*.parquet
+*.sqlite
+
+# Secrets (API keys for live data)
+.env
+*.key
+secrets.*
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.ipynb_checkpoints/
+.pytest_cache/
+
+# LaTeX build artifacts
+paper/*.aux
+paper/*.log
+paper/*.out
+paper/*.bbl
+paper/*.blg
+paper/*.synctex.gz
+paper/*.fdb_latexmk
+paper/*.fls
+paper/main.pdf
+
+# OS / editor
+.DS_Store

@@ -1,0 +1,18 @@
+# Core
+numpy
+pandas
+scipy
+matplotlib
+# Modeling
+scikit-learn
+xgboost
+statsmodels
+pymc            # Bayesian Poisson / Dixon-Coles strength model (optional path)
+# Data access
+requests
+soccerdata     # FBref/Opta scraping convenience
+# Notebooks
+jupyterlab
+# Quality
+pytest
+ruff
