@@ -37,3 +37,32 @@ structural mechanism in THEORY.md.
 5. **Δ units** = expected knockout rounds won; interpret accordingly.
 
 **Next:** refine caveat (1), then scale (3) — that gives the first defensible number.
+
+---
+
+## R2 — Measured cross-group flag + scaled run with CIs (2026-06-16)
+
+**Command:** `uv run python scripts/run_manipulability.py --snapshots 30 --inner 200 --margin 0.05`
+**Strength model:** Elo (full-history), Elo sampler. Field = top-N by Elo, snake-drafted
+(synthetic draw, still). Runtime ~3m47s. 95% CIs by bootstrap over states.
+
+| Format | ρ (manipulability rate) | cross-group share | n states | n manip |
+|--------|------------------------:|------------------:|---------:|--------:|
+| 32-team | 0.152 [0.131, 0.174] | 0.000 | 960 | 146 |
+| 48-team | 0.250 [0.229, 0.273] | 0.500 | 1440 | 360 |
+
+**Expansion multiplier ρ(48)/ρ(32) = 1.64 [1.40, 1.97].**
+
+**Reading:**
+- The expansion raises the final-matchday manipulability rate by **~64% (CI excludes 1.0
+  → significant)**: from ~15% to ~25% of decisions where not-winning is advancement-optimal.
+- **Half of the 48-team manipulable states are cross-group** — they route through the
+  best-third-placed pool, the mechanism that within-group simultaneity cannot remove. In
+  the 32-team format this share is **identically zero** (no best-third pool). This is now a
+  *measured* quantity (R1's 1.000 was a stub artifact), and it is the paper's core
+  structural claim.
+
+**What improved vs R1:** caveat (1) fixed (cross-group is measured, not assumed); CIs added;
+n scaled ~10x. **Remaining caveats:** still a synthetic draw (not official 2026), Elo-only
+(owe Bayesian-Poisson robustness re-run), single q3 threshold (0.05) — should show
+sensitivity to it. These are the path to the freeze number.
