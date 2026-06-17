@@ -156,7 +156,7 @@ def main():
     out = {
         "meta": {
             "description": "R4 projected MD3 manipulability, conditioned on results to date",
-            "conditioned_through": "2026-06-16 (16 MD1 results)",
+            "conditioned_through": "2026-06-16 (16 of 24 MD1 matches played; rest simulated)",
             "snapshots": n, "inner": args.inner, "margin": args.margin,
             "strength_model": model_label, "seed": args.seed,
         },

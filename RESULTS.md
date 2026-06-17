@@ -99,8 +99,11 @@ robustness re-run; (c) q3-threshold sensitivity.
 ## R4 — Named manipulable MD3 matches, real field (2026-06-16)
 
 **Command:** `uv run python scripts/run_r4_named.py --snapshots 60 --inner 150 --margin 0.05`
-**Setup:** conditions on the 16 real MD1 results, uses the official matchday schedule, projects
-each group to its real MD3 over 60 Monte-Carlo continuations (Elo). Artifact: `results/r4_named.json`.
+**Setup:** conditions on the **16 of 24 MD1 matches played so far** (MD1 is not yet complete; the
+remaining 8 MD1 matches and all of MD2 are simulated), uses the official matchday schedule, and
+projects each group to its real MD3 over 60 Monte-Carlo continuations (Elo). Artifact:
+`results/r4_named.json`. *(Earlier wording "the 16 real MD1 results" wrongly implied a complete
+matchday — corrected per reviewer R2.)*
 
 **Top named predictions — P(match contains a manipulable team):**
 
@@ -117,9 +120,9 @@ each group to its real MD3 over 60 Monte-Carlo continuations (Elo). Artifact: `r
 (K, 23%), South Korea (A, 23%), Canada (B, 23%), Sweden (F, 22%), Algeria (J, 22%).
 
 **Reading:** every one of the 24 MD3 matches shows some manipulation probability across
-continuations; the ranked magnitudes are the falsifiable predictions. The cross-group cases
-(e.g. Brazil–Scotland) are the novel mechanism — incentives that hinge on the best-third pool
-and survive simultaneous kickoffs.
+continuations; the ranked magnitudes are the falsifiable predictions. In the cross-group cases
+(e.g. Brazil–Scotland), the flagged team's qualification routes through the best-third pool, so its
+advancement-optimal result depends on other groups and is not removed by simultaneous kickoffs.
 
 **Caveat / freeze timing:** MD2 has not yet been played (starts ~June 18), so these projections
 average over simulated MD2 outcomes. The **sharpest, lowest-variance freeze** is right after MD2
@@ -133,7 +136,7 @@ as the early projection; re-run + OSF-freeze post-MD2.
 **Commands:**
 `uv run python scripts/run_r4_named.py --model elo    --snapshots 60 --inner 150 --margin 0.05` (= R4)
 `uv run python scripts/run_r4_named.py --model poisson --snapshots 60 --inner 150 --margin 0.05`
-**Setup:** identical R4 projection (real MD1, official MD3, conditioned-on continuations) run under
+**Setup:** identical R4 projection (partial real MD1 — 16/24 — official MD3, conditioned-on continuations) run under
 two **independent strength-model families** — full-history Elo vs. a hierarchical Bayesian Poisson
 (Dixon–Coles, post-2018 window, **non-centered, 4 chains**). This addresses the #1 reviewer attack
 and the #1 documented freeze caveat: that the named predictions are an Elo artifact. Artifacts:
@@ -171,8 +174,9 @@ cross-group case under both models (48%/48%)** — the headline simultaneity-pro
 
 **Reading:** the named predictions are **not** a single-model artifact — rank order is preserved
 across two independent model families (ρ = 0.90, *up* from 0.86 with the converged fit), and the
-registered robust set is what we freeze. This lifts the live test from "an Elo forecast" to a
-model-family-stable prediction.
+registered robust set is what we freeze. So the prediction does not depend on the Elo specification.
+*(Caveat per reviewers: Elo and Bayesian-Poisson are both goals models and not fully independent;
+"model-family stability" is the correct claim, not model-class independence.)*
 
 **Freeze caveats (remaining):**
 1. ✅ **Resolved** — Poisson convergence fixed via non-centered reparameterization (above).

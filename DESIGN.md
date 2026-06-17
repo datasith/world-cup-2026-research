@@ -13,9 +13,9 @@ Status: scaffolding / idea selection. Last updated 2026-06-16.
 
 ## 1. The honest publishing landscape (literature scan, 2026-06-16)
 
-Before picking an angle, here is what the literature actually shows. This matters because Nature
-and Science (the *flagship* journals) reject ~92% of submissions and almost never publish a sports
-analysis unless it answers a question of broad scientific significance.
+Summary of the relevant literature, to position the contribution. Nature and Science reject ~92%
+of submissions and rarely publish a sports analysis unless it answers a question of broad
+scientific significance, so the framing has to clear that bar.
 
 **What already exists:**
 
@@ -32,8 +32,8 @@ analysis unless it answers a question of broad scientific significance.
   competitive balance in 10M online games (Sci. Reports). These are the realistic homes for strong
   work that isn't broad enough for flagship Nature/Science.
 - **Sustainability** is saturated *and journalistic*: Greenly (7.8 Mt CO2e), New Weather Institute
-  (~9 Mt), "most polluting ever." Mostly industry reports and press, not peer-reviewed science.
-  The user's instinct is right — this is crowded and not a flagship path.
+  (~9 Mt), "most polluting ever." Mostly industry reports and press, not peer-reviewed science —
+  crowded and not a flagship path; not pursued.
 
 **The gap:** No one has treated the 2026 expansion as a *prospective natural experiment* on a
 complex competitive system and used it to test *generalizable* theory about how the structure of a
@@ -64,8 +64,8 @@ and stakes under 32 vs 48 via the simulator, and state the general **breadth–f
 strategyproofness trilemma**. Lineage: Gibbard–Satterthwaite / mechanism design (broad significance).
 Single striking number: the **expansion manipulability multiplier**. Live test: pre-register the
 flagged MD3 states (~2026-06-24) and observe whether implicated teams exploit them. Full formalism
-in [`THEORY.md`](THEORY.md). *This is the flagship-best angle: general theorem + crisp number +
-pre-registered live falsification.*
+in [`THEORY.md`](THEORY.md). *Lead angle: it combines a (restricted) formal result, a single
+reproducible estimate, and a prospective prediction that the live tournament can falsify.*
 
 ### #1 (support, reframed). The breadth–fidelity frontier of selection systems
 *Reframed away from "inclusivity/dilution" (politically loaded) to a neutral mechanism property.*
@@ -86,24 +86,24 @@ convergence. Good supporting results or a second paper; not the lead.
 
 **Spine:** Lead with **#4** (the theorem + the number + the live test), motivate significance with
 **#1 reframed** (breadth–fidelity of selection systems generally), measure everything with the
-**#2/#3** entropy instrument. Coherent flagship-shaped story: *expanding access to a competition has
-a quantifiable price in manipulability and meritocratic fidelity — the World Cup is the cleanest
-observed instance.*
+**#2/#3** entropy instrument. The through-line: *expanding access to a competition trades selection
+accuracy for breadth at a measurable cost in manipulability; the 2026 expansion is a clean test case.*
 
 ## 4. Methods sketch
 
-- **Team strength model:** time-varying Elo (or a Bayesian Poisson/bivariate-Poisson goals model,
-  e.g. Dixon-Coles) fit to historical internationals → calibrated match-outcome probabilities.
-- **ML layer:** gradient-boosted / neural models on match + (where available) event-level features
-  for outcome and goal-difference prediction; used for *calibrated probabilities*, benchmarked vs.
-  the Elo/Poisson baseline. Emphasis on **calibration and proper scoring (Brier, log-loss, RPS)**,
-  not raw accuracy — reviewers in this space punish accuracy-only claims.
+- **Team strength model:** two independent families — time-varying Elo, and a hierarchical
+  Bayesian Poisson (Dixon-Coles style) goals model — fit to historical internationals →
+  calibrated match-outcome and scoreline probabilities. Both are implemented; results are
+  reported under each for robustness. Emphasis on **calibration and proper scoring (Brier,
+  log-loss, RPS)**, not raw accuracy. (No separate gradient-boosted/neural "ML layer" is used;
+  if added later it would be a calibration benchmark against these baselines, not a core
+  dependency — flagged so the methods stay consistent with what is actually run.)
 - **Tournament simulator:** Monte Carlo over the full bracket; swap the 32- vs 48-team format and
   the draw to produce counterfactual distributions.
 - **Metrics:** outcome entropy / surprisal; competitive-balance index; share of stakeless matches;
   draw-luck attribution; live win-probability volatility.
 - **Pre-registration:** lock the model + predictions before the 2026 knockout rounds; score live.
-  This is the credibility centerpiece.
+  The prospective prediction is what reduces researcher degrees of freedom in the MD3 analysis.
 
 ## 5. Data strategy
 See `data/README.md` for the source catalog and licensing notes.

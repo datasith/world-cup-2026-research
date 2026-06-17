@@ -90,9 +90,13 @@ Likelihoods: **R1 0.50 (med)** · **R2 0.78 (med)** · **R3 0.85 (high)**. All t
 **Already done (this session):** cluster-bootstrap CIs (C-partial), model-family robustness (R5), margin sensitivity (R6).
 
 **Do now (cheap, high-value):**
-1. Strip AI-tells / chat-leak from `DESIGN.md` + `RESULTS.md` (AI-authorship section).
-2. Verify the "16 vs 24 MD1 results" question against `data/draw_2026.json`.
-3. Resolve the ML-layer inconsistency (integrate or remove references).
+1. ✅ **Done** — stripped AI-tells / chat-leak from `DESIGN.md` + `RESULTS.md`.
+2. ✅ **Done** — verified: only **16 of 24** MD1 matches are recorded (MD1 incomplete); wording
+   corrected in `RESULTS.md` (R4/R5) and the `r4_named.json` artifact meta. Not a bug, but the
+   prior "16 real MD1 results" phrasing falsely implied a complete matchday.
+3. ✅ **Done** — removed the promised gradient-boosted/neural "ML layer" from `DESIGN.md §4` and
+   `paper/main.tex` Methods (kept the contrasting reference to ML-prediction work); docs now match
+   the Elo + Bayesian-Poisson implementation.
 4. Reconcile the snapshot-minimum discrepancy (prereg says ≥60; R7 used 30).
 
 **Do before the OSF freeze (~June 23–24):**
