@@ -9,10 +9,10 @@ submission. Personas are kept as editable markdown (prompt-as-data); edit them f
 |----------|---------|----------|------------------------------|
 | R1 — The Theorist | `personas/theorist.md` (mechanism design / social choice) | anthropic | `claude-opus-4-8` |
 | R2 — The Domain Skeptic | `personas/domain_skeptic.md` (tournament-design OR) | openai | `gpt-5.5` |
-| R3 — The Methodologist | `personas/methodologist.md` (Bayesian stats / meta-science) | google | `gemini-3.1-pro-preview` |
+| R3 — The Methodologist | `personas/methodologist.md` (Bayesian stats / meta-science) | google | `gemini-3.5-flash` |
 
 Model ids live in `config.json` and are overridable per provider via
-`REVIEW_<PROVIDER>_MODEL` (e.g. `gemini-2.5-pro` is the stable Gemini fallback).
+`REVIEW_<PROVIDER>_MODEL` (e.g. set `gemini-3.1-pro-preview` for the larger Pro model).
 
 ## Setup
 
@@ -43,7 +43,7 @@ OPENAI_API_KEY=sk-proj-...
 GOOGLE_API_KEY=AIza...
 # optional model pins:
 # REVIEW_OPENAI_MODEL=gpt-5.5
-# REVIEW_GOOGLE_MODEL=gemini-3.1-pro-preview
+# REVIEW_GOOGLE_MODEL=gemini-3.5-flash
 ```
 
 > Never commit real keys. Only `.env.example` (placeholders) is tracked; `.env` is ignored.
