@@ -1,0 +1,614 @@
+{
+  "meta": {
+    "snapshots": 60,
+    "inner": 150,
+    "margins": [
+      0.03,
+      0.05,
+      0.08
+    ],
+    "q3_threshold": 0.05,
+    "seed": 20260616,
+    "conditioned_through": "2026-06-16 (16 MD1 results)"
+  },
+  "models": {
+    "elo": {
+      "label": "Elo (full-history)",
+      "by_margin": {
+        "0.03": {
+          "A|Czech Republic vs Mexico": {
+            "p_manip": 0.65,
+            "p_cross": 0.3333333333333333
+          },
+          "A|South Africa vs South Korea": {
+            "p_manip": 0.5833333333333334,
+            "p_cross": 0.3333333333333333
+          },
+          "B|Canada vs Switzerland": {
+            "p_manip": 0.65,
+            "p_cross": 0.43333333333333335
+          },
+          "B|Bosnia and Herzegovina vs Qatar": {
+            "p_manip": 0.3,
+            "p_cross": 0.16666666666666666
+          },
+          "C|Brazil vs Scotland": {
+            "p_manip": 0.7,
+            "p_cross": 0.5166666666666667
+          },
+          "C|Haiti vs Morocco": {
+            "p_manip": 0.38333333333333336,
+            "p_cross": 0.25
+          },
+          "D|Turkey vs United States": {
+            "p_manip": 0.65,
+            "p_cross": 0.26666666666666666
+          },
+          "D|Australia vs Paraguay": {
+            "p_manip": 0.45,
+            "p_cross": 0.2
+          },
+          "E|Germany vs Ivory Coast": {
+            "p_manip": 0.8166666666666667,
+            "p_cross": 0.2833333333333333
+          },
+          "E|Curaçao vs Ecuador": {
+            "p_manip": 0.16666666666666666,
+            "p_cross": 0.13333333333333333
+          },
+          "F|Netherlands vs Sweden": {
+            "p_manip": 0.7,
+            "p_cross": 0.3333333333333333
+          },
+          "F|Japan vs Tunisia": {
+            "p_manip": 0.4166666666666667,
+            "p_cross": 0.25
+          },
+          "G|Belgium vs New Zealand": {
+            "p_manip": 0.3,
+            "p_cross": 0.2
+          },
+          "G|Egypt vs Iran": {
+            "p_manip": 0.36666666666666664,
+            "p_cross": 0.18333333333333332
+          },
+          "H|Saudi Arabia vs Spain": {
+            "p_manip": 0.5,
+            "p_cross": 0.25
+          },
+          "H|Cape Verde vs Uruguay": {
+            "p_manip": 0.38333333333333336,
+            "p_cross": 0.15
+          },
+          "I|France vs Norway": {
+            "p_manip": 0.65,
+            "p_cross": 0.26666666666666666
+          },
+          "I|Iraq vs Senegal": {
+            "p_manip": 0.31666666666666665,
+            "p_cross": 0.18333333333333332
+          },
+          "J|Argentina vs Jordan": {
+            "p_manip": 0.5833333333333334,
+            "p_cross": 0.26666666666666666
+          },
+          "J|Algeria vs Austria": {
+            "p_manip": 0.5333333333333333,
+            "p_cross": 0.3333333333333333
+          },
+          "K|Colombia vs Portugal": {
+            "p_manip": 0.75,
+            "p_cross": 0.38333333333333336
+          },
+          "K|DR Congo vs Uzbekistan": {
+            "p_manip": 0.21666666666666667,
+            "p_cross": 0.15
+          },
+          "L|England vs Panama": {
+            "p_manip": 0.6166666666666667,
+            "p_cross": 0.26666666666666666
+          },
+          "L|Croatia vs Ghana": {
+            "p_manip": 0.36666666666666664,
+            "p_cross": 0.18333333333333332
+          }
+        },
+        "0.05": {
+          "A|Czech Republic vs Mexico": {
+            "p_manip": 0.6,
+            "p_cross": 0.3
+          },
+          "A|South Africa vs South Korea": {
+            "p_manip": 0.48333333333333334,
+            "p_cross": 0.3
+          },
+          "B|Canada vs Switzerland": {
+            "p_manip": 0.55,
+            "p_cross": 0.36666666666666664
+          },
+          "B|Bosnia and Herzegovina vs Qatar": {
+            "p_manip": 0.2,
+            "p_cross": 0.08333333333333333
+          },
+          "C|Brazil vs Scotland": {
+            "p_manip": 0.65,
+            "p_cross": 0.48333333333333334
+          },
+          "C|Haiti vs Morocco": {
+            "p_manip": 0.35,
+            "p_cross": 0.21666666666666667
+          },
+          "D|Turkey vs United States": {
+            "p_manip": 0.5333333333333333,
+            "p_cross": 0.23333333333333334
+          },
+          "D|Australia vs Paraguay": {
+            "p_manip": 0.43333333333333335,
+            "p_cross": 0.2
+          },
+          "E|Germany vs Ivory Coast": {
+            "p_manip": 0.7333333333333333,
+            "p_cross": 0.23333333333333334
+          },
+          "E|Curaçao vs Ecuador": {
+            "p_manip": 0.16666666666666666,
+            "p_cross": 0.13333333333333333
+          },
+          "F|Netherlands vs Sweden": {
+            "p_manip": 0.6333333333333333,
+            "p_cross": 0.2833333333333333
+          },
+          "F|Japan vs Tunisia": {
+            "p_manip": 0.38333333333333336,
+            "p_cross": 0.2
+          },
+          "G|Belgium vs New Zealand": {
+            "p_manip": 0.3,
+            "p_cross": 0.18333333333333332
+          },
+          "G|Egypt vs Iran": {
+            "p_manip": 0.3,
+            "p_cross": 0.13333333333333333
+          },
+          "H|Saudi Arabia vs Spain": {
+            "p_manip": 0.45,
+            "p_cross": 0.2
+          },
+          "H|Cape Verde vs Uruguay": {
+            "p_manip": 0.3,
+            "p_cross": 0.11666666666666667
+          },
+          "I|France vs Norway": {
+            "p_manip": 0.6,
+            "p_cross": 0.21666666666666667
+          },
+          "I|Iraq vs Senegal": {
+            "p_manip": 0.2833333333333333,
+            "p_cross": 0.16666666666666666
+          },
+          "J|Argentina vs Jordan": {
+            "p_manip": 0.5333333333333333,
+            "p_cross": 0.21666666666666667
+          },
+          "J|Algeria vs Austria": {
+            "p_manip": 0.45,
+            "p_cross": 0.3
+          },
+          "K|Colombia vs Portugal": {
+            "p_manip": 0.6833333333333333,
+            "p_cross": 0.3333333333333333
+          },
+          "K|DR Congo vs Uzbekistan": {
+            "p_manip": 0.2,
+            "p_cross": 0.11666666666666667
+          },
+          "L|England vs Panama": {
+            "p_manip": 0.5333333333333333,
+            "p_cross": 0.2
+          },
+          "L|Croatia vs Ghana": {
+            "p_manip": 0.35,
+            "p_cross": 0.16666666666666666
+          }
+        },
+        "0.08": {
+          "A|Czech Republic vs Mexico": {
+            "p_manip": 0.45,
+            "p_cross": 0.2
+          },
+          "A|South Africa vs South Korea": {
+            "p_manip": 0.4166666666666667,
+            "p_cross": 0.25
+          },
+          "B|Canada vs Switzerland": {
+            "p_manip": 0.38333333333333336,
+            "p_cross": 0.25
+          },
+          "B|Bosnia and Herzegovina vs Qatar": {
+            "p_manip": 0.06666666666666667,
+            "p_cross": 0.03333333333333333
+          },
+          "C|Brazil vs Scotland": {
+            "p_manip": 0.5833333333333334,
+            "p_cross": 0.4166666666666667
+          },
+          "C|Haiti vs Morocco": {
+            "p_manip": 0.3,
+            "p_cross": 0.18333333333333332
+          },
+          "D|Turkey vs United States": {
+            "p_manip": 0.45,
+            "p_cross": 0.13333333333333333
+          },
+          "D|Australia vs Paraguay": {
+            "p_manip": 0.3333333333333333,
+            "p_cross": 0.15
+          },
+          "E|Germany vs Ivory Coast": {
+            "p_manip": 0.65,
+            "p_cross": 0.18333333333333332
+          },
+          "E|Curaçao vs Ecuador": {
+            "p_manip": 0.13333333333333333,
+            "p_cross": 0.11666666666666667
+          },
+          "F|Netherlands vs Sweden": {
+            "p_manip": 0.5166666666666667,
+            "p_cross": 0.25
+          },
+          "F|Japan vs Tunisia": {
+            "p_manip": 0.2833333333333333,
+            "p_cross": 0.16666666666666666
+          },
+          "G|Belgium vs New Zealand": {
+            "p_manip": 0.26666666666666666,
+            "p_cross": 0.16666666666666666
+          },
+          "G|Egypt vs Iran": {
+            "p_manip": 0.2,
+            "p_cross": 0.11666666666666667
+          },
+          "H|Saudi Arabia vs Spain": {
+            "p_manip": 0.36666666666666664,
+            "p_cross": 0.15
+          },
+          "H|Cape Verde vs Uruguay": {
+            "p_manip": 0.25,
+            "p_cross": 0.06666666666666667
+          },
+          "I|France vs Norway": {
+            "p_manip": 0.55,
+            "p_cross": 0.2
+          },
+          "I|Iraq vs Senegal": {
+            "p_manip": 0.21666666666666667,
+            "p_cross": 0.15
+          },
+          "J|Argentina vs Jordan": {
+            "p_manip": 0.43333333333333335,
+            "p_cross": 0.15
+          },
+          "J|Algeria vs Austria": {
+            "p_manip": 0.36666666666666664,
+            "p_cross": 0.23333333333333334
+          },
+          "K|Colombia vs Portugal": {
+            "p_manip": 0.5666666666666667,
+            "p_cross": 0.26666666666666666
+          },
+          "K|DR Congo vs Uzbekistan": {
+            "p_manip": 0.16666666666666666,
+            "p_cross": 0.08333333333333333
+          },
+          "L|England vs Panama": {
+            "p_manip": 0.4666666666666667,
+            "p_cross": 0.18333333333333332
+          },
+          "L|Croatia vs Ghana": {
+            "p_manip": 0.2833333333333333,
+            "p_cross": 0.13333333333333333
+          }
+        }
+      }
+    },
+    "poisson": {
+      "label": "Bayesian Poisson (post-2018)",
+      "by_margin": {
+        "0.03": {
+          "A|Czech Republic vs Mexico": {
+            "p_manip": 0.55,
+            "p_cross": 0.3
+          },
+          "A|South Africa vs South Korea": {
+            "p_manip": 0.45,
+            "p_cross": 0.2833333333333333
+          },
+          "B|Canada vs Switzerland": {
+            "p_manip": 0.5666666666666667,
+            "p_cross": 0.3333333333333333
+          },
+          "B|Bosnia and Herzegovina vs Qatar": {
+            "p_manip": 0.3,
+            "p_cross": 0.13333333333333333
+          },
+          "C|Brazil vs Scotland": {
+            "p_manip": 0.7,
+            "p_cross": 0.5
+          },
+          "C|Haiti vs Morocco": {
+            "p_manip": 0.4166666666666667,
+            "p_cross": 0.18333333333333332
+          },
+          "D|Turkey vs United States": {
+            "p_manip": 0.6,
+            "p_cross": 0.2833333333333333
+          },
+          "D|Australia vs Paraguay": {
+            "p_manip": 0.5666666666666667,
+            "p_cross": 0.2
+          },
+          "E|Germany vs Ivory Coast": {
+            "p_manip": 0.7333333333333333,
+            "p_cross": 0.21666666666666667
+          },
+          "E|Curaçao vs Ecuador": {
+            "p_manip": 0.08333333333333333,
+            "p_cross": 0.08333333333333333
+          },
+          "F|Netherlands vs Sweden": {
+            "p_manip": 0.6333333333333333,
+            "p_cross": 0.38333333333333336
+          },
+          "F|Japan vs Tunisia": {
+            "p_manip": 0.36666666666666664,
+            "p_cross": 0.23333333333333334
+          },
+          "G|Belgium vs New Zealand": {
+            "p_manip": 0.43333333333333335,
+            "p_cross": 0.18333333333333332
+          },
+          "G|Egypt vs Iran": {
+            "p_manip": 0.48333333333333334,
+            "p_cross": 0.21666666666666667
+          },
+          "H|Saudi Arabia vs Spain": {
+            "p_manip": 0.45,
+            "p_cross": 0.3333333333333333
+          },
+          "H|Cape Verde vs Uruguay": {
+            "p_manip": 0.4166666666666667,
+            "p_cross": 0.25
+          },
+          "I|France vs Norway": {
+            "p_manip": 0.55,
+            "p_cross": 0.2
+          },
+          "I|Iraq vs Senegal": {
+            "p_manip": 0.3333333333333333,
+            "p_cross": 0.23333333333333334
+          },
+          "J|Argentina vs Jordan": {
+            "p_manip": 0.6166666666666667,
+            "p_cross": 0.18333333333333332
+          },
+          "J|Algeria vs Austria": {
+            "p_manip": 0.5166666666666667,
+            "p_cross": 0.3
+          },
+          "K|Colombia vs Portugal": {
+            "p_manip": 0.75,
+            "p_cross": 0.3333333333333333
+          },
+          "K|DR Congo vs Uzbekistan": {
+            "p_manip": 0.11666666666666667,
+            "p_cross": 0.08333333333333333
+          },
+          "L|England vs Panama": {
+            "p_manip": 0.6,
+            "p_cross": 0.13333333333333333
+          },
+          "L|Croatia vs Ghana": {
+            "p_manip": 0.4166666666666667,
+            "p_cross": 0.21666666666666667
+          }
+        },
+        "0.05": {
+          "A|Czech Republic vs Mexico": {
+            "p_manip": 0.4666666666666667,
+            "p_cross": 0.25
+          },
+          "A|South Africa vs South Korea": {
+            "p_manip": 0.38333333333333336,
+            "p_cross": 0.25
+          },
+          "B|Canada vs Switzerland": {
+            "p_manip": 0.4666666666666667,
+            "p_cross": 0.26666666666666666
+          },
+          "B|Bosnia and Herzegovina vs Qatar": {
+            "p_manip": 0.15,
+            "p_cross": 0.08333333333333333
+          },
+          "C|Brazil vs Scotland": {
+            "p_manip": 0.6666666666666666,
+            "p_cross": 0.48333333333333334
+          },
+          "C|Haiti vs Morocco": {
+            "p_manip": 0.36666666666666664,
+            "p_cross": 0.15
+          },
+          "D|Turkey vs United States": {
+            "p_manip": 0.45,
+            "p_cross": 0.23333333333333334
+          },
+          "D|Australia vs Paraguay": {
+            "p_manip": 0.5333333333333333,
+            "p_cross": 0.2
+          },
+          "E|Germany vs Ivory Coast": {
+            "p_manip": 0.7,
+            "p_cross": 0.18333333333333332
+          },
+          "E|Curaçao vs Ecuador": {
+            "p_manip": 0.06666666666666667,
+            "p_cross": 0.06666666666666667
+          },
+          "F|Netherlands vs Sweden": {
+            "p_manip": 0.55,
+            "p_cross": 0.3
+          },
+          "F|Japan vs Tunisia": {
+            "p_manip": 0.26666666666666666,
+            "p_cross": 0.2
+          },
+          "G|Belgium vs New Zealand": {
+            "p_manip": 0.36666666666666664,
+            "p_cross": 0.18333333333333332
+          },
+          "G|Egypt vs Iran": {
+            "p_manip": 0.43333333333333335,
+            "p_cross": 0.18333333333333332
+          },
+          "H|Saudi Arabia vs Spain": {
+            "p_manip": 0.35,
+            "p_cross": 0.25
+          },
+          "H|Cape Verde vs Uruguay": {
+            "p_manip": 0.31666666666666665,
+            "p_cross": 0.16666666666666666
+          },
+          "I|France vs Norway": {
+            "p_manip": 0.5166666666666667,
+            "p_cross": 0.18333333333333332
+          },
+          "I|Iraq vs Senegal": {
+            "p_manip": 0.23333333333333334,
+            "p_cross": 0.13333333333333333
+          },
+          "J|Argentina vs Jordan": {
+            "p_manip": 0.5333333333333333,
+            "p_cross": 0.13333333333333333
+          },
+          "J|Algeria vs Austria": {
+            "p_manip": 0.45,
+            "p_cross": 0.26666666666666666
+          },
+          "K|Colombia vs Portugal": {
+            "p_manip": 0.7166666666666667,
+            "p_cross": 0.3
+          },
+          "K|DR Congo vs Uzbekistan": {
+            "p_manip": 0.08333333333333333,
+            "p_cross": 0.06666666666666667
+          },
+          "L|England vs Panama": {
+            "p_manip": 0.5333333333333333,
+            "p_cross": 0.11666666666666667
+          },
+          "L|Croatia vs Ghana": {
+            "p_manip": 0.35,
+            "p_cross": 0.2
+          }
+        },
+        "0.08": {
+          "A|Czech Republic vs Mexico": {
+            "p_manip": 0.3333333333333333,
+            "p_cross": 0.15
+          },
+          "A|South Africa vs South Korea": {
+            "p_manip": 0.3333333333333333,
+            "p_cross": 0.18333333333333332
+          },
+          "B|Canada vs Switzerland": {
+            "p_manip": 0.3333333333333333,
+            "p_cross": 0.2
+          },
+          "B|Bosnia and Herzegovina vs Qatar": {
+            "p_manip": 0.016666666666666666,
+            "p_cross": 0.016666666666666666
+          },
+          "C|Brazil vs Scotland": {
+            "p_manip": 0.5666666666666667,
+            "p_cross": 0.4
+          },
+          "C|Haiti vs Morocco": {
+            "p_manip": 0.26666666666666666,
+            "p_cross": 0.11666666666666667
+          },
+          "D|Turkey vs United States": {
+            "p_manip": 0.31666666666666665,
+            "p_cross": 0.15
+          },
+          "D|Australia vs Paraguay": {
+            "p_manip": 0.4666666666666667,
+            "p_cross": 0.15
+          },
+          "E|Germany vs Ivory Coast": {
+            "p_manip": 0.5666666666666667,
+            "p_cross": 0.15
+          },
+          "E|Curaçao vs Ecuador": {
+            "p_manip": 0.016666666666666666,
+            "p_cross": 0.016666666666666666
+          },
+          "F|Netherlands vs Sweden": {
+            "p_manip": 0.45,
+            "p_cross": 0.23333333333333334
+          },
+          "F|Japan vs Tunisia": {
+            "p_manip": 0.23333333333333334,
+            "p_cross": 0.16666666666666666
+          },
+          "G|Belgium vs New Zealand": {
+            "p_manip": 0.2833333333333333,
+            "p_cross": 0.11666666666666667
+          },
+          "G|Egypt vs Iran": {
+            "p_manip": 0.2833333333333333,
+            "p_cross": 0.13333333333333333
+          },
+          "H|Saudi Arabia vs Spain": {
+            "p_manip": 0.21666666666666667,
+            "p_cross": 0.11666666666666667
+          },
+          "H|Cape Verde vs Uruguay": {
+            "p_manip": 0.23333333333333334,
+            "p_cross": 0.15
+          },
+          "I|France vs Norway": {
+            "p_manip": 0.4,
+            "p_cross": 0.16666666666666666
+          },
+          "I|Iraq vs Senegal": {
+            "p_manip": 0.15,
+            "p_cross": 0.08333333333333333
+          },
+          "J|Argentina vs Jordan": {
+            "p_manip": 0.4166666666666667,
+            "p_cross": 0.1
+          },
+          "J|Algeria vs Austria": {
+            "p_manip": 0.2833333333333333,
+            "p_cross": 0.18333333333333332
+          },
+          "K|Colombia vs Portugal": {
+            "p_manip": 0.6166666666666667,
+            "p_cross": 0.23333333333333334
+          },
+          "K|DR Congo vs Uzbekistan": {
+            "p_manip": 0.016666666666666666,
+            "p_cross": 0.016666666666666666
+          },
+          "L|England vs Panama": {
+            "p_manip": 0.48333333333333334,
+            "p_cross": 0.1
+          },
+          "L|Croatia vs Ghana": {
+            "p_manip": 0.25,
+            "p_cross": 0.13333333333333333
+          }
+        }
+      }
+    }
+  }
+}

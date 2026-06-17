@@ -34,6 +34,8 @@ class ManipResult:
     adv_action: TargetResult          # action maximizing progression value
     delta: float                      # forgone progression value if playing to win
     cross_group: bool                 # dependency is on other groups (simultaneity-proof)
+    q3_adv: float = 0.0               # raw P(qualify via best-third) under adv_action;
+                                      # lets thresholds be swept post-hoc (sensitivity)
 
 
 def advancement_optimal(engine, team: str, state) -> tuple[TargetResult, float]:

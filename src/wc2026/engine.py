@@ -194,4 +194,5 @@ class SimEngine:
             adv_action=adv_action,
             delta=delta,
             cross_group=cross_group,
+            q3_adv=q3[adv_action],
         )

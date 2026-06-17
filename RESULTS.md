@@ -175,4 +175,35 @@ model-family-stable prediction.
 **Freeze caveats (remaining):**
 1. ✅ **Resolved** — Poisson convergence fixed via non-centered reparameterization (above).
 2. Still pre-MD2 — re-run both arms conditioned on real MD1+MD2 at the freeze (~June 23–24).
-3. q3-threshold sensitivity ({0.03, 0.05, 0.08}) still owed (PREREGISTRATION §4).
+3. ✅ **Resolved** — q3/margin sensitivity done (R6 below).
+
+---
+
+## R6 — Margin (q3) sensitivity of the named predictions (2026-06-17)
+
+**Command:** `uv run python scripts/run_q3_sensitivity.py --snapshots 60 --inner 150`
+**Setup:** the R4 projection run **once per model**, capturing each team's raw decision
+record (adv_action, Δ, q3_adv) per snapshot, then re-thresholded at margins {0.03, 0.05, 0.08}
+*without* re-running the sub-simulations (enabled by exposing `q3_adv` on `ManipResult`). The
+cross-group flag threshold is held at 0.05. Artifact: `results/q3_sensitivity.json`. This is the
+sensitivity analysis pre-committed in PREREGISTRATION §4.
+
+**Rank stability of P(manipulable) across margins (Spearman ρ vs. margin 0.05):**
+
+| Model | 0.05 vs 0.03 | 0.05 vs 0.08 |
+|-------|-------------:|-------------:|
+| Elo | **0.986** | **0.978** |
+| Bayesian Poisson | **0.975** | **0.979** |
+
+**Robust-set (P ≥ 0.50) size by margin:** Elo 13 / 10 / 5; Poisson 12 / 8 / 3 (at 0.03 / 0.05 / 0.08).
+
+**Reading:** the **ranking** of MD3 matches — i.e. the actual prediction — is essentially
+invariant to the margin (ρ ≈ 0.98 throughout, both models). Absolute manipulability *levels*
+fall as the margin tightens (by construction: a stricter Δ band flags fewer states), which shrinks
+the ≥0.50 set; but the **headline matches persist across all three margins and both models**:
+Germany–Ivory Coast, Colombia–Portugal, Brazil–Scotland, Netherlands–Sweden, and France–Norway are
+in the top tier at every setting. The conclusions do not hinge on the choice of margin; only the
+borderline set-membership does, which we report honestly rather than fix to a single threshold.
+
+**Net status:** with R5 (cross-model) and R6 (cross-margin), the two methodological freeze caveats
+are closed. The only remaining pre-freeze step is the post-MD2 re-run on real results (~June 23–24).
