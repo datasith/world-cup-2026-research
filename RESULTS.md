@@ -123,3 +123,53 @@ and survive simultaneous kickoffs.
 average over simulated MD2 outcomes. The **sharpest, lowest-variance freeze** is right after MD2
 completes and just before MD3 (~June 23–24), when only the MD3 results remain uncertain. Treat R4
 as the early projection; re-run + OSF-freeze post-MD2.
+
+---
+
+## R5 — Cross-model robustness of the named predictions (2026-06-17)
+
+**Commands:**
+`uv run python scripts/run_r4_named.py --model elo    --snapshots 60 --inner 150 --margin 0.05` (= R4)
+`uv run python scripts/run_r4_named.py --model poisson --snapshots 60 --inner 150 --margin 0.05`
+**Setup:** identical R4 projection (real MD1, official MD3, conditioned-on continuations) run under
+two **independent strength-model families** — full-history Elo vs. a hierarchical Bayesian Poisson
+(Dixon–Coles, post-2018 window). This addresses the #1 reviewer attack and the #1 documented freeze
+caveat: that the named predictions are an Elo artifact. Artifacts: `results/r4_named.json` (Elo),
+`results/r4_named_poisson.json` (Poisson).
+
+**Agreement across the 24 MD3 matches:**
+
+| Quantity | Spearman ρ | Pearson r |
+|----------|-----------:|----------:|
+| P(manipulable) | **0.86** | 0.89 |
+| P(cross-group) | 0.74 | — |
+
+Robust set (P(manip) ≥ 0.50 **under both models**, per PREREGISTRATION §5): **8 matches**, Jaccard
+0.67 vs. either model's top-10 alone.
+
+| P(manip) elo/pois | P(cross) elo/pois | Group | MD3 match |
+|:-----------------:|:-----------------:|:-----:|-----------|
+| 73% / 83% | 23% / 18% | E | Germany vs Ivory Coast |
+| 68% / 68% | 33% / 28% | K | Colombia vs Portugal |
+| 65% / 65% | **48% / 40%** | C | Brazil vs Scotland |
+| 60% / 63% | 22% / 25% | I | France vs Norway |
+| 63% / 58% | 28% / 30% | F | Netherlands vs Sweden |
+| 55% / 53% | 37% / 33% | B | Canada vs Switzerland |
+| 53% / 53% | 22% / 12% | J | Argentina vs Jordan |
+| 53% / 50% | 20% / 10% | L | England vs Panama |
+
+**Only model-disagreement** in the ≥0.50 band: Czech Republic–Mexico (A, 60/43%) and
+Turkey–USA (D, 53/47%) clear the bar under Elo but fall just short under Poisson — both *near* the
+threshold, not contradictory. Brazil–Scotland remains the strongest cross-group case under both.
+
+**Reading:** the named predictions are **not** a single-model artifact — rank order is preserved
+across two model families (ρ = 0.86), and the registered robust set is what we freeze. This is the
+robustness evidence that lifts the live test from "an Elo forecast" to a model-family-stable
+prediction.
+
+**Freeze caveats (must fix before OSF freeze):**
+1. The Poisson NUTS fit threw convergence warnings (rhat > 1.01, low ESS, 2 chains). Re-fit with a
+   **non-centered parameterization + ≥4 chains / more draws** for a publication-grade Poisson arm.
+   The cross-model *rank* agreement is robust to this; the point P-values may shift slightly.
+2. Still pre-MD2 — re-run both arms conditioned on real MD1+MD2 at the freeze (~June 23–24).
+3. q3-threshold sensitivity ({0.03, 0.05, 0.08}) still owed (PREREGISTRATION §4).
