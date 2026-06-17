@@ -6,11 +6,13 @@ provider, and a full dry-run of the orchestrator.
 from __future__ import annotations
 
 import json
+import os
 from pathlib import Path
 
 import pytest
 
 from src.wc2026.review import context as ctxmod
+from src.wc2026.review.env import load_dotenv
 from src.wc2026.review.orchestrator import run_panel
 from src.wc2026.review.personas import load_panel
 from src.wc2026.review.providers import MockProvider, get_provider, ProviderError
@@ -76,6 +78,21 @@ def test_model_env_override(monkeypatch):
     monkeypatch.setenv("REVIEW_OPENAI_MODEL", "gpt-test-xyz")
     specs = {s.provider: s for s in load_panel()}
     assert specs["openai"].model == "gpt-test-xyz"
+
+
+def test_load_dotenv_parses_and_respects_existing(tmp_path, monkeypatch):
+    env = tmp_path / ".env"
+    env.write_text('# comment\nexport OPENAI_API_KEY="sk-fromfile"\nGOOGLE_API_KEY=g123\n\n')
+    monkeypatch.delenv("OPENAI_API_KEY", raising=False)
+    monkeypatch.setenv("GOOGLE_API_KEY", "already-set")     # real env must win
+    loaded = load_dotenv(env)
+    assert "OPENAI_API_KEY" in loaded and "GOOGLE_API_KEY" not in loaded
+    assert os.environ["OPENAI_API_KEY"] == "sk-fromfile"
+    assert os.environ["GOOGLE_API_KEY"] == "already-set"
+
+
+def test_load_dotenv_missing_file_is_noop(tmp_path):
+    assert load_dotenv(tmp_path / "nope.env") == []
 
 
 def test_build_context_notes_missing_file():

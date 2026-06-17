@@ -1,5 +1,5 @@
 {
-  "_comment": "LLM-as-judge reviewer panel. Each reviewer = persona (prompt-as-data) + provider + model. Model ids and API keys come from the environment; defaults below are overridable via REVIEW_<PROVIDER>_MODEL env vars (the OpenAI/Gemini defaults are placeholders -- set them to the latest ids you have access to). API keys: ANTHROPIC_API_KEY, OPENAI_API_KEY, GOOGLE_API_KEY.",
+  "_comment": "LLM-as-judge reviewer panel. Each reviewer = persona (prompt-as-data) + provider + model. Model ids overridable via REVIEW_<PROVIDER>_MODEL env vars. Models verified current 2026-06-17: gpt-5.5 (OpenAI frontier), gemini-3.1-pro-preview (latest Gemini Pro; gemini-2.5-pro is the stable fallback), claude-opus-4-8. API keys come from the environment / .env: ANTHROPIC_API_KEY, OPENAI_API_KEY, GOOGLE_API_KEY.",
   "defaults": {
     "max_tokens": 4096,
     "temperature": 0.2
@@ -17,14 +17,14 @@
       "name": "R2 - The Domain Skeptic",
       "persona": "personas/domain_skeptic.md",
       "provider": "openai",
-      "model": "gpt-5.1"
+      "model": "gpt-5.5"
     },
     {
       "id": "methodologist",
       "name": "R3 - The Methodologist",
       "persona": "personas/methodologist.md",
       "provider": "google",
-      "model": "gemini-2.5-pro"
+      "model": "gemini-3.1-pro-preview"
     }
   ]
 }

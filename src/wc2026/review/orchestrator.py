@@ -13,6 +13,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 
 from . import context as ctxmod
+from .env import load_dotenv
 from .personas import ReviewerSpec, load_panel
 from .providers import ProviderError, get_provider
 from .schema import REVIEW_JSON_SCHEMA, Review, parse_review
@@ -45,6 +46,8 @@ def run_panel(docs: list[str] | None = None, *, config_path: Path | None = None,
               out_dir: Path = DEFAULT_OUT, dry_run: bool = False,
               max_workers: int = 3) -> dict:
     """Run all reviewers and write the results. Returns the run record dict."""
+    if not dry_run:
+        load_dotenv()                     # populate keys from .env if not already in env
     specs = load_panel(config_path=config_path)
     context = ctxmod.build_context(docs)
     user = _USER_TEMPLATE.format(context=context,
