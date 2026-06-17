@@ -51,6 +51,17 @@ class PoissonFit:
         lam_a = np.exp(self.mu + a_a - d_h)
         return float(lam_h), float(lam_a)
 
+    def strength(self, team: str) -> float:
+        """Scalar overall strength = attack + defence (higher = better both ends).
+
+        Used to rank teams for bracket seeding, mirroring EloModel.rating so the
+        simulator can be driven by either strength model interchangeably.
+        """
+        i = self._index(team)
+        if i is None:
+            return 0.0
+        return float(self.attack[i] + self.defence[i])
+
     def score_matrix(self, home: str, away: str, neutral: bool = True) -> np.ndarray:
         """P(home_goals=i, away_goals=j) on a truncated independent-Poisson grid."""
         from scipy.stats import poisson

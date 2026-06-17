@@ -27,7 +27,24 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from src.wc2026 import data, fit_elo
 from src.wc2026.engine import SimEngine, DecisionState
 from src.wc2026.formats import SPEC_48, group_matchdays
-from src.wc2026.samplers import EloSampler
+from src.wc2026.samplers import EloSampler, PoissonSampler
+
+
+def build_model(name: str, df, seed: int):
+    """Return (sampler, strength_fn) for the requested strength model.
+
+    Both arms expose the same interface so the simulator is model-agnostic
+    (THEORY.md sec. 4): Elo for the fast primary run, Bayesian Poisson for the
+    pre-registered robustness check.
+    """
+    if name == "elo":
+        model, _ = fit_elo.fit(df)
+        return EloSampler(model), model.rating, "Elo (full-history)"
+    if name == "poisson":
+        from src.wc2026 import bayesian
+        fit = bayesian.fit(data.training_window(df), seed=seed)
+        return PoissonSampler(fit), fit.strength, "Bayesian Poisson (post-2018)"
+    raise ValueError(f"unknown model: {name}")
 
 
 def real_fixed(draw) -> dict:
@@ -57,19 +74,20 @@ def main():
     ap.add_argument("--inner", type=int, default=150)
     ap.add_argument("--margin", type=float, default=0.05)
     ap.add_argument("--seed", type=int, default=20260616)
+    ap.add_argument("--model", choices=["elo", "poisson"], default="elo",
+                    help="strength model: elo (primary) or poisson (robustness)")
     ap.add_argument("--out", type=str, default="results/r4_named.json")
     args = ap.parse_args()
 
-    print("[1/2] fitting Elo + loading official draw ...")
+    print(f"[1/2] fitting {args.model} model + loading official draw ...")
     df = data.load_results()
-    model, _ = fit_elo.fit(df)
-    sampler = EloSampler(model)
+    sampler, strength_of, model_label = build_model(args.model, df, args.seed)
     draw = data.load_draw()
     groups = draw["groups"]
     group_keys = "ABCDEFGHIJKL"
     fixed_real = real_fixed(draw)
     strength_rank = {t: i for i, t in enumerate(
-        sorted([t for g in groups for t in g], key=model.rating, reverse=True))}
+        sorted([t for g in groups for t in g], key=strength_of, reverse=True))}
 
     # accumulators keyed by (group_key, frozenset(match teams)) and team
     match_manip = defaultdict(int)       # snapshots with >=1 manipulable team in the match
@@ -140,7 +158,7 @@ def main():
             "description": "R4 projected MD3 manipulability, conditioned on results to date",
             "conditioned_through": "2026-06-16 (16 MD1 results)",
             "snapshots": n, "inner": args.inner, "margin": args.margin,
-            "strength_model": "Elo (full-history)", "seed": args.seed,
+            "strength_model": model_label, "seed": args.seed,
         },
         "matches": matches,
         "teams": teams_report,
