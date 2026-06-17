@@ -1,7 +1,7 @@
 {
   "_comment": "LLM-as-judge reviewer panel. Each reviewer = persona (prompt-as-data) + provider + model. Model ids overridable via REVIEW_<PROVIDER>_MODEL env vars. Models verified current 2026-06-17: gpt-5.5 (OpenAI frontier), gemini-3.5-flash (latest GA stable Gemini), claude-opus-4-8. API keys come from the environment / .env: ANTHROPIC_API_KEY, OPENAI_API_KEY, GOOGLE_API_KEY.",
   "defaults": {
-    "max_tokens": 4096,
+    "max_tokens": 16384,
     "temperature": 0.2
   },
   "reviewers": [

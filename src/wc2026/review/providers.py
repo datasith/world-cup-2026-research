@@ -107,6 +107,7 @@ class GoogleProvider:
             from google.genai import types
         except ImportError as e:
             raise ProviderError("pip install google-genai") from e
+        import time
         client = genai.Client(api_key=key)
         cfg = types.GenerateContentConfig(
             system_instruction=system,
@@ -114,11 +115,29 @@ class GoogleProvider:
             max_output_tokens=max_tokens,
             response_mime_type="application/json" if json_mode else "text/plain",
         )
-        try:
-            resp = client.models.generate_content(model=model, contents=user, config=cfg)
-        except Exception as e:  # noqa: BLE001
-            raise ProviderError(f"google call failed: {e}") from e
-        return resp.text or ""
+        # Gemini 3.x are thinking models; retry transient 5xx/UNAVAILABLE with backoff.
+        last = None
+        for attempt in range(4):
+            try:
+                resp = client.models.generate_content(model=model, contents=user, config=cfg)
+            except Exception as e:  # noqa: BLE001
+                last = e
+                msg = str(e)
+                if any(s in msg for s in ("503", "UNAVAILABLE", "500", "overloaded", "429")):
+                    time.sleep(2 * (attempt + 1))
+                    continue
+                raise ProviderError(f"google call failed: {e}") from e
+            text = resp.text or ""
+            if text.strip():
+                return text
+            # empty text: usually thinking consumed the whole budget (finish_reason MAX_TOKENS)
+            fr = None
+            for c in (resp.candidates or []):
+                fr = getattr(c, "finish_reason", None)
+            raise ProviderError(
+                f"google returned empty text (finish_reason={fr}); "
+                f"raise max_tokens (thinking budget may be exhausting it)")
+        raise ProviderError(f"google call failed after retries: {last}")
 
 
 class MockProvider:
