@@ -133,43 +133,46 @@ as the early projection; re-run + OSF-freeze post-MD2.
 `uv run python scripts/run_r4_named.py --model poisson --snapshots 60 --inner 150 --margin 0.05`
 **Setup:** identical R4 projection (real MD1, official MD3, conditioned-on continuations) run under
 two **independent strength-model families** — full-history Elo vs. a hierarchical Bayesian Poisson
-(Dixon–Coles, post-2018 window). This addresses the #1 reviewer attack and the #1 documented freeze
-caveat: that the named predictions are an Elo artifact. Artifacts: `results/r4_named.json` (Elo),
-`results/r4_named_poisson.json` (Poisson).
+(Dixon–Coles, post-2018 window, **non-centered, 4 chains**). This addresses the #1 reviewer attack
+and the #1 documented freeze caveat: that the named predictions are an Elo artifact. Artifacts:
+`results/r4_named.json` (Elo), `results/r4_named_poisson.json` (Poisson).
+
+**Poisson convergence (converged fit).** Non-centered parameterization (`*_raw` × group sd) +
+4 chains / tune=1500 / target_accept=0.95. **All 48 field teams: max r-hat = 1.000, min ESS = 2413,
+0 divergences.** The only residual r-hat > 1.01 across all 572 params is a single data-poor non-field
+team (r-hat 1.02), irrelevant to the analysis. (Earlier 2-chain centered fit warned widely — fixed.)
 
 **Agreement across the 24 MD3 matches:**
 
 | Quantity | Spearman ρ | Pearson r |
 |----------|-----------:|----------:|
-| P(manipulable) | **0.86** | 0.89 |
-| P(cross-group) | 0.74 | — |
+| P(manipulable) | **0.90** | 0.91 |
+| P(cross-group) | 0.79 | — |
 
-Robust set (P(manip) ≥ 0.50 **under both models**, per PREREGISTRATION §5): **8 matches**, Jaccard
-0.67 vs. either model's top-10 alone.
+Robust set (P(manip) ≥ 0.50 **under both models**, per PREREGISTRATION §5): **7 matches**, Jaccard
+0.64 vs. either model's ≥0.50 set.
 
 | P(manip) elo/pois | P(cross) elo/pois | Group | MD3 match |
 |:-----------------:|:-----------------:|:-----:|-----------|
-| 73% / 83% | 23% / 18% | E | Germany vs Ivory Coast |
-| 68% / 68% | 33% / 28% | K | Colombia vs Portugal |
-| 65% / 65% | **48% / 40%** | C | Brazil vs Scotland |
-| 60% / 63% | 22% / 25% | I | France vs Norway |
-| 63% / 58% | 28% / 30% | F | Netherlands vs Sweden |
-| 55% / 53% | 37% / 33% | B | Canada vs Switzerland |
-| 53% / 53% | 22% / 12% | J | Argentina vs Jordan |
-| 53% / 50% | 20% / 10% | L | England vs Panama |
+| 73% / 70% | 23% / 18% | E | Germany vs Ivory Coast |
+| 68% / 72% | 33% / 30% | K | Colombia vs Portugal |
+| 65% / 67% | **48% / 48%** | C | Brazil vs Scotland |
+| 63% / 55% | 28% / 30% | F | Netherlands vs Sweden |
+| 60% / 52% | 22% / 18% | I | France vs Norway |
+| 53% / 53% | 22% / 13% | J | Argentina vs Jordan |
+| 53% / 53% | 20% / 12% | L | England vs Panama |
 
-**Only model-disagreement** in the ≥0.50 band: Czech Republic–Mexico (A, 60/43%) and
-Turkey–USA (D, 53/47%) clear the bar under Elo but fall just short under Poisson — both *near* the
-threshold, not contradictory. Brazil–Scotland remains the strongest cross-group case under both.
+**Model-disagreement** in the ≥0.50 band (all *near*-threshold, not contradictory): Czech Republic–
+Mexico (A, 60/43%), Canada–Switzerland (B, 55/47%), Turkey–USA (D, 53/47%) clear the bar under Elo
+only; Australia–Paraguay (D, 47/52%) under Poisson only. **Brazil–Scotland remains the strongest
+cross-group case under both models (48%/48%)** — the headline simultaneity-proof prediction.
 
 **Reading:** the named predictions are **not** a single-model artifact — rank order is preserved
-across two model families (ρ = 0.86), and the registered robust set is what we freeze. This is the
-robustness evidence that lifts the live test from "an Elo forecast" to a model-family-stable
-prediction.
+across two independent model families (ρ = 0.90, *up* from 0.86 with the converged fit), and the
+registered robust set is what we freeze. This lifts the live test from "an Elo forecast" to a
+model-family-stable prediction.
 
-**Freeze caveats (must fix before OSF freeze):**
-1. The Poisson NUTS fit threw convergence warnings (rhat > 1.01, low ESS, 2 chains). Re-fit with a
-   **non-centered parameterization + ≥4 chains / more draws** for a publication-grade Poisson arm.
-   The cross-model *rank* agreement is robust to this; the point P-values may shift slightly.
+**Freeze caveats (remaining):**
+1. ✅ **Resolved** — Poisson convergence fixed via non-centered reparameterization (above).
 2. Still pre-MD2 — re-run both arms conditioned on real MD1+MD2 at the freeze (~June 23–24).
 3. q3-threshold sensitivity ({0.03, 0.05, 0.08}) still owed (PREREGISTRATION §4).
