@@ -91,3 +91,35 @@ cross-group; structurally 0% under 32 teams.
 **Remaining for the freeze:** (a) condition on real results to date + use the official matchday
 schedule (in progress — MD3 pairings being added to the draw file); (b) Bayesian-Poisson
 robustness re-run; (c) q3-threshold sensitivity.
+
+---
+
+## R4 — Named manipulable MD3 matches, real field (2026-06-16)
+
+**Command:** `uv run python scripts/run_r4_named.py --snapshots 60 --inner 150 --margin 0.05`
+**Setup:** conditions on the 16 real MD1 results, uses the official matchday schedule, projects
+each group to its real MD3 over 60 Monte-Carlo continuations (Elo). Artifact: `results/r4_named.json`.
+
+**Top named predictions — P(match contains a manipulable team):**
+
+| P(manip) | P(cross-group) | Group | MD3 match |
+|---------:|---------------:|:-----:|-----------|
+| 73% | 23% | E | Germany vs Ivory Coast |
+| 68% | 33% | K | Colombia vs Portugal |
+| 65% | **48%** | C | Brazil vs Scotland |
+| 63% | 28% | F | Netherlands vs Sweden |
+| 60% | 30% | A | Czech Republic vs Mexico |
+| 60% | 22% | I | France vs Norway |
+
+**Strongest cross-group (simultaneity-proof) team-level cases:** Scotland (C, 33%), Colombia
+(K, 23%), South Korea (A, 23%), Canada (B, 23%), Sweden (F, 22%), Algeria (J, 22%).
+
+**Reading:** every one of the 24 MD3 matches shows some manipulation probability across
+continuations; the ranked magnitudes are the falsifiable predictions. The cross-group cases
+(e.g. Brazil–Scotland) are the novel mechanism — incentives that hinge on the best-third pool
+and survive simultaneous kickoffs.
+
+**Caveat / freeze timing:** MD2 has not yet been played (starts ~June 18), so these projections
+average over simulated MD2 outcomes. The **sharpest, lowest-variance freeze** is right after MD2
+completes and just before MD3 (~June 23–24), when only the MD3 results remain uncertain. Treat R4
+as the early projection; re-run + OSF-freeze post-MD2.
