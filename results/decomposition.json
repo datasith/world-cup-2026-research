@@ -1,0 +1,67 @@
+{
+  "meta": {
+    "snapshots": 160,
+    "inner": 150,
+    "margin": 0.05,
+    "seed": 7,
+    "draw": "official 2026 for 48-arms; matched-strength for 32"
+  },
+  "arms": {
+    "A": {
+      "label": "48 top-2 + best-third (real)",
+      "rho": 0.26588541666666665,
+      "rho_ci": [
+        0.2576822916666667,
+        0.27434895833333334
+      ],
+      "cross_group_share": 0.49461312438785504,
+      "n_states": 7680,
+      "n_manip": 2042
+    },
+    "B": {
+      "label": "48 top-2 only",
+      "rho": 0.1546875,
+      "rho_ci": [
+        0.14791666666666667,
+        0.161328125
+      ],
+      "cross_group_share": 0.0,
+      "n_states": 7680,
+      "n_manip": 1188
+    },
+    "C": {
+      "label": "32 top-2 (baseline)",
+      "rho": 0.1572265625,
+      "rho_ci": [
+        0.1490234375,
+        0.1658203125
+      ],
+      "cross_group_share": 0.0,
+      "n_states": 5120,
+      "n_manip": 805
+    }
+  },
+  "decomposition": {
+    "overall_multiplier_A_over_C": {
+      "point": 1.6910973084886127,
+      "ci": [
+        1.5890706592268808,
+        1.802483660130719
+      ]
+    },
+    "best_third_effect_A_over_B": {
+      "point": 1.7188552188552186,
+      "ci": [
+        1.6298342498062377,
+        1.814793901695913
+      ]
+    },
+    "field_group_effect_B_over_C": {
+      "point": 0.9838509316770186,
+      "ci": [
+        0.9194557879900597,
+        1.0557063929375516
+      ]
+    }
+  }
+}

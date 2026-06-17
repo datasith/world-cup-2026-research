@@ -275,3 +275,46 @@ qualitative conclusion never flips.
 **Budget decision:** the freeze uses **≥400 snapshots, ≥150 inner** — convergence-justified (point
 estimate flat to ±0.03 and CI width <0.13 by N=400; demonstrated feasible). PREREGISTRATION §3 updated
 accordingly, resolving the ≥60-vs-30 inconsistency. This closes R3's Monte-Carlo-budget critique.
+
+---
+
+## R9 — Factorial decomposition: the multiplier is the *rule*, not the *size* (2026-06-17)
+
+**Trigger:** reviewers R1 & R2 (finding C3) noted the headline multiplier ρ(48)/ρ(32) conflates ≥4
+simultaneous changes — the best-third wildcard rule, the field size (32→48), the group count (8→12),
+and the draw — so it is **not causally identified** as an effect of "expansion." **Test:** a 3-arm
+factorial that isolates the best-third rule by holding the field, groups, and draw fixed and toggling
+*only* the advancement rule. Required `SPEC_48_TOP2` (real 48 field/12 groups, top-2 only → 24
+qualifiers) + bye-padded knockout brackets (`simulator._seed_bracket`). Artifact:
+`results/decomposition.json`.
+
+**Command:** `uv run python scripts/run_decomposition.py --snapshots 160 --inner 150 --margin 0.05`
+
+| Arm | Format (field / groups / rule) | ρ | cross-group share |
+|-----|--------------------------------|---:|------------------:|
+| A | 48 / 12 / top-2 **+ 8 best-thirds** (real, official draw) | 0.266 [0.258, 0.274] | **0.495** |
+| B | 48 / 12 / **top-2 only** (same field+groups+draw) | 0.155 [0.148, 0.161] | 0.000 |
+| C | 32 / 8 / top-2 (matched-strength baseline) | 0.157 [0.149, 0.166] | 0.000 |
+
+**Multiplicative decomposition** ρ(A)/ρ(C) = [ρ(A)/ρ(B)] × [ρ(B)/ρ(C)]:
+
+| Component | Ratio | 95% CI | Meaning |
+|-----------|------:|:------:|---------|
+| Overall multiplier ρ(A)/ρ(C) | **1.69** | [1.59, 1.80] | the headline number |
+| **Best-third rule** ρ(A)/ρ(B) | **1.72** | [1.63, 1.81] | **field/groups/draw held fixed** |
+| Field + group-count ρ(B)/ρ(C) | 0.98 | [0.92, 1.06] | both top-2-only; CI **spans 1.0** |
+
+**Reading — this is the identification result the thesis needs:**
+- The manipulability increase is attributable **almost entirely to the best-third wildcard rule**
+  (1.72×), *not* to having more teams or more groups: the pure field-size + group-count effect is
+  **0.98 [0.92, 1.06] — statistically indistinguishable from no effect**.
+- The **cross-group mechanism is created solely by the rule**: cross-group share is **49%** with
+  best-thirds but **identically 0%** in both top-2-only arms (B and C). Expanding the field without
+  the wildcard rule produces *no* simultaneity-irreducible manipulability.
+- The official-draw multiplier (R8: 1.64; here 1.69) is therefore best read as a **case study**; the
+  **identified causal quantity is the rule effect, 1.72**. This directly answers C3: "expansion" per
+  se is not the cause — the best-third advancement *rule* is.
+
+**Net:** strongest single result for the paper's mechanism claim — it converts "expansion correlates
+with manipulability" into "the best-third rule *causes* it, and uniquely creates the cross-group,
+simultaneity-proof variety." Closes reviewer finding C3.

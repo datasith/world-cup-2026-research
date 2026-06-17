@@ -25,9 +25,10 @@ Every reported number (ρ, multiplier, cross-group share, named P(manip)) is a f
 `THEORY.md §4` labels it *Conjecture* with an undefined breadth threshold (`§6` open); the title says expansion "breaks the strategyproofness of the group stage." R1 notes it isn't even obviously an impossibility as stated.
 **Fix (R1's recommended path):** prove the *restricted, provable* theorem — "any advancement rule whose advancement of *t* depends on a comparison with teams outside *t*'s simultaneously-played match admits a manipulable state simultaneity cannot remove; M₄₈ satisfies the antecedent, M₃₂ does not." Then either keep the trilemma as an explicitly labeled conjecture or soften the title to a measured claim.
 
-### C3. The expansion multiplier is **not causally identified** — **R1 (major), R2 (major)**
+### C3. The expansion multiplier is **not causally identified** — **R1 (major), R2 (major)** — ✅ **Done (R9)**
 The 1.69 mixes ≥4 changes at once: best-third rule + 12-group structure + qualification math + (R3 arm) real-draw-48 vs synthetic-matched-32.
 **Fix:** factorial decomposition — add a within-48 arm toggling **only** the best-third rule (12 groups, top-2 vs top-2+best-third), and match the draw-generation process across formats. Report what fraction of the multiplier the cross-group rule specifically explains. Treat the official-draw number as a case study, not the causal effect.
+**Done (RESULTS.md R9):** added `SPEC_48_TOP2` + bye-bracket support and a 3-arm decomposition (A: 48 top-2+best-third / B: 48 top-2-only, same field+groups+draw / C: 32 baseline). The multiplier decomposes multiplicatively: **best-third-rule effect ρ(A)/ρ(B) = 1.72 [1.63, 1.81]** carries essentially the whole multiplier (1.69), while the **field+group-count effect ρ(B)/ρ(C) = 0.98 [0.92, 1.06] is indistinguishable from no effect**. Cross-group share: **49% with the rule, 0% without** (arms B and C). The identified causal quantity is the rule effect, not "expansion" per se.
 
 ### C4. Pre-registration integrity / leakage — **R1 (blind spot), R2 (critical), R3 (inconsistency)**
 R1–R7 contain extensive exploratory runs, named predictions, thresholds, and even a CI-method change *before* the OSF freeze commit/DOI exist; H1/H2 are "confirmed by a frozen computation," and H2 is partly tautological (M₃₂ has no best-third pool by construction).
@@ -111,7 +112,9 @@ Likelihoods: **R1 0.50 (med)** · **R2 0.78 (med)** · **R3 0.85 (high)**. All t
 **Do for the paper to be theory-credible (the hard core):**
 8. Pin `V_adv` with one definition + sensitivity (C1).
 9. Prove the restricted cross-group impossibility proposition; relabel/soften the trilemma + title (C2).
-10. Factorial decomposition isolating the best-third rule (C3).
+10. ✅ **Done (R9)** — factorial decomposition isolating the best-third rule: the rule carries the
+    multiplier; field-size + group-count alone contributes ~nothing; cross-group manipulability
+    exists only with the rule.
 11. Implement + test exact FIFA R32 bracket assignment and tie-breaks (C5); add information-regime modeling (C6).
 12. Model calibration (Dixon–Coles ρ, posterior propagation, calibration metrics) (C7).
 13. Engage the prior-art literature directly (C9).

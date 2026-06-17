@@ -45,9 +45,19 @@ def play_group(teams: list[str], sampler: MatchSampler, rng: np.random.Generator
     return GroupOutcome(rank_group(teams, results, rng=rng), results)
 
 
+BYE = "BYE"
+
+
 def _knockout_winner(a: str, b: str, sampler: MatchSampler,
                      rng: np.random.Generator) -> str:
-    """Single elimination match; ties broken by a strength-weighted shootout."""
+    """Single elimination match; ties broken by a strength-weighted shootout.
+
+    A ``BYE`` opponent means the real team advances without playing (used when the
+    qualifier count is not a power of two, e.g. the 48/top-2-only decomposition arm)."""
+    if a == BYE:
+        return b
+    if b == BYE:
+        return a
     hg, ag = sampler.sample(a, b, neutral=True, rng=rng)
     if hg > ag:
         return a
@@ -62,16 +72,23 @@ def _seed_bracket(qualifiers: list[str]) -> list[str]:
 
     ``qualifiers`` is assumed in overall seeding order (strongest first); the
     returned order pairs adjacent slots (0,1),(2,3),... so the top seed meets the
-    bottom seed first and seeds 1 and 2 can only meet in the final. ``len`` must
-    be a power of two (32 and 16 qualifiers both are). The official cross-group
-    R32 pairing table can replace this for the freeze.
+    bottom seed first and seeds 1 and 2 can only meet in the final. When the count
+    is not a power of two (e.g. 24 in the 48/top-2-only decomposition arm) the
+    bracket is padded to the next power of two with ``BYE`` slots placed opposite
+    the top seeds, so the strongest teams get the first-round byes. The official
+    cross-group R32 pairing table can replace this for the freeze.
     """
     n = len(qualifiers)
+    if n == 0:
+        return []
+    size = 1
+    while size < n:
+        size *= 2
     seeds = [0]
-    while len(seeds) < n:
+    while len(seeds) < size:
         m = len(seeds) * 2
         seeds = [s for pair in ((x, m - 1 - x) for x in seeds) for s in pair]
-    return [qualifiers[i] for i in seeds]
+    return [qualifiers[i] if i < n else BYE for i in seeds]
 
 
 def play_knockout(qualifiers_seeded: list[str], sampler: MatchSampler,

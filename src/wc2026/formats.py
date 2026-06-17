@@ -135,6 +135,10 @@ class FormatSpec:
 
 SPEC_32 = FormatSpec("WC1998-2022", 32, 8, 4, advance_top=2, best_thirds=0)
 SPEC_48 = FormatSpec("WC2026", 48, 12, 4, advance_top=2, best_thirds=8)
+# Counterfactual for the factorial decomposition (RESULTS R9): the real 48-team field
+# and groups, but ONLY the top 2 advance (no best-third wildcards) -> 24 qualifiers,
+# bracket padded with byes. Isolates the best-third rule from field/group-count effects.
+SPEC_48_TOP2 = FormatSpec("WC2026-top2only", 48, 12, 4, advance_top=2, best_thirds=0)
 
 
 def assign_groups(teams_by_seed: list[str], spec: FormatSpec) -> list[list[str]]:
