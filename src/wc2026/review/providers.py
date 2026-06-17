@@ -46,19 +46,20 @@ class AnthropicProvider:
         except ImportError as e:
             raise ProviderError("pip install anthropic") from e
         client = anthropic.Anthropic(api_key=key)
+        # Rely on prompt-instructed JSON + defensive parsing: newer models (opus-4-8)
+        # reject assistant-prefill, so we cannot force the leading "{" that way.
+        sys_prompt = system + ("\n\nReturn ONLY a single JSON object, no prose." if json_mode else "")
         messages = [{"role": "user", "content": user}]
-        if json_mode:
-            # prefill the assistant turn with "{" so the model must emit a JSON object
-            messages.append({"role": "assistant", "content": "{"})
-        try:
-            msg = client.messages.create(
-                model=model, max_tokens=max_tokens, temperature=temperature,
-                system=system, messages=messages,
-            )
-        except Exception as e:  # noqa: BLE001 - surface any SDK/API failure uniformly
-            raise ProviderError(f"anthropic call failed: {e}") from e
-        text = "".join(b.text for b in msg.content if getattr(b, "type", None) == "text")
-        return ("{" + text) if json_mode else text
+        base = dict(model=model, max_tokens=max_tokens, system=sys_prompt, messages=messages)
+        # Newer models (e.g. opus-4-8) deprecate `temperature`; try with it, then without.
+        for kwargs in ({**base, "temperature": temperature}, base):
+            try:
+                msg = client.messages.create(**kwargs)
+            except Exception as e:  # noqa: BLE001 - surface any SDK/API failure uniformly
+                if "temperature" in str(e).lower() and kwargs is not base:
+                    continue
+                raise ProviderError(f"anthropic call failed: {e}") from e
+            return "".join(b.text for b in msg.content if getattr(b, "type", None) == "text")
 
 
 class OpenAIProvider:
