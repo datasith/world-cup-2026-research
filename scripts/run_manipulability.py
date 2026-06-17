@@ -46,15 +46,20 @@ def md12_snapshot(groups, sampler, rng):
 
 def evaluate_format(spec, field, strength_rank, sampler, n_snapshots, n_inner,
                     min_delta, seed, groups=None):
-    """Return per-state (manipulable, cross_group) boolean arrays for the format.
+    """Return per-state (manipulable, cross_group, snapshot_id) arrays for the format.
+
+    ``snapshot_id`` records which Monte-Carlo snapshot each state came from. States
+    within a snapshot share the same simulated MD1-2 results and are therefore
+    correlated -- the bootstrap must resample *snapshots* (clusters), not individual
+    states, to avoid understating the CIs.
 
     ``groups`` lets the caller pass the official draw; otherwise teams are
     snake-drafted from ``field`` (matched-strength baseline)."""
     rng = np.random.default_rng(seed)
     if groups is None:
         groups = assign_groups(field, spec)
-    manip, cross = [], []
-    for _ in range(n_snapshots):
+    manip, cross, snap = [], [], []
+    for s in range(n_snapshots):
         fixed = md12_snapshot(groups, sampler, rng)
         eng = SimEngine(groups, spec, sampler, strength_rank,
                         n_inner=n_inner, seed=int(rng.integers(1 << 30)))
@@ -65,28 +70,50 @@ def evaluate_format(spec, field, strength_rank, sampler, n_snapshots, n_inner,
                 r = eng.assess(team, state, min_delta=min_delta)
                 manip.append(r.manipulable)
                 cross.append(r.cross_group and r.manipulable)
-    return np.array(manip, dtype=float), np.array(cross, dtype=float)
+                snap.append(s)
+    return (np.array(manip, dtype=float), np.array(cross, dtype=float),
+            np.array(snap, dtype=int))
 
 
-def bootstrap_ci(x, stat=np.mean, n_boot=2000, alpha=0.05, rng=None):
+def _by_cluster(x, snap):
+    """Group values by snapshot id -> list of per-snapshot arrays (the resample units)."""
+    return [x[snap == s] for s in np.unique(snap)]
+
+
+def bootstrap_ci(x, snap, stat=np.mean, n_boot=2000, alpha=0.05, rng=None):
+    """Cluster bootstrap: resample whole snapshots (clusters), then pool their states.
+
+    Propagates the between-snapshot variance (the dominant source), which the naive
+    per-state bootstrap ignored.
+    """
     rng = rng or np.random.default_rng(0)
-    n = len(x)
-    boots = [stat(x[rng.integers(0, n, n)]) for _ in range(n_boot)]
+    clusters = _by_cluster(x, snap)
+    k = len(clusters)
+    boots = []
+    for _ in range(n_boot):
+        idx = rng.integers(0, k, k)
+        pooled = np.concatenate([clusters[i] for i in idx])
+        boots.append(stat(pooled))
     lo, hi = np.percentile(boots, [100 * alpha / 2, 100 * (1 - alpha / 2)])
     return stat(x), lo, hi
 
 
-def ratio_ci(num, den, n_boot=2000, alpha=0.05, rng=None):
-    """Bootstrap CI for rho(num)/rho(den) (manipulability-rate ratio)."""
+def ratio_ci(num, snum, den, sden, n_boot=2000, alpha=0.05, rng=None):
+    """Cluster-bootstrap CI for rho(num)/rho(den) (manipulability-rate ratio).
+
+    Resamples snapshots within each (independent) format arm.
+    """
     rng = rng or np.random.default_rng(1)
-    nn, nd = len(num), len(den)
+    cn, cd = _by_cluster(num, snum), _by_cluster(den, sden)
+    kn, kd = len(cn), len(cd)
     boots = []
     for _ in range(n_boot):
-        rn = num[rng.integers(0, nn, nn)].mean()
-        rd = den[rng.integers(0, nd, nd)].mean()
+        rn = np.concatenate([cn[i] for i in rng.integers(0, kn, kn)]).mean()
+        rd = np.concatenate([cd[i] for i in rng.integers(0, kd, kd)]).mean()
         boots.append(rn / rd if rd > 0 else np.inf)
     point = num.mean() / den.mean() if den.mean() > 0 else np.inf
-    lo, hi = np.percentile([b for b in boots if np.isfinite(b)], [100 * alpha / 2, 100 * (1 - alpha / 2)])
+    finite = [b for b in boots if np.isfinite(b)]
+    lo, hi = np.percentile(finite, [100 * alpha / 2, 100 * (1 - alpha / 2)])
     return point, lo, hi
 
 
@@ -117,23 +144,24 @@ def main():
 
     print("[2/3] evaluating 32-team format ...")
     f32, r32 = build_field(model, 32)
-    m32, c32 = evaluate_format(SPEC_32, f32, r32, sampler, args.snapshots, args.inner,
-                               args.margin, args.seed)
+    m32, c32, s32 = evaluate_format(SPEC_32, f32, r32, sampler, args.snapshots, args.inner,
+                                    args.margin, args.seed)
 
     print("[3/3] evaluating 48-team format ...")
-    m48, c48 = evaluate_format(SPEC_48, field48, r48, sampler, args.snapshots, args.inner,
-                               args.margin, args.seed + 1, groups=official_groups)
+    m48, c48, s48 = evaluate_format(SPEC_48, field48, r48, sampler, args.snapshots, args.inner,
+                                    args.margin, args.seed + 1, groups=official_groups)
 
     boot = np.random.default_rng(args.seed + 99)
-    print("\n=== manipulability (final-matchday decisions; 95% bootstrap CIs) ===")
-    print(f"snapshots={args.snapshots} inner={args.inner} margin={args.margin}")
-    for label, m, c in (("32-team", m32, c32), ("48-team", m48, c48)):
-        rho, rlo, rhi = bootstrap_ci(m, rng=boot)
+    print("\n=== manipulability (final-matchday decisions; 95% cluster-bootstrap CIs) ===")
+    print(f"snapshots={args.snapshots} inner={args.inner} margin={args.margin} "
+          f"(CIs resample whole snapshots)")
+    for label, m, c, s in (("32-team", m32, c32, s32), ("48-team", m48, c48, s48)):
+        rho, rlo, rhi = bootstrap_ci(m, s, rng=boot)
         # cross-group share = P(cross-group | manipulable)
         cg = c.sum() / m.sum() if m.sum() > 0 else 0.0
         print(f"  {label}: rho={rho:.3f} [{rlo:.3f}, {rhi:.3f}]  "
               f"cross_group_share={cg:.3f}  n_states={len(m)}  n_manip={int(m.sum())}")
-    pt, lo, hi = ratio_ci(m48, m32, rng=boot)
+    pt, lo, hi = ratio_ci(m48, s48, m32, s32, rng=boot)
     print(f"  EXPANSION MULTIPLIER rho(48)/rho(32) = {pt:.2f} [{lo:.2f}, {hi:.2f}]")
 
 
