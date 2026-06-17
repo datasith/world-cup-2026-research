@@ -1,0 +1,30 @@
+{
+  "_comment": "LLM-as-judge reviewer panel. Each reviewer = persona (prompt-as-data) + provider + model. Model ids and API keys come from the environment; defaults below are overridable via REVIEW_<PROVIDER>_MODEL env vars (the OpenAI/Gemini defaults are placeholders -- set them to the latest ids you have access to). API keys: ANTHROPIC_API_KEY, OPENAI_API_KEY, GOOGLE_API_KEY.",
+  "defaults": {
+    "max_tokens": 4096,
+    "temperature": 0.2
+  },
+  "reviewers": [
+    {
+      "id": "theorist",
+      "name": "R1 - The Theorist",
+      "persona": "personas/theorist.md",
+      "provider": "anthropic",
+      "model": "claude-opus-4-8"
+    },
+    {
+      "id": "domain_skeptic",
+      "name": "R2 - The Domain Skeptic",
+      "persona": "personas/domain_skeptic.md",
+      "provider": "openai",
+      "model": "gpt-5.1"
+    },
+    {
+      "id": "methodologist",
+      "name": "R3 - The Methodologist",
+      "persona": "personas/methodologist.md",
+      "provider": "google",
+      "model": "gemini-2.5-pro"
+    }
+  ]
+}

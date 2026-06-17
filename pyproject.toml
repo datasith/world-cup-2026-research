@@ -18,6 +18,8 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = ["pytest", "ruff", "jupyterlab"]
+# LLM-as-judge reviewer panel (scripts/run_review.py). Install: uv pip install -e '.[review]'
+review = ["anthropic", "openai", "google-genai"]
 
 [build-system]
 requires = ["hatchling"]

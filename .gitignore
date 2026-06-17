@@ -35,3 +35,6 @@ paper/main.pdf
 
 # transient run logs
 results/_*.log
+
+# generated reviewer-panel run outputs
+results/reviews/
