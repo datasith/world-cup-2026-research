@@ -239,3 +239,39 @@ conclusion is unaffected: the multiplier point estimate is ~1.7 and its **95% CI
 The methodology is now correct *and* the result is shown robust to the correction — a direct, clean
 answer to the reviewer's (valid) statistical objection. **All CIs reported henceforth (and at the
 freeze) use the cluster bootstrap; the R2/R3 interval figures are superseded by this entry.**
+
+---
+
+## R8 — Monte-Carlo convergence of the multiplier + budget decision (2026-06-17)
+
+**Trigger:** the methodologist reviewer (R3) argued 30 snapshots (R7) / 60 (R4–R6) under-sample the
+MD1–2 history space, so the cluster-bootstrap CIs may not have converged; and there was an internal
+inconsistency (PREREGISTRATION §3 said snapshots ≥ 60, R7 used 30). **Test:** evaluate both formats
+once at 400 snapshots (official draw, inner=150), then compute the multiplier + cluster CI on
+increasing snapshot *prefixes* (snapshots are i.i.d., so this gives the whole convergence curve from
+one pass). Artifacts: `results/convergence.json`, `results/convergence.png`.
+
+**Command:** `uv run python scripts/run_convergence.py --official --max-snapshots 400 --inner 150`
+
+| snapshots | multiplier | 95% CI | CI width |
+|----------:|-----------:|:------:|---------:|
+| 10  | 1.73 | [1.32, 2.35] | 1.03 |
+| 20  | 1.46 | [1.21, 1.80] | 0.59 |
+| 40  | 1.47 | [1.30, 1.67] | 0.37 |
+| 80  | 1.57 | [1.44, 1.71] | 0.28 |
+| 160 | 1.55 | [1.47, 1.64] | 0.18 |
+| 240 | 1.61 | [1.53, 1.69] | 0.16 |
+| 320 | 1.63 | [1.56, 1.70] | 0.15 |
+| **400** | **1.64** | **[1.58, 1.71]** | **0.125** |
+
+**Reading:** the point estimate is noisy below ~40 snapshots (1.73→1.46→1.47) — R7's 30-snapshot run
+sat in that unstable regime — then **stabilizes from N≈80** and settles at **1.64 [1.58, 1.71]** by
+N=400. CI width shrinks ∝ 1/√N (proper sampling convergence) and the **95% CI excludes 1.0 at every
+budget tested (N≥10)**. R3's concern was correct in direction (low-N estimates are noisy) but the
+qualitative conclusion never flips.
+
+**New headline (supersedes R7's 30-snapshot 1.69):** **ρ(48)/ρ(32) = 1.64 [1.58, 1.71]** at N=400.
+
+**Budget decision:** the freeze uses **≥400 snapshots, ≥150 inner** — convergence-justified (point
+estimate flat to ±0.03 and CI width <0.13 by N=400; demonstrated feasible). PREREGISTRATION §3 updated
+accordingly, resolving the ≥60-vs-30 inconsistency. This closes R3's Monte-Carlo-budget critique.

@@ -49,15 +49,18 @@ they do **not** depend on how teams behave). H3 adds named, in-tournament predic
   Official 2026 draw: `data/draw_2026.json`. Official matchday schedule used for MD ordering.
 - **Determinism:** all runs use fixed seeds (default `--seed 20260616`); the frozen artifact
   records its seed, snapshot, inner, and margin parameters in its `meta` block.
-- **Monte-Carlo budget at freeze:** snapshots ≥ 60, inner ≥ 150 (raise if a named match's
-  P(manip) 95% bootstrap CI half-width exceeds 0.05).
+- **Monte-Carlo budget at freeze:** snapshots ≥ 400, inner ≥ 150 — convergence-justified: the
+  expansion-multiplier point estimate is flat to ±0.03 and its 95% CI half-width < 0.07 by 400
+  snapshots (RESULTS.md R8; `results/convergence.png`). Raise further if a named match's P(manip)
+  95% cluster-bootstrap CI half-width exceeds 0.05. *(Amended 2026-06-17 from "≥ 60"; see §9.)*
 
 ## 4. Estimands and analysis plan
 
 1. **ρ(M):** P[final-matchday state is manipulable for some team], per format.
 2. **Cross-group share:** fraction of manipulable states whose dependency routes through the
    best-third pool (measured, not assumed — see RESULTS.md R2 vs R1).
-3. **Expansion multiplier:** ρ(M₄₈)/ρ(M₃₂), with 95% CI by bootstrap over states.
+3. **Expansion multiplier:** ρ(M₄₈)/ρ(M₃₂), with 95% CI by **cluster bootstrap over snapshots**
+   (states within a snapshot are correlated; see RESULTS.md R7).
 4. **Per-match / per-team P(manipulable) and P(cross-group)** for the real 2026 MD3.
 
 **Robustness (pre-committed):** every headline number is reported under **both** the Elo and
@@ -90,7 +93,7 @@ conditions on real MD1+MD2 results so that only MD3 outcomes remain uncertain.
   command under both models; (c) commit the artifact + this protocol; (d) push and create the
   OSF registration referencing the freeze commit hash; (e) record hash + DOI in §0 header.
 - **Locked command:**
-  `uv run python scripts/run_r4_named.py --model {elo,poisson} --snapshots 60 --inner 150 --margin 0.05`
+  `uv run python scripts/run_r4_named.py --model {elo,poisson} --snapshots 400 --inner 150 --margin 0.05`
 
 ## 7. Scoring rule (fixed before data)
 
@@ -127,4 +130,8 @@ illustration, framed as illustration, not as the test.
 
 Any change after 2026-06-16 is dated and justified here; pre-data text above is immutable.
 
-- _(none yet)_
+- **2026-06-17:** §3 Monte-Carlo budget raised from "snapshots ≥ 60" to "≥ 400" and the §4
+  multiplier CI method changed from "bootstrap over states" to "cluster bootstrap over snapshots."
+  Justification: a convergence study (RESULTS.md R8) showed low-snapshot estimates are noisy and the
+  per-state bootstrap mis-specifies the resampling unit. Both changes are pre-MD2 (no MD2/MD3 outcome
+  data exist yet) and only make the analysis more conservative; no hypothesis or prediction changed.

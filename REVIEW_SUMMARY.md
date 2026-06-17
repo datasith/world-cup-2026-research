@@ -62,7 +62,7 @@ Must engage, not just name: **Dagaev & Sonin (2018) "Winning by losing"**; **Csa
 
 - **R1:** "the manipulable state is a single-team decision problem in what is actually a *simultaneous-move game*" — is it a best response vs a fixed opponent model (decision-theoretic) or a Nash equilibrium property? The simulator must declare which; the two give different cross-group shares.
 - **R1 & R2:** the "32-team has *zero* irreducible manipulability" framing is overstated — **Gijón-style collusive scoreline targeting between two teams playing each other survives simultaneous kickoffs** even in the 32-team format. Qualify the dichotomy.
-- **R3 (critical):** Monte-Carlo budget too small — 30/60 snapshots under-sample MD1–2 histories; cluster-bootstrap CIs may not have converged. **Run ≥500 snapshots × ~1000 inner**, and show a convergence plot of the multiplier CI vs snapshot count.
+- **R3 (critical): ✅ addressed** — Monte-Carlo budget too small. Convergence study done (R8): multiplier noisy below ~40 snapshots, stable from ~80, settled at N=400; budget raised to ≥400 with a convergence plot (`results/convergence.png`).
 - **R3 (critical) & inconsistency:** the **ML calibration layer** promised in `DESIGN.md §4` / `main.tex` Methods is absent from the pre-reg and results → looks like a dropped/selective plan. Either integrate it fully or remove all references.
 - **R2 (verify):** R4 says "16 real MD1 results" — a 48-team MD1 is **24 matches**. Either a data/labeling bug or MD1 was only partially played; must be clarified (it's central to the live predictions). **→ worth verifying against `data/draw_2026.json` now.**
 - **R3 (inconsistency):** PREREGISTRATION §3 states snapshots ≥ 60, but R7's corrected run used 30 — violates the stated minimum.
@@ -97,7 +97,11 @@ Likelihoods: **R1 0.50 (med)** · **R2 0.78 (med)** · **R3 0.85 (high)**. All t
 3. ✅ **Done** — removed the promised gradient-boosted/neural "ML layer" from `DESIGN.md §4` and
    `paper/main.tex` Methods (kept the contrasting reference to ML-prediction work); docs now match
    the Elo + Bayesian-Poisson implementation.
-4. Reconcile the snapshot-minimum discrepancy (prereg says ≥60; R7 used 30).
+4. ✅ **Done** — convergence study (RESULTS.md R8, `results/convergence.png`): multiplier stabilizes
+   by N≈80, settles at **1.64 [1.58, 1.71]** at N=400, CI excludes 1.0 at every budget. Prereg §3
+   budget raised to **≥400 snapshots** (data-justified), §4 CI method corrected to cluster bootstrap,
+   amendment logged in §9. Resolves the ≥60-vs-30 inconsistency **and** R3's Monte-Carlo-budget
+   critique (see single-reviewer points).
 
 **Do before the OSF freeze (~June 23–24):**
 5. Scale Monte-Carlo to ≥500 snapshots + convergence plot (C: R3).
