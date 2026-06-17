@@ -32,3 +32,6 @@ paper/main.pdf
 
 # OS / editor
 .DS_Store
+
+# transient run logs
+results/_*.log
