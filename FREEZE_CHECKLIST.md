@@ -49,7 +49,7 @@ Tag + push **before** registering, so the OSF record can point at an existing pu
 4. In the registration form, paste / attach:
    - the full text of `PREREGISTRATION.md`,
    - the **freeze commit hash** from step 2 and the GitHub URL at that commit, e.g.
-     `https://github.com/datasith/world-cup-2026/tree/<hash>`,
+     `https://github.com/datasith/worldcup-2026-research/tree/<hash>`,
    - the two frozen artifact files (the named predictions).
 5. Set an **embargo** only if you want it private until publication; otherwise register public so
    the timestamp is immediately verifiable.
