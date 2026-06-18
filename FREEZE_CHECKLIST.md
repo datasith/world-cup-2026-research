@@ -41,25 +41,26 @@ git tag freeze-2026-06-17 && git push --tags   # optional, human-friendly handle
 
 Tag + push **before** posting, so arXiv/Zenodo can point at an existing public commit.
 
-## 3. Establish the public timestamp (arXiv + Zenodo)
+## 3. Establish the public timestamp
 
-### 3a. arXiv predictions note (the primary, backdate-proof timestamp)
-1. Build `paper/arxiv_predictions.tex` → PDF (`pdflatex arxiv_predictions.tex`); confirm it names the
-   robust-set matches, the scoring rule, the freeze commit, and the two SHA-256 digests.
-2. Submit at <https://arxiv.org/submit> — category **stat.AP** (cross-list **physics.soc-ph** and/or
-   **econ.GN**). Source upload (the `.tex`) is preferred over PDF-only.
-3. arXiv moderation can take 1–2 business days; submit **now** so it posts before MD3 (~June 23–27).
-   The arXiv submission datestamp is the unfakeable public timestamp.
-
-### 3b. Zenodo DOI (immutable archived snapshot of the artifacts)
+### 3a. Zenodo DOI (PRIMARY — immutable archived snapshot + citable DOI, no endorsement needed)
 1. One-time: sign in at <https://zenodo.org> with GitHub/ORCID → **Settings → GitHub** → toggle the
-   repo `datasith/world-cup-2026-research` **ON** (this installs the release webhook).
-2. Edit `.zenodo.json` to fill your name + ORCID (currently placeholders), commit, push.
-3. Cut a GitHub release **on the freeze tag**: `gh release create freeze-2026-06-18 --title "Freeze: pre-registered MD3 predictions" --notes "see PREREGISTRATION.md"` (or via the GitHub UI). Zenodo
-   auto-archives that release and mints a **version DOI** (plus a concept DOI).
-   - Requires the repo to be **public**. If it must stay private, instead use Zenodo **New upload**
-     and attach `results/r4_freeze_elo.json`, `results/r4_freeze_poisson.json`, `PREREGISTRATION.md`
-     manually → publish → DOI.
+   repo `datasith/world-cup-2026-research` **ON** (installs the release webhook). [done]
+2. Ensure `.zenodo.json` (name, ORCID, license CC-BY-4.0) is committed and pushed. [done]
+3. Cut a GitHub release at the current HEAD (which carries `.zenodo.json` and the frozen artifacts):
+   `gh release create v1.0-freeze --title "Freeze: pre-registered MD3 predictions" --notes "Frozen MD3 manipulability predictions; see PREREGISTRATION.md and RESULTS.md R11. Freeze tag freeze-2026-06-18, commit ea30863."`
+   Zenodo auto-archives the release and mints a **version DOI** (plus a concept DOI). The DOI's
+   snapshot contains the byte-identical frozen artifacts; integrity is anchored by tag
+   `freeze-2026-06-18` + the SHA-256 digests.
+   - Requires the repo to be **public**. If private, use Zenodo **New upload** instead and attach
+     `results/r4_freeze_elo.json`, `results/r4_freeze_poisson.json`, `PREREGISTRATION.md` → publish.
+
+### 3b. arXiv companion note (SECONDARY/OPTIONAL — for reach)
+1. Build `paper/arxiv_predictions.tex` → PDF; confirm it names the robust-set matches, the scoring
+   rule, the freeze commit, and the two SHA-256 digests.
+2. Submit at <https://arxiv.org/submit> — primary **stat.AP**, cross-list **cs.GT**, **physics.soc-ph**.
+   Register with the `@caltech.edu` email for auto-endorsement; if endorsement is required and
+   inconvenient, skip — the Zenodo DOI already provides the timestamp.
 
 ## 4. Record the identifiers back in the repo
 
@@ -84,10 +85,11 @@ git add PREREGISTRATION.md paper/main.tex && git commit -m "Record arXiv id + Ze
 ### Notes / caveats to keep visible
 - Freezing after MD1 means **MD2 and MD3 are both unobserved** — predictions are a genuine
   two-matchday-ahead forecast (stronger anti-leakage; wider intervals). Disclosed in §6.
-- The **arXiv datestamp** is the primary proof the predictions predate the outcomes (third-party,
-  cannot be backdated); the **Zenodo DOI** gives a citable, immutable artifact snapshot; the **signed
-  git tag + SHA-256 digests** are the machine-verifiable companions. We deliberately do not use OSF
-  (low adoption in this field); the integrity guarantee does not depend on the venue.
+- The **Zenodo DOI** is the primary public timestamp: a third-party, citable, immutable snapshot with
+  a registration date that cannot be backdated, and it needs no endorsement. The **signed git tag +
+  SHA-256 digests** are the machine-verifiable companions. An **arXiv note is secondary** (reach + an
+  extra independent datestamp) but can require endorsement, so it is not on the critical path. We
+  deliberately do not use OSF (low adoption in this field); integrity does not depend on the venue.
 - Note for submission: under single-blind review (Nature default) author identity is visible anyway,
   so a public arXiv note is not a conflict; if opting into double-blind, anonymize the manuscript and
   be aware the public note makes true anonymity imperfect (still permitted).

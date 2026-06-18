@@ -113,7 +113,7 @@ See `data/README.md` for the source catalog and licensing notes.
 ## 6. Open decisions (for the user)
 1. Anchor angle: A-lead triad (recommended) vs. single sharp angle?
 2. Primary target journal: design-for Nature Human Behaviour/PNAS (recommended) vs. flagship-first?
-3. Public **prospective time-stamp** of the live predictions via a dated arXiv note + signed git tag
-   + Zenodo DOI, rather than OSF (low adoption in our field); the content hashes give integrity. (Big
-   credibility win.)
+3. Public **prospective time-stamp** of the live predictions via a Zenodo DOI + signed git tag
+   (primary), with a dated arXiv note as secondary/optional reach, rather than OSF (low adoption in our
+   field); the content hashes give integrity. (Big credibility win.)
 4. Strength backbone: Elo-first (fast) vs. Bayesian Poisson-first (more defensible)?
