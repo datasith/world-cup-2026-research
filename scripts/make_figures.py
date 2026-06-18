@@ -37,6 +37,14 @@ def _load(name):
     return json.loads((RES / name).read_text())
 
 
+def _save(fig, stem):
+    """Save both an editable SVG (for hand-editing) and a PDF (for the LaTeX build)."""
+    fig.tight_layout()
+    fig.savefig(OUT / f"{stem}.svg")
+    fig.savefig(OUT / f"{stem}.pdf")
+    plt.close(fig)
+
+
 def fig1_rates():
     d = _load("decomposition.json")["arms"]
     order = [("C", "32-team\n(top 2)"), ("B", "48-team\n(top 2 only)"), ("A", "48-team\n(+ best third)")]
@@ -64,7 +72,7 @@ def fig1_rates():
     for xi, v in zip(x, xg):
         ax2.text(xi, v + 0.012, f"{v:.0%}", ha="center", fontsize=9)
     ax2.set_ylim(0, max(0.6, max(xg) * 1.25))
-    fig.tight_layout(); fig.savefig(OUT / "fig1_rates.pdf"); plt.close(fig)
+    _save(fig, "fig1_rates")
 
 
 def fig2_decomposition():
@@ -93,7 +101,7 @@ def fig2_decomposition():
         ax.text(p, yi + 0.18, f"{p:.2f}", ha="center", fontsize=9)
     ax.set_xlim(0.8, max(pts) + max(hi) + 0.2)
     ax.legend(loc="lower right", frameon=False, fontsize=8)
-    fig.tight_layout(); fig.savefig(OUT / "fig2_decomposition.pdf"); plt.close(fig)
+    _save(fig, "fig2_decomposition")
 
 
 def fig3_predictions():
@@ -121,7 +129,7 @@ def fig3_predictions():
     ax.set_title("Pre-registered MD3 predictions (frozen, official bracket)", fontsize=10, loc="left")
     ax.set_xlim(0, 1)
     ax.legend(loc="lower right", frameon=False, fontsize=8)
-    fig.tight_layout(); fig.savefig(OUT / "fig3_predictions.pdf"); plt.close(fig)
+    _save(fig, "fig3_predictions")
 
 
 def figS_convergence():
@@ -138,7 +146,7 @@ def figS_convergence():
     ax.set_ylabel("expansion multiplier")
     ax.set_title("Monte-Carlo convergence of the multiplier", fontsize=10, loc="left")
     ax.legend(frameon=False, fontsize=8)
-    fig.tight_layout(); fig.savefig(OUT / "figS_convergence.pdf"); plt.close(fig)
+    _save(fig, "figS_convergence")
 
 
 def main():
