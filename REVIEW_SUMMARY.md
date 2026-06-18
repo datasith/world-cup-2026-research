@@ -120,7 +120,15 @@ Likelihoods: **R1 0.50 (med)** · **R2 0.78 (med)** · **R3 0.85 (high)**. All t
 10. ✅ **Done (R9)** — factorial decomposition isolating the best-third rule: the rule carries the
     multiplier; field-size + group-count alone contributes ~nothing; cross-group manipulability
     exists only with the rule.
-11. Implement + test exact FIFA R32 bracket assignment and tie-breaks (C5); add information-regime modeling (C6).
-12. Model calibration (Dixon–Coles ρ, posterior propagation, calibration metrics) (C7).
-13. Engage the prior-art literature directly (C9).
-14. Write the actual manuscript (C10).
+11. ✅ **Done (C5)** official 2026 R32→final bracket (`bracket.py`) wired into the engine + tested;
+    ✅ **(C6)** information-regime declared in PREREGISTRATION §3 (static pre-match; live-info a
+    stated limitation). *Residual:* fair-play tiebreak not simulated (cards unmodelled); exact
+    495-table tie resolution within candidate sets.
+12. ⏳ **Partly (C7)** — calibration *limitation declared* + commitment to report Brier/log-loss/RPS
+    and a Dixon–Coles-ρ recheck (PREREGISTRATION §3). Implementation of ρ + posterior propagation
+    deferred to the paper revision (not freeze-critical; flagged honestly).
+13. ✅ **Done (C9)** — prior art added to `references.bib` (Dagaev & Sonin, Csató 2021, Pauly, Vong,
+    Kendall & Lenten, Guyon, Gibbard, Satterthwaite, Gneiting & Raftery) and cited in the intro.
+14. ⏳ **First draft (C10)** — `paper/main.tex` abstract/intro/results/discussion/methods written
+    from R1–R11 + theory §4.1 (replacing TODO scaffolding). Remaining: figures, frozen named-match
+    table (post-R11), DOIs, full-length polish.

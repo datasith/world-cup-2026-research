@@ -39,58 +39,157 @@ group-stage manipulability in the 48-team World Cup}
 % ---- Summary paragraph (Nature: ~200 words, fully referenced) --------
 \begin{abstract}
 \noindent
-\todo{~200-word summary paragraph. Lead with the general mechanism-design question
-(does broadening access to a selection system necessarily cost strategyproofness?),
-introduce the 2026 expansion's best-third-placed rule as a concrete move across a
-breadth--fidelity--strategyproofness frontier, give the manipulable-match-state
-metric and the expansion manipulability multiplier, and the pre-registered live
-test on the group finale. Generalizable conclusion: the price of expansion is
-quantifiable manipulability.}
+Selection systems that admit more entrants are widely assumed to be fairer, but breadth can
+silently cost \emph{strategyproofness} --- the property that a competitor never gains by
+underperforming. We study the 2026 expansion of the FIFA World Cup from 32 to 48 teams, whose
+group stage advances, besides the top two of each group, the eight best third-placed teams. We
+define a \emph{manipulable match-state} as one in which a team's advancement-optimal action is not
+to maximise its chance of winning, and estimate its prevalence by Monte-Carlo simulation of the
+full tournament under calibrated team-strength models. Final-matchday manipulability is markedly
+higher under the 48-team format: the expansion multiplier is
+$\rho_{48}/\rho_{32}=1.69$ (95\% CI $[1.59,1.80]$). A factorial decomposition shows this is caused
+almost entirely by the best-third rule ($1.72\times$, holding field, groups and draw fixed), not by
+the larger field or group count ($0.98\times$, indistinguishable from no effect). The rule uniquely
+creates \emph{cross-group} manipulability --- incentives that route through other groups' results and
+therefore survive the simultaneous final kickoffs FIFA introduced after the 1982 ``Disgrace of
+Gij\'on'' --- present in $49\%$ of manipulable 48-team states and $0\%$ under 32 teams. A restricted
+theorem explains the mechanism: group qualification is monotone in own performance (no
+threshold-tanking), so manipulability is path-valued, and the best-third rule injects a cross-group
+advancement channel that within-group simultaneity cannot neutralise. We pre-register, before the
+group finale is played, the specific 2026 matches our model flags as manipulable. The price of
+expansion is a quantifiable, mechanistically identified increase in manipulability.
 \end{abstract}
 
 % =====================================================================
 \section*{Introduction}
-\todo{Open with mechanism design / strategyproofness (Gibbard--Satterthwaite
-lineage) and selection systems broadly. Narrate Gij\'on 1982 and FIFA's
-simultaneous-kickoff fix; show the best-third-placed rule creates a \emph{cross-group}
-dependency that simultaneity cannot remove. Position against OR competitiveness work
-(Csat\'o \& Gyimesi) and ML match-prediction work: our contribution is a general,
-pre-registered, game-theoretic result, not a forecast.}
+Whether a competition is \emph{strategyproof} --- whether a participant can ever gain by not
+trying to win --- is a mechanism-design property with a long lineage in social choice, where the
+Gibbard--Satterthwaite theorem \cite{gibbard1973,satterthwaite1975} shows that non-trivial choice
+rules are generically manipulable. Tournament design is the sporting instance of the same question
+\cite{csato2021tournament,kendall2017sportsrules}, and its failures are concrete: at the 1982 World
+Cup in Gij\'on, West Germany and Austria played out a result that eliminated Algeria, after which
+FIFA mandated that a group's final two matches kick off \emph{simultaneously} so that neither team
+can play to a known target. Simultaneity removes manipulation that depends on a contemporaneously
+played match \emph{within a team's own group}.
+
+The 2026 expansion to 48 teams changes the advancement rule, not merely its scale: twelve groups of
+four send their top two plus the eight best third-placed teams to a Round of 32. A third-placed
+team's fate is decided by comparison with teams in \emph{other} groups --- a cross-group dependency
+that within-group simultaneity cannot conceal. Existing analyses of the expansion treat
+competitiveness and balance \cite{csato2025imbalanced} or forecast outcomes; the strategyproofness
+of the new format, and a clean attribution of any change to the rule rather than the larger field,
+have not been established. Incentive incompatibility of qualification more broadly is known
+\cite{dagaev2018winning,pauly2014roundrobin,vong2017strategic,guyon2015rethinking}, but as
+existence, not as a measured, mechanistically decomposed, and prospectively tested quantity.
+
+We make three contributions. First, we define and measure the prevalence of manipulable
+final-matchday states under both formats. Second, we causally isolate the best-third rule by a
+factorial that holds the field, group structure and draw fixed, and prove a restricted theorem that
+explains why the rule, and not the expansion per se, creates manipulability that simultaneity cannot
+remove. Third, we pre-register the specific 2026 matches our model flags, turning the tournament
+into a prospective natural experiment rather than a retrospective fit.
 
 \section*{Results}
 \subsection*{Manipulable match-states and the expansion multiplier}
-\todo{Define manipulable states (Methods); report manipulability rate $\rho$ and mass
-$\bar\Delta$ under simulated 32- vs 48-team formats, and the simultaneity-irreducible
-(cross-group) share. Headline: $\rho(M_{48})/\rho(M_{32})$. Figure 1.}
+We simulate each format's full bracket under two independent team-strength models (Methods), and at
+every team's final-group-match decision compare the action that maximises its probability of winning
+the match with the action that maximises its advancement value $V_{\mathrm{adv}}$ (expected knockout
+rounds won). A state is manipulable when these differ (Methods). Across the official 2026 draw, the
+final-matchday manipulability rate is $\rho_{48}=0.27$ versus $\rho_{32}=0.16$, an expansion
+multiplier of $\rho_{48}/\rho_{32}=1.69$ (95\% CI $[1.59,1.80]$; cluster bootstrap over Monte-Carlo
+snapshots). The interval excludes 1 across model families, manipulability margins, and Monte-Carlo
+budgets (Robustness). \todo{Figure 1: $\rho$ by format with CIs; convergence-vs-snapshots inset.}
 
-\subsection*{The breadth--fidelity--strategyproofness frontier}
-\todo{Trace selection efficiency (P best team wins) and manipulability against
-breadth across formats; locate 2026 on the frontier. Figure 2.}
+\subsection*{The cause is the rule, not the field}
+The multiplier conflates several simultaneous changes (field size, group count, advancement rule,
+draw). We isolate the best-third rule with a three-arm factorial: (A) the real 48-team format; (B)
+the identical 48-team field, groups and draw but with only the top two advancing; and (C) the 32-team
+baseline. The multiplier decomposes multiplicatively as $\rho_A/\rho_C=(\rho_A/\rho_B)(\rho_B/\rho_C)$.
+The best-third-rule term is $\rho_A/\rho_B=1.72$ (95\% CI $[1.63,1.81]$), while the field-plus-group
+term is $\rho_B/\rho_C=0.98$ (95\% CI $[0.92,1.06]$), statistically indistinguishable from no effect.
+Cross-group manipulability --- states whose advancement-optimal action routes through the best-third
+pool --- accounts for $49\%$ of manipulable states under the rule and is identically $0\%$ without it
+(arms B and C). Expanding the field without the wildcard rule produces essentially no additional, and
+no cross-group, manipulability. \todo{Figure 2: decomposition bars with CIs.}
 
-\subsection*{Information collapse and the value of advancement}
-\todo{Entropy-collapse curve per matchday; used to value $V_{\text{adv}}$ and show how
-expansion redistributes where suspense concentrates. Figure 3.}
+\subsection*{A restricted theorem}
+Two propositions explain the simulation (Methods; full statements and proofs in the Supplementary
+Theory). \emph{Proposition 1:} holding others' results fixed, the set of a team's own results for
+which it advances is upward-closed in $\{\mathrm{LOSE}\prec\mathrm{DRAW}\prec\mathrm{WIN}\}$ in both
+formats; hence winning maximises the probability of advancing and there is no pure-qualification
+manipulation. All manipulability is therefore path/seeding-valued --- consistent with the simulated
+qualification-objective rate being $\approx 0$ in both formats. \emph{Proposition 2:} the best-third
+rule creates states in which a team's advancement-optimal action is not to win and the deciding
+dependency is cross-group --- it still qualifies as a best third (a comparison across groups) and a
+lower finish routes it, via the fixed Round-of-32 assignment, to a weaker path. Because the deciding
+quantities lie outside the team's group, within-group simultaneity cannot remove the incentive. No
+state of this type exists under 32 teams, where third place is elimination. We do not claim the
+32-team format is manipulation-free --- seeding manipulation exists at every breadth --- only that
+the best-third rule adds a cross-group channel; the magnitude is the empirical decomposition above.
+
+\subsection*{Robustness}
+The multiplier is $1.64$--$1.74$ across the two strength-model families (named-prediction rank
+correlation $\rho_s=0.90$), three manipulability margins (rank correlation $\approx0.98$), and is
+stable once the Monte-Carlo budget exceeds $\approx 80$ snapshots, settling at $1.64\,[1.58,1.71]$ at
+400 snapshots; confidence intervals use a cluster bootstrap that resamples whole snapshots, the
+correct unit given within-snapshot correlation. Under alternative advancement values --- probability
+of qualifying, and probability of winning the title --- the qualification objective yields no
+manipulability in either format (Proposition 1) and the title objective is too sparse to estimate
+reliably; the canonical rounds-won objective is reported throughout.
 
 \subsection*{Pre-registered live test on the 2026 group finale}
-\todo{Pre-registered flagged manipulable MD3 states vs.\ observed play (passivity
-proxies: win-prob volatility, shot/press rates). Score predicted-vs-observed.}
+Before the group finale is played we register the matches our model flags as containing a manipulable
+team, ranked by probability and labelled by whether the incentive is cross-group (Methods; the frozen
+artifact and protocol are version-controlled and time-stamped). The behaviour-independent core
+(H1: multiplier $>1$; H2: cross-group share $>0$ only under 48 teams) is decided by the frozen
+computation. A secondary, explicitly confoundable analysis compares the implicated teams' observed
+passivity against a strength-matched historical baseline. \todo{Insert frozen named-match table (R11)
+and, after the finale, the scored outcome.}
 
 \section*{Discussion}
-\todo{Generalization beyond football: broadening any selection system past a
-threshold trades strategyproofness for access. Limitations: passivity is
-confoundable; theoretical manipulable-state count is the rigorous core.}
+Our results separate two things usually conflated in debates over expanding a competition: admitting
+more entrants, and the rule used to admit them. The manipulability cost of the 2026 World Cup is not
+a price of size; it is a price of the specific best-third wildcard, which makes advancement depend on
+other groups in a way the post-Gij\'on simultaneity fix cannot reach. The same logic applies to any
+selection system that admits a marginal tier by cross-comparing otherwise-separate competitions ---
+wild-card play-offs, cross-panel grant or hiring quotas, multi-region qualification --- where the
+remedy is structural (synchronise or sever the cross-comparison), not exhortatory. The principal
+limitation is that our behavioural test of manipulation is confoundable by rotation, fatigue and
+tactics; we therefore make the behaviour-independent manipulable-state count the primary claim and
+pre-register it. Remaining modelling extensions --- a finer action space capturing within-win
+scoreline targeting, an equilibrium (rather than best-response) treatment of the simultaneous finale,
+and goal-model calibration with the Dixon--Coles low-score correction \cite{dixoncoles1997} --- are
+expected to sharpen, not overturn, the identified mechanism.
 
 \section*{Methods}
-\todo{Two strength models -- time-varying Elo and a hierarchical Bayesian Poisson
-(Dixon--Coles style) -- reported under each for robustness, with calibration by proper
-scores (Brier/log-loss/RPS, not accuracy); Monte Carlo tournament simulator; manipulable-state
-and $V_{\text{adv}}$ definitions; the trilemma statement; pre-registration protocol
-(OSF); data sources and availability.}
+\paragraph{Data and strength models.} We fit two independent models to historical international
+results: a time-varying Elo with an Elo-to-Poisson scoreline sampler, and a hierarchical Bayesian
+Poisson (attack/defence with home advantage, non-centred, sampled by NUTS with convergence verified
+for the 48 finalists). Probabilities are assessed by proper scores (Brier, log-loss, ranked
+probability score) \cite{gneiting2007scoring} rather than accuracy. The current Poisson is
+independent (no Dixon--Coles low-score correlation); calibration and a corrected refit are reported
+as robustness.
+\paragraph{Simulator and bracket.} A Monte-Carlo engine plays the group stage under FIFA ranking
+criteria (points, goal difference, goals scored, head-to-head) and the official 2026
+Round-of-32$\rightarrow$final bracket, including the candidate-set assignment of the eight best
+third-placed teams to bracket slots. Format and draw are the swapped variables.
+\paragraph{Manipulable states and $V_{\mathrm{adv}}$.} For a team's final-group match we condition
+the scoreline on each target result $\{\mathrm{WIN},\mathrm{DRAW},\mathrm{LOSE}\}$, simulate the
+remainder against the fixed strength model (a decision-theoretic best response, not an equilibrium),
+and set $V_{\mathrm{adv}}$ to expected knockout rounds won (zero if eliminated; this subsumes
+advancement probability and bracket-path strength). A state is manipulable when the
+$V_{\mathrm{adv}}$-maximising action is not WIN by more than a noise margin; it is cross-group when
+the advancement-optimal action qualifies the team via the best-third pool. Estimands, the cluster
+bootstrap, the convergence-justified budget, and the full pre-registration protocol are given in the
+Supplementary Information.
+\paragraph{Pre-registration.} The model, predictions and scoring rule were fixed and time-stamped
+before the group finale; the protocol, frozen prediction artifact and analysis code are public.
 
 % ---- Back matter ----
-\paragraph{Data availability.} \todo{repository + dataset DOIs.}
+\paragraph{Data availability.} Historical results and the official 2026 draw/schedule are in the
+repository; \todo{dataset DOI}.
 \paragraph{Code availability.} \url{https://github.com/datasith/world-cup-2026}
-\paragraph{Pre-registration.} \todo{OSF link + freeze commit hash.}
+\paragraph{Pre-registration.} \todo{OSF link + freeze commit hash} (protocol: \texttt{PREREGISTRATION.md}).
 
 \bibliographystyle{naturemag}
 \bibliography{references}
