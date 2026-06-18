@@ -53,7 +53,7 @@ Tag + push **before** posting, so arXiv/Zenodo can point at an existing public c
 
 ### 3b. Zenodo DOI (immutable archived snapshot of the artifacts)
 1. One-time: sign in at <https://zenodo.org> with GitHub/ORCID → **Settings → GitHub** → toggle the
-   repo `datasith/worldcup-2026-research` **ON** (this installs the release webhook).
+   repo `datasith/world-cup-2026-research` **ON** (this installs the release webhook).
 2. Edit `.zenodo.json` to fill your name + ORCID (currently placeholders), commit, push.
 3. Cut a GitHub release **on the freeze tag**: `gh release create freeze-2026-06-18 --title "Freeze: pre-registered MD3 predictions" --notes "see PREREGISTRATION.md"` (or via the GitHub UI). Zenodo
    auto-archives that release and mints a **version DOI** (plus a concept DOI).

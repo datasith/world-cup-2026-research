@@ -6,9 +6,8 @@
   "license": "cc-by-4.0",
   "creators": [
     {
-      "name": "Zabala, TODO-given-name",
-      "affiliation": "California Institute of Technology",
-      "orcid": "TODO-0000-0000-0000-0000"
+      "name": "Zabala, Francisco A.",
+      "affiliation": "California Institute of Technology"
     }
   ],
   "keywords": [
@@ -25,7 +24,7 @@
   ],
   "related_identifiers": [
     {
-      "identifier": "https://github.com/datasith/worldcup-2026-research",
+      "identifier": "https://github.com/datasith/world-cup-2026-research",
       "relation": "isSupplementTo",
       "scheme": "url"
     }
