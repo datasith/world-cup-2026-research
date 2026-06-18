@@ -88,6 +88,11 @@ def main():
     groups = draw["groups"]
     group_keys = "ABCDEFGHIJKL"
     fixed_real = real_fixed(draw)
+    # accurate, dynamic provenance: count real results actually conditioned on, by matchday
+    n_md1 = sum(1 for r in draw["results"] if r.get("matchday") == 1)
+    n_md2 = sum(1 for r in draw["results"] if r.get("matchday") == 2)
+    conditioned_through = (f"{n_md1}/24 MD1 + {n_md2}/24 MD2 real results played "
+                           f"({len(draw['results'])} total); remaining matches simulated")
     strength_rank = {t: i for i, t in enumerate(
         sorted([t for g in groups for t in g], key=strength_of, reverse=True))}
 
@@ -159,7 +164,7 @@ def main():
     out = {
         "meta": {
             "description": "R4 projected MD3 manipulability, conditioned on results to date",
-            "conditioned_through": "2026-06-16 (16 of 24 MD1 matches played; rest simulated)",
+            "conditioned_through": conditioned_through,
             "snapshots": n, "inner": args.inner, "margin": args.margin,
             "strength_model": model_label, "seed": args.seed, "bracket": args.bracket,
         },

@@ -1,0 +1,586 @@
+{
+  "meta": {
+    "description": "R4 projected MD3 manipulability, conditioned on results to date",
+    "conditioned_through": "24/24 MD1 + 0/24 MD2 real results played (24 total); remaining matches simulated",
+    "snapshots": 400,
+    "inner": 150,
+    "margin": 0.05,
+    "strength_model": "Bayesian Poisson (post-2018)",
+    "seed": 20260616,
+    "bracket": "official",
+    "provenance_note": "conditioned_through label corrected post-run to match the 24/24-MD1 data actually used; match probabilities are unchanged (deterministic seed 20260616 + committed draw). prior label: '2026-06-16 (16 of 24 MD1 matches played; rest simulated)'"
+  },
+  "matches": [
+    {
+      "group": "C",
+      "match": "Brazil vs Scotland",
+      "p_manipulable": 0.785,
+      "p_cross_group": 0.355,
+      "teams": [
+        "Brazil",
+        "Scotland"
+      ]
+    },
+    {
+      "group": "B",
+      "match": "Canada vs Switzerland",
+      "p_manipulable": 0.7375,
+      "p_cross_group": 0.41,
+      "teams": [
+        "Canada",
+        "Switzerland"
+      ]
+    },
+    {
+      "group": "A",
+      "match": "Czech Republic vs Mexico",
+      "p_manipulable": 0.67,
+      "p_cross_group": 0.2225,
+      "teams": [
+        "Czech Republic",
+        "Mexico"
+      ]
+    },
+    {
+      "group": "J",
+      "match": "Algeria vs Austria",
+      "p_manipulable": 0.65,
+      "p_cross_group": 0.51,
+      "teams": [
+        "Algeria",
+        "Austria"
+      ]
+    },
+    {
+      "group": "F",
+      "match": "Netherlands vs Sweden",
+      "p_manipulable": 0.58,
+      "p_cross_group": 0.4025,
+      "teams": [
+        "Netherlands",
+        "Sweden"
+      ]
+    },
+    {
+      "group": "A",
+      "match": "South Africa vs South Korea",
+      "p_manipulable": 0.5075,
+      "p_cross_group": 0.105,
+      "teams": [
+        "South Africa",
+        "South Korea"
+      ]
+    },
+    {
+      "group": "J",
+      "match": "Argentina vs Jordan",
+      "p_manipulable": 0.5,
+      "p_cross_group": 0.1225,
+      "teams": [
+        "Argentina",
+        "Jordan"
+      ]
+    },
+    {
+      "group": "L",
+      "match": "England vs Panama",
+      "p_manipulable": 0.43,
+      "p_cross_group": 0.02,
+      "teams": [
+        "England",
+        "Panama"
+      ]
+    },
+    {
+      "group": "K",
+      "match": "Colombia vs Portugal",
+      "p_manipulable": 0.38,
+      "p_cross_group": 0.0275,
+      "teams": [
+        "Colombia",
+        "Portugal"
+      ]
+    },
+    {
+      "group": "I",
+      "match": "France vs Norway",
+      "p_manipulable": 0.38,
+      "p_cross_group": 0.0375,
+      "teams": [
+        "France",
+        "Norway"
+      ]
+    },
+    {
+      "group": "E",
+      "match": "Germany vs Ivory Coast",
+      "p_manipulable": 0.375,
+      "p_cross_group": 0.04,
+      "teams": [
+        "Germany",
+        "Ivory Coast"
+      ]
+    },
+    {
+      "group": "H",
+      "match": "Saudi Arabia vs Spain",
+      "p_manipulable": 0.3575,
+      "p_cross_group": 0.18,
+      "teams": [
+        "Saudi Arabia",
+        "Spain"
+      ]
+    },
+    {
+      "group": "F",
+      "match": "Japan vs Tunisia",
+      "p_manipulable": 0.3425,
+      "p_cross_group": 0.3175,
+      "teams": [
+        "Japan",
+        "Tunisia"
+      ]
+    },
+    {
+      "group": "L",
+      "match": "Croatia vs Ghana",
+      "p_manipulable": 0.3375,
+      "p_cross_group": 0.1575,
+      "teams": [
+        "Croatia",
+        "Ghana"
+      ]
+    },
+    {
+      "group": "H",
+      "match": "Cape Verde vs Uruguay",
+      "p_manipulable": 0.3325,
+      "p_cross_group": 0.255,
+      "teams": [
+        "Cape Verde",
+        "Uruguay"
+      ]
+    },
+    {
+      "group": "C",
+      "match": "Haiti vs Morocco",
+      "p_manipulable": 0.305,
+      "p_cross_group": 0.1025,
+      "teams": [
+        "Haiti",
+        "Morocco"
+      ]
+    },
+    {
+      "group": "D",
+      "match": "Australia vs Paraguay",
+      "p_manipulable": 0.29,
+      "p_cross_group": 0.06,
+      "teams": [
+        "Australia",
+        "Paraguay"
+      ]
+    },
+    {
+      "group": "G",
+      "match": "Egypt vs Iran",
+      "p_manipulable": 0.2475,
+      "p_cross_group": 0.115,
+      "teams": [
+        "Egypt",
+        "Iran"
+      ]
+    },
+    {
+      "group": "D",
+      "match": "Turkey vs United States",
+      "p_manipulable": 0.245,
+      "p_cross_group": 0.05,
+      "teams": [
+        "Turkey",
+        "United States"
+      ]
+    },
+    {
+      "group": "G",
+      "match": "Belgium vs New Zealand",
+      "p_manipulable": 0.19,
+      "p_cross_group": 0.0625,
+      "teams": [
+        "Belgium",
+        "New Zealand"
+      ]
+    },
+    {
+      "group": "B",
+      "match": "Bosnia and Herzegovina vs Qatar",
+      "p_manipulable": 0.135,
+      "p_cross_group": 0.055,
+      "teams": [
+        "Bosnia and Herzegovina",
+        "Qatar"
+      ]
+    },
+    {
+      "group": "E",
+      "match": "Curaçao vs Ecuador",
+      "p_manipulable": 0.12,
+      "p_cross_group": 0.12,
+      "teams": [
+        "Curaçao",
+        "Ecuador"
+      ]
+    },
+    {
+      "group": "I",
+      "match": "Iraq vs Senegal",
+      "p_manipulable": 0.0775,
+      "p_cross_group": 0.0775,
+      "teams": [
+        "Iraq",
+        "Senegal"
+      ]
+    },
+    {
+      "group": "K",
+      "match": "DR Congo vs Uzbekistan",
+      "p_manipulable": 0.0125,
+      "p_cross_group": 0.005,
+      "teams": [
+        "DR Congo",
+        "Uzbekistan"
+      ]
+    }
+  ],
+  "teams": [
+    {
+      "group": "C",
+      "team": "Brazil",
+      "p_manipulable": 0.6775,
+      "p_cross_group": 0.225,
+      "match": "Brazil vs Scotland"
+    },
+    {
+      "group": "A",
+      "team": "Mexico",
+      "p_manipulable": 0.595,
+      "p_cross_group": 0.1825,
+      "match": "Czech Republic vs Mexico"
+    },
+    {
+      "group": "B",
+      "team": "Switzerland",
+      "p_manipulable": 0.5675,
+      "p_cross_group": 0.2675,
+      "match": "Canada vs Switzerland"
+    },
+    {
+      "group": "J",
+      "team": "Austria",
+      "p_manipulable": 0.5125,
+      "p_cross_group": 0.305,
+      "match": "Algeria vs Austria"
+    },
+    {
+      "group": "F",
+      "team": "Sweden",
+      "p_manipulable": 0.5025,
+      "p_cross_group": 0.2775,
+      "match": "Netherlands vs Sweden"
+    },
+    {
+      "group": "A",
+      "team": "South Korea",
+      "p_manipulable": 0.4875,
+      "p_cross_group": 0.1,
+      "match": "South Africa vs South Korea"
+    },
+    {
+      "group": "J",
+      "team": "Argentina",
+      "p_manipulable": 0.46,
+      "p_cross_group": 0.065,
+      "match": "Argentina vs Jordan"
+    },
+    {
+      "group": "L",
+      "team": "England",
+      "p_manipulable": 0.4275,
+      "p_cross_group": 0.015,
+      "match": "England vs Panama"
+    },
+    {
+      "group": "B",
+      "team": "Canada",
+      "p_manipulable": 0.4125,
+      "p_cross_group": 0.2025,
+      "match": "Canada vs Switzerland"
+    },
+    {
+      "group": "J",
+      "team": "Algeria",
+      "p_manipulable": 0.41,
+      "p_cross_group": 0.3925,
+      "match": "Algeria vs Austria"
+    },
+    {
+      "group": "C",
+      "team": "Scotland",
+      "p_manipulable": 0.335,
+      "p_cross_group": 0.2075,
+      "match": "Brazil vs Scotland"
+    },
+    {
+      "group": "K",
+      "team": "Colombia",
+      "p_manipulable": 0.33,
+      "p_cross_group": 0.005,
+      "match": "Colombia vs Portugal"
+    },
+    {
+      "group": "C",
+      "team": "Morocco",
+      "p_manipulable": 0.305,
+      "p_cross_group": 0.1025,
+      "match": "Haiti vs Morocco"
+    },
+    {
+      "group": "F",
+      "team": "Netherlands",
+      "p_manipulable": 0.28,
+      "p_cross_group": 0.2625,
+      "match": "Netherlands vs Sweden"
+    },
+    {
+      "group": "D",
+      "team": "Australia",
+      "p_manipulable": 0.27,
+      "p_cross_group": 0.035,
+      "match": "Australia vs Paraguay"
+    },
+    {
+      "group": "H",
+      "team": "Spain",
+      "p_manipulable": 0.265,
+      "p_cross_group": 0.12,
+      "match": "Saudi Arabia vs Spain"
+    },
+    {
+      "group": "F",
+      "team": "Japan",
+      "p_manipulable": 0.2525,
+      "p_cross_group": 0.225,
+      "match": "Japan vs Tunisia"
+    },
+    {
+      "group": "I",
+      "team": "France",
+      "p_manipulable": 0.2275,
+      "p_cross_group": 0.0125,
+      "match": "France vs Norway"
+    },
+    {
+      "group": "D",
+      "team": "United States",
+      "p_manipulable": 0.225,
+      "p_cross_group": 0.0325,
+      "match": "Turkey vs United States"
+    },
+    {
+      "group": "E",
+      "team": "Germany",
+      "p_manipulable": 0.22,
+      "p_cross_group": 0.0075,
+      "match": "Germany vs Ivory Coast"
+    },
+    {
+      "group": "L",
+      "team": "Croatia",
+      "p_manipulable": 0.2175,
+      "p_cross_group": 0.0875,
+      "match": "Croatia vs Ghana"
+    },
+    {
+      "group": "H",
+      "team": "Uruguay",
+      "p_manipulable": 0.19,
+      "p_cross_group": 0.1175,
+      "match": "Cape Verde vs Uruguay"
+    },
+    {
+      "group": "H",
+      "team": "Cape Verde",
+      "p_manipulable": 0.1825,
+      "p_cross_group": 0.1575,
+      "match": "Cape Verde vs Uruguay"
+    },
+    {
+      "group": "I",
+      "team": "Norway",
+      "p_manipulable": 0.1825,
+      "p_cross_group": 0.03,
+      "match": "France vs Norway"
+    },
+    {
+      "group": "E",
+      "team": "Ivory Coast",
+      "p_manipulable": 0.17,
+      "p_cross_group": 0.0325,
+      "match": "Germany vs Ivory Coast"
+    },
+    {
+      "group": "L",
+      "team": "Ghana",
+      "p_manipulable": 0.15,
+      "p_cross_group": 0.08,
+      "match": "Croatia vs Ghana"
+    },
+    {
+      "group": "H",
+      "team": "Saudi Arabia",
+      "p_manipulable": 0.1375,
+      "p_cross_group": 0.08,
+      "match": "Saudi Arabia vs Spain"
+    },
+    {
+      "group": "G",
+      "team": "Belgium",
+      "p_manipulable": 0.135,
+      "p_cross_group": 0.0325,
+      "match": "Belgium vs New Zealand"
+    },
+    {
+      "group": "G",
+      "team": "Egypt",
+      "p_manipulable": 0.13,
+      "p_cross_group": 0.0775,
+      "match": "Egypt vs Iran"
+    },
+    {
+      "group": "G",
+      "team": "Iran",
+      "p_manipulable": 0.13,
+      "p_cross_group": 0.045,
+      "match": "Egypt vs Iran"
+    },
+    {
+      "group": "A",
+      "team": "Czech Republic",
+      "p_manipulable": 0.12,
+      "p_cross_group": 0.07,
+      "match": "Czech Republic vs Mexico"
+    },
+    {
+      "group": "E",
+      "team": "Ecuador",
+      "p_manipulable": 0.11,
+      "p_cross_group": 0.11,
+      "match": "Curaçao vs Ecuador"
+    },
+    {
+      "group": "F",
+      "team": "Tunisia",
+      "p_manipulable": 0.1075,
+      "p_cross_group": 0.1075,
+      "match": "Japan vs Tunisia"
+    },
+    {
+      "group": "K",
+      "team": "Portugal",
+      "p_manipulable": 0.105,
+      "p_cross_group": 0.0225,
+      "match": "Colombia vs Portugal"
+    },
+    {
+      "group": "B",
+      "team": "Qatar",
+      "p_manipulable": 0.075,
+      "p_cross_group": 0.035,
+      "match": "Bosnia and Herzegovina vs Qatar"
+    },
+    {
+      "group": "J",
+      "team": "Jordan",
+      "p_manipulable": 0.07,
+      "p_cross_group": 0.07,
+      "match": "Argentina vs Jordan"
+    },
+    {
+      "group": "I",
+      "team": "Senegal",
+      "p_manipulable": 0.07,
+      "p_cross_group": 0.07,
+      "match": "Iraq vs Senegal"
+    },
+    {
+      "group": "B",
+      "team": "Bosnia and Herzegovina",
+      "p_manipulable": 0.07,
+      "p_cross_group": 0.0275,
+      "match": "Bosnia and Herzegovina vs Qatar"
+    },
+    {
+      "group": "G",
+      "team": "New Zealand",
+      "p_manipulable": 0.0625,
+      "p_cross_group": 0.0325,
+      "match": "Belgium vs New Zealand"
+    },
+    {
+      "group": "D",
+      "team": "Paraguay",
+      "p_manipulable": 0.0275,
+      "p_cross_group": 0.025,
+      "match": "Australia vs Paraguay"
+    },
+    {
+      "group": "A",
+      "team": "South Africa",
+      "p_manipulable": 0.0225,
+      "p_cross_group": 0.0075,
+      "match": "South Africa vs South Korea"
+    },
+    {
+      "group": "D",
+      "team": "Turkey",
+      "p_manipulable": 0.02,
+      "p_cross_group": 0.0175,
+      "match": "Turkey vs United States"
+    },
+    {
+      "group": "K",
+      "team": "DR Congo",
+      "p_manipulable": 0.01,
+      "p_cross_group": 0.0025,
+      "match": "DR Congo vs Uzbekistan"
+    },
+    {
+      "group": "E",
+      "team": "Curaçao",
+      "p_manipulable": 0.01,
+      "p_cross_group": 0.01,
+      "match": "Curaçao vs Ecuador"
+    },
+    {
+      "group": "I",
+      "team": "Iraq",
+      "p_manipulable": 0.0075,
+      "p_cross_group": 0.0075,
+      "match": "Iraq vs Senegal"
+    },
+    {
+      "group": "L",
+      "team": "Panama",
+      "p_manipulable": 0.005,
+      "p_cross_group": 0.005,
+      "match": "England vs Panama"
+    },
+    {
+      "group": "K",
+      "team": "Uzbekistan",
+      "p_manipulable": 0.0025,
+      "p_cross_group": 0.0025,
+      "match": "DR Congo vs Uzbekistan"
+    }
+  ]
+}

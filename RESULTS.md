@@ -357,3 +357,44 @@ the same sub-simulations. Command:
 **Conclusion:** per R1's "report the range," the headline holds under the canonical `depth` objective
 and the alternatives *clarify the mechanism* (path-, not threshold-, driven). C1 closed; the
 finer-action-space (scoreline-targeting) and equilibrium treatments remain logged as open in THEORY §6.
+
+---
+
+## R11 — FREEZE artifact: named MD3 predictions, official bracket, after MD1 (2026-06-18)
+
+**This is the pre-registered live-test prediction set.** Run under the **official 2026 R32→final
+bracket** (C5), conditioned on **all 24 MD1 results** (complete; Group J order corrected), with MD2
+and MD3 unplayed — a genuine two-matchday-ahead forecast (after-MD1 freeze, PREREGISTRATION §6).
+Artifacts: `results/r4_freeze_elo.json`, `results/r4_freeze_poisson.json`.
+
+**Command (locked):**
+`run_r4_named.py --bracket official --model {elo,poisson} --snapshots 400 --inner 150 --margin 0.05`
+
+**Cross-model agreement:** Spearman ρ on P(manipulable) across the 24 MD3 matches = **0.964**.
+
+**Registered robust set — P(manipulable) ≥ 0.50 under *both* models (the falsifiable predictions):**
+
+| P(manip) elo/pois | P(cross) elo/pois | Group | MD3 match |
+|:-----------------:|:-----------------:|:-----:|-----------|
+| 56% / 78% | 29% / 36% | C | Brazil vs Scotland |
+| 57% / 74% | 28% / 41% | B | Canada vs Switzerland |
+| 55% / 67% | 16% / 22% | A | Czech Republic vs Mexico |
+| 54% / 65% | **39% / 51%** | J | Algeria vs Austria |
+| 56% / 58% | 35% / 40% | F | Netherlands vs Sweden |
+
+**Registered cross-group teams — P(cross_group) ≥ 0.20 under both** (the simultaneity-proof cases):
+Algeria (J), Austria (J), Sweden (F), Netherlands (F), Japan (F). Algeria–Austria (J) is the
+strongest cross-group match; Group F is the cross-group hotspot.
+
+**Power (pre-registered C8):** expected realized robust manipulable matches
+$E=\sum_{\text{robust}}\min(P_{\text{elo}},P_{\text{pois}}) = \mathbf{2.76} < 3$. Per the locked rule
+(PREREGISTRATION §7), the **behavioral endpoint is therefore reported as descriptive/illustrative
+only**; the behavior-independent primary endpoint (H1 multiplier, H2 cross-group share) carries the
+test. (This is our own pre-registered stopping rule firing, recorded before MD2/MD3.)
+
+**Note vs earlier (seeded-bracket) projections R4/R5:** the named set shifts under the real bracket
+geometry + complete data — Germany–Ivory Coast and Colombia–Portugal fall below the 0.50 robust bar,
+while Algeria–Austria and Canada–Switzerland rise; Brazil–Scotland and Netherlands–Sweden persist as
+cross-group cases. Expected and correct: R11 supersedes R4/R5 as the registered set.
+
+**Freeze status:** predictions locked; ready for the OSF registration (`FREEZE_CHECKLIST.md`).
