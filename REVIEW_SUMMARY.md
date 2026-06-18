@@ -22,9 +22,10 @@ Every reported number (ρ, multiplier, cross-group share, named P(manip)) is a f
 **Fix:** give one closed-form `V_adv` (terminal bracket-node values + path weighting + action family), use it everywhere, and report sensitivity to ≥2 specifications (rounds-won vs win-prob-weighted).
 **Done (THEORY §2 + RESULTS R10):** pinned canonical `V_adv` = expected knockout rounds won (subsumes P(advance) + bracket-path); action space {WIN,DRAW,LOSE}→conditioned scorelines; decision-theoretic opponent model — all stated explicitly, §6 open-tasks updated. Sensitivity run under depth/qualify/champion: headline robust under canonical `depth` (1.55 [1.47,1.65]); `qualify`→0 reveals the manipulation is **path/seeding-, not threshold-, driven**; `champion` underpowered. Remaining (still open in §6): finer action space for within-WIN scoreline targeting; equilibrium (vs best-response) treatment.
 
-### C2. The "trilemma" is a conjecture but the **title asserts it as fact** — **R1 (critical), R2 (critical)**
+### C2. The "trilemma" is a conjecture but the **title asserts it as fact** — **R1 (critical), R2 (critical)** — ✅ **Done (THEORY §4.1)**
 `THEORY.md §4` labels it *Conjecture* with an undefined breadth threshold (`§6` open); the title says expansion "breaks the strategyproofness of the group stage." R1 notes it isn't even obviously an impossibility as stated.
 **Fix (R1's recommended path):** prove the *restricted, provable* theorem — "any advancement rule whose advancement of *t* depends on a comparison with teams outside *t*'s simultaneously-played match admits a manipulable state simultaneity cannot remove; M₄₈ satisfies the antecedent, M₃₂ does not." Then either keep the trilemma as an explicitly labeled conjecture or soften the title to a measured claim.
+**Done (THEORY §4.1 rewritten):** proved **Prop 1** (own-qualification is monotone ⇒ no pure-qualification manipulation in *either* format — matches R10's qualify→0) and **Prop 2** (the best-third rule creates simultaneity-irreducible, cross-group, *path-valued* manipulable states, with an explicit worked construction; absent in M₃₂ where 3rd = elimination). Honest scope added: M₃₂ is **not** claimed manipulation-free (seeding manipulation exists in both) — the rule adds a cross-group *channel*, and R9 supplies the magnitude. Trilemma explicitly downgraded to a conjecture (§4.2); **title softened "breaks" → "increases" / mechanism-specific** in `main.tex` and `DESIGN.md`. Remaining open (§6): finer action space, equilibrium treatment, pinning the trilemma threshold.
 
 ### C3. The expansion multiplier is **not causally identified** — **R1 (major), R2 (major)** — ✅ **Done (R9)**
 The 1.69 mixes ≥4 changes at once: best-third rule + 12-group structure + qualification math + (R3 arm) real-draw-48 vs synthetic-matched-32.
@@ -113,7 +114,9 @@ Likelihoods: **R1 0.50 (med)** · **R2 0.78 (med)** · **R3 0.85 (high)**. All t
 **Do for the paper to be theory-credible (the hard core):**
 8. ✅ **Done (R10)** — pinned `V_adv` (canonical = expected knockout rounds won) + 3-objective
    sensitivity; headline robust; mechanism shown path-driven not threshold-driven.
-9. Prove the restricted cross-group impossibility proposition; relabel/soften the trilemma + title (C2).
+9. ✅ **Done (THEORY §4.1)** — proved Prop 1 (qualification monotone, both formats) + Prop 2
+   (best-third creates simultaneity-irreducible cross-group manipulable states); trilemma downgraded
+   to conjecture; title softened "breaks"→"increases".
 10. ✅ **Done (R9)** — factorial decomposition isolating the best-third rule: the rule carries the
     multiplier; field-size + group-count alone contributes ~nothing; cross-group manipulability
     exists only with the rule.

@@ -79,7 +79,80 @@ For a format $M$, over Monte-Carlo tournaments:
 4. **Expansion multiplier**: $\rho(M_{48})/\rho(M_{32})$ and $\bar\Delta(M_{48})/\bar\Delta(M_{32})$
    — the single striking numbers.
 
-## 4. The general claim (what makes it flagship-shaped)
+## 4. Theory: a restricted theorem (proven) and the general conjecture (open)
+
+### 4.1 What within-group simultaneity can and cannot remove
+
+**Setup.** Final matchday. *Within-group simultaneity* (FIFA's post-Gijón rule): the two matches of
+each group kick off together; **across** groups the order is arbitrary (the actual 2026 schedule
+spreads the 12 groups over several days). Team $t$'s **decision information set** $I_t$ is the set of
+match results completed strictly before $t$'s kickoff; within-group simultaneity guarantees $I_t$
+excludes $t$'s own match *and* its group-mate match, but it includes other groups that have already
+finished. Actions $\mathcal{A}=\{$WIN,DRAW,LOSE$\}$ and $V_{\text{adv}}$ are as pinned in §2.
+
+> **Definition (simultaneity-irreducible).** A manipulable state is *simultaneity-irreducible* if
+> $a^\*_{\text{adv}}(t)\neq$ WIN persists under **every** schedule respecting within-group
+> simultaneity — equivalently, the deciding dependency is on matches **outside** $t$'s group, which
+> within-group simultaneity never conceals.
+
+> **Proposition 1 (no pure-qualification manipulation, either format).** Fix all results other than
+> $t$'s final match. In both $M_{32}$ and $M_{48}$ the set of $t$'s own results for which $t$
+> *advances* is upward-closed in the order LOSE $\prec$ DRAW $\prec$ WIN. Hence WIN maximizes
+> $\Pr[t\text{ advances}]$ for any beliefs about the unknown group-mate match: no team has a
+> manipulation incentive whose objective is **qualification alone**.
+
+*Proof.* A better own result strictly increases $t$'s points and weakly improves its goal difference
+and goals scored, weakly worsens its opponent's, and leaves all other teams' records unchanged. Every
+ranking $t$ is entered into — its group ranking (points, GD, GF, head-to-head) and, under $M_{48}$,
+the best-third ranking (points, GD, GF) — is monotone non-decreasing in $t$'s record. So advancing
+under DRAW implies advancing under WIN, and LOSE $\preceq$ DRAW; the qualifying set is upward-closed.
+Upward-closedness is preserved under expectation over the unknown group-mate result, so WIN maximizes
+$\Pr[\text{advance}]$ pointwise and in expectation. $\qquad\blacksquare$
+
+Consequently **all** group-stage manipulability is *path/seeding-valued*, not threshold-valued — which
+is exactly why the simulated qualification-objective manipulability is $\approx 0$ in both formats
+(RESULTS.md R10).
+
+> **Proposition 2 (the best-third rule creates simultaneity-irreducible manipulable states).** Under
+> $M_{48}$ there exist states — with at least one best-third-relevant group completed before $t$'s
+> match — in which $t$'s advancement-optimal action is **not** WIN and the incentive is
+> simultaneity-irreducible. No state of this *type* exists under $M_{32}$, where third place is
+> elimination.
+
+*Proof (construction).* Group $G=\{t,X,Y,Z\}$; MD3 pairs $t$–$Z$ and $X$–$Y$ (simultaneous). Choose
+pre-MD3 points so that $X$ has clinched 1st and $Y$ is eliminated irrespective of the $X$–$Y$ result,
+and the 2nd-vs-3rd place between $t$ and $Z$ is decided **solely by the $t$–$Z$ match**: $t$ finishes
+2nd if it draws or wins and 3rd if it loses (e.g. $t$ leads $Z$ by one point entering MD3). Thus
+$t$'s finishing position is a function of its own action alone — the concealed $X$–$Y$ match is
+irrelevant. Now suppose the other groups have completed (so their results are in $I_t$) and are such
+that (i) $t$'s 3rd-place record would still rank inside the best eight thirds, so $t$ **qualifies
+either way**, and (ii) the official R32 table sends a 3rd-from-$G$ to a bracket slot whose path is
+strictly weaker (higher $V_{\text{adv}}$) than the slot a 2nd-from-$G$ receives. Then
+$V_{\text{adv}}(t,\text{LOSE}{\to}\text{3rd}) > V_{\text{adv}}(t,\text{WIN}{\to}\text{2nd})$, so
+$a^\*_{\text{adv}}=$ LOSE $\neq$ WIN: the state is manipulable. The deciding quantities — that $t$
+still qualifies as a third, and that the 3rd slot's path is easier — are both **cross-group**
+functions (the best-third pool and the R32 fill), so the incentive is simultaneity-irreducible.
+Under $M_{32}$ the identical configuration gives 3rd place value $0$ (elimination), so WIN weakly
+dominates and the state is not manipulable: the channel is absent. $\qquad\blacksquare$
+
+**Honest scope — what is *not* claimed.** Proposition 2 is an existence result for a channel *unique
+to* $M_{48}$; it is **not** a claim that $M_{32}$ is manipulation-free. Path/seeding manipulation
+(e.g. preferring 2nd to 1st for an easier draw) exists under $M_{32}$ too, and some of it is also
+simultaneity-irreducible. What the best-third rule adds is a qualification channel (3rd place) whose
+*availability* and *bracket slot* are cross-group functions, so the manipulable states it creates are
+cross-group by construction. The *magnitude* of the difference is the empirical contribution:
+cross-group-manipulable share is identically $0$ under $M_{32}$ and $\approx 0.49$ under $M_{48}$
+(R9), and the best-third rule alone accounts for essentially the whole multiplier (R9: $1.72$ of the
+$1.69$, field/groups/draw held fixed).
+
+**Remark (could simultaneity be lifted to fix this?).** Eliminating the Proposition-2 incentive would
+require synchronizing *all* groups that feed a common best-third pool into one tournament-wide
+simultaneous final matchday — the Gijón fix at tournament scale — which is generally infeasible
+(venues, time zones, broadcast) and, even if imposed, only removes *informed* manipulation (replacing
+it with a team unable to know whether to deviate). Within-group simultaneity, the rule FIFA actually
+uses, cannot remove it.
+
+### 4.2 The general conjecture (open)
 
 > **Conjecture (breadth–fidelity–strategyproofness trilemma).** No group-stage advancement
 > mechanism can simultaneously satisfy: (i) **breadth** — admit more than a threshold fraction of
@@ -87,10 +160,13 @@ For a format $M$, over Monte-Carlo tournaments:
 > entrant; and (iii) **strategyproofness** — no team ever has $\Delta(t,s)>0$. The 32→48 expansion
 > is a concrete move across this frontier: it buys breadth at a measurable price in manipulability.
 
-This is the impossibility-frontier statement (Gibbard–Satterthwaite / mechanism-design lineage).
-We don't need to *prove* the full impossibility to publish; we need to (a) define the frontier
-precisely, (b) show $M_{48}$ sits strictly worse than $M_{32}$ on it, and (c) argue the trade-off
-is structural, not incidental. A formal proof of a restricted version would be a major bonus.
+This remains a **conjecture**, not a theorem: the breadth threshold in (i) is undefined (§6 open
+task), and (iii) as stated is too strong given Proposition 1's caveat that some seeding manipulation
+exists at every breadth. §4.1 is the proven kernel — a restricted, cross-group existence result with a
+measured magnitude. The trilemma is the aspirational generalization; **the paper's claims rest on
+§4.1 (proven) + the empirical decomposition (R9), and the title/abstract are phrased accordingly
+(“increases”, not “breaks”).** Lineage: Gibbard–Satterthwaite / Duggan–Schwartz; relate but do not
+assert equivalence.
 
 ## 5. Empirical test (this month — the live differentiator)
 

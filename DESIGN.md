@@ -1,7 +1,9 @@
 # World Cup 2026 — Research Design Plan
 
-**Working title (placeholder):** *The price of expansion is manipulability: how enlarging the
-World Cup to 48 teams breaks the strategyproofness of the group stage.*
+**Working title (placeholder):** *The price of expansion is manipulability: the best-third rule, not
+the larger field, increases group-stage manipulability in the 48-team World Cup.* (Softened from
+"breaks the strategyproofness" per reviewer R1 — we prove a restricted cross-group existence result,
+THEORY §4.1, and measure the increase, R9; we do not prove a general impossibility.)
 
 Lead result is the game-theoretic **manipulability / strategyproofness** analysis (angle #4),
 instrumented by the entropy/predictability machinery and tested live this month. Formal
