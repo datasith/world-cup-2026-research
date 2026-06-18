@@ -45,12 +45,12 @@ define a \emph{manipulable match-state} as one in which a team's advancement-opt
 to maximise its chance of winning, and estimate its prevalence by Monte-Carlo simulation of the
 full tournament under calibrated team-strength models. Final-matchday manipulability is markedly
 higher under the 48-team format: the expansion multiplier is
-$\rho_{48}/\rho_{32}=1.69$ (95\% CI $[1.59,1.80]$). A factorial decomposition shows this is caused
+$\rho_{48}/\rho_{32}=1.66$ (95\% CI $[1.59,1.73]$). A factorial decomposition shows this is caused
 almost entirely by the best-third rule ($1.72\times$, holding field, groups and draw fixed), not by
-the larger field or group count ($0.98\times$, indistinguishable from no effect). The rule uniquely
+the larger field or group count ($0.96\times$, indistinguishable from no effect). The rule uniquely
 creates \emph{cross-group} manipulability --- incentives that route through other groups' results and
 therefore survive the simultaneous final kickoffs FIFA introduced after the 1982 ``Disgrace of
-Gij\'on'' --- present in $49\%$ of manipulable 48-team states and $0\%$ under 32 teams. A restricted
+Gij\'on'' --- present in $48\%$ of manipulable 48-team states and $0\%$ under 32 teams. A restricted
 theorem explains the mechanism: group qualification is monotone in own performance (no
 threshold-tanking), so manipulability is path-valued, and the best-third rule injects a cross-group
 advancement channel that within-group simultaneity cannot neutralise. We pre-register, before the
@@ -93,10 +93,10 @@ We simulate each format's full bracket under two independent team-strength model
 every team's final-group-match decision compare the action that maximises its probability of winning
 the match with the action that maximises its advancement value $V_{\mathrm{adv}}$ (expected knockout
 rounds won). A state is manipulable when these differ (Methods). Across the official 2026 draw, the
-final-matchday manipulability rate is $\rho_{48}=0.27$ versus $\rho_{32}=0.16$, an expansion
-multiplier of $\rho_{48}/\rho_{32}=1.69$ (95\% CI $[1.59,1.80]$; cluster bootstrap over Monte-Carlo
-snapshots). The interval excludes 1 across model families, manipulability margins, and Monte-Carlo
-budgets (Robustness; Fig.~\ref{fig:rates}a).
+final-matchday manipulability rate is $\rho_{48}=0.26$ versus $\rho_{32}=0.16$, an expansion
+multiplier of $\rho_{48}/\rho_{32}=1.66$ (95\% CI $[1.59,1.73]$; $400$ snapshots $\times$ $150$ inner,
+cluster bootstrap over Monte-Carlo snapshots). The interval excludes 1 across model families,
+manipulability margins, and Monte-Carlo budgets (Robustness; Fig.~\ref{fig:rates}a).
 
 \begin{figure}[t]
 \centering
@@ -116,10 +116,10 @@ The multiplier conflates several simultaneous changes (field size, group count, 
 draw). We isolate the best-third rule with a three-arm factorial: (A) the real 48-team format; (B)
 the identical 48-team field, groups and draw but with only the top two advancing; and (C) the 32-team
 baseline. The multiplier decomposes multiplicatively as $\rho_A/\rho_C=(\rho_A/\rho_B)(\rho_B/\rho_C)$.
-The best-third-rule term is $\rho_A/\rho_B=1.72$ (95\% CI $[1.63,1.81]$), while the field-plus-group
-term is $\rho_B/\rho_C=0.98$ (95\% CI $[0.92,1.06]$), statistically indistinguishable from no effect.
+The best-third-rule term is $\rho_A/\rho_B=1.72$ (95\% CI $[1.66,1.79]$), while the field-plus-group
+term is $\rho_B/\rho_C=0.96$ (95\% CI $[0.92,1.01]$), statistically indistinguishable from no effect.
 Cross-group manipulability --- states whose advancement-optimal action routes through the best-third
-pool --- accounts for $49\%$ of manipulable states under the rule and is identically $0\%$ without it
+pool --- accounts for $48\%$ of manipulable states under the rule and is identically $0\%$ without it
 (arms B and C). Expanding the field without the wildcard rule produces essentially no additional, and
 no cross-group, manipulability (Fig.~\ref{fig:decomp}).
 
@@ -150,11 +150,13 @@ state of this type exists under 32 teams, where third place is elimination. We d
 the best-third rule adds a cross-group channel; the magnitude is the empirical decomposition above.
 
 \subsection*{Robustness}
-The multiplier is $1.64$--$1.74$ across the two strength-model families (named-prediction rank
-correlation $\rho_s=0.90$), three manipulability margins (rank correlation $\approx0.98$), and is
-stable once the Monte-Carlo budget exceeds $\approx 80$ snapshots, settling at $1.64\,[1.58,1.71]$ at
-400 snapshots (Fig.~\ref{fig:conv}); confidence intervals use a cluster bootstrap that resamples whole
-snapshots, the correct unit given within-snapshot correlation. Under alternative advancement values --- probability
+The primary estimate ($1.66$) is stable across analytic choices: the named-prediction ranking is
+preserved across the two strength-model families (rank correlation $\rho_s=0.96$) and across three
+manipulability margins (rank correlation $\approx0.98$), and a separate convergence study shows the
+multiplier is stable once the Monte-Carlo budget exceeds $\approx 80$ snapshots, motivating the
+$400$-snapshot budget used throughout (Fig.~\ref{fig:conv}); every 95\% interval excludes 1.
+Confidence intervals use a cluster bootstrap that resamples whole snapshots, the correct unit given
+within-snapshot correlation. Under alternative advancement values --- probability
 of qualifying, and probability of winning the title --- the qualification objective yields no
 manipulability in either format (Proposition 1) and the title objective is too sparse to estimate
 reliably; the canonical rounds-won objective is reported throughout.
@@ -170,23 +172,28 @@ $\approx80$, and its interval excludes 1 at every budget; the freeze uses $\ge40
 \end{figure}
 
 \subsection*{Pre-registered live test on the 2026 group finale}
-Before the group finale is played we register the matches our model flags as containing a manipulable
-team, ranked by probability and labelled by whether the incentive is cross-group (Methods; the frozen
-artifact and protocol are version-controlled and time-stamped). The behaviour-independent core
-(H1: multiplier $>1$; H2: cross-group share $>0$ only under 48 teams) is decided by the frozen
-computation. A secondary, explicitly confoundable analysis compares the implicated teams' observed
-passivity against a strength-matched historical baseline. The frozen predictions are shown in
+After Matchday~1 and before Matchday~2, we register the matches our model flags as containing a
+manipulable team, ranked by probability and labelled by whether the incentive is cross-group
+(Methods; the frozen artifact and protocol are version-controlled and time-stamped). We distinguish
+two kinds of claim. The expansion multiplier ($\rho_{48}/\rho_{32}>1$) and the cross-group share are
+\emph{computational estimands} --- properties of the format, the draw and the strength model that are
+fixed by the frozen computation rather than tested against play (and the $32$-team cross-group share
+is zero by construction, not an empirical finding). The genuinely \emph{prospective} object is the
+named Matchday-3 prediction set, evaluated after the finale by a secondary, explicitly confoundable
+analysis comparing implicated teams' observed passivity against a strength-matched historical
+baseline. The frozen predictions are shown in
 Fig.~\ref{fig:pred}: five matches clear the robust threshold under both models (Brazil--Scotland,
 Canada--Switzerland, Czech~Republic--Mexico, Algeria--Austria, Netherlands--Sweden), with
 Algeria--Austria and the Group~F matches carrying the largest cross-group component. By the
 pre-registered power rule the expected number of realised robust manipulable matches is $2.76<3$, so
-the behavioural endpoint is reported as illustrative; the behaviour-independent endpoints carry the
-test. \todo{After the finale: add the scored outcome.}
+the behavioural endpoint is reported as illustrative; the computational estimands (the multiplier and
+the cross-group share) are the paper's quantitative core, and the named predictions are the prospective
+falsifiable claim. \todo{After the finale: add the scored outcome.}
 
 \begin{figure}[t]
 \centering
 \includegraphics[width=\linewidth]{fig3_predictions.pdf}
-\caption{\textbf{Pre-registered Matchday-3 predictions (frozen before MD2/MD3, official bracket).}
+\caption{\textbf{Pre-registered Matchday-3 predictions (frozen after MD1, before MD2; official bracket).}
 Probability that each MD3 match contains a manipulable team, under the Elo and Bayesian-Poisson
 models (cross-model rank correlation $\rho_s=0.96$); the shaded portion is the cross-group component.
 The dashed line is the robust-set threshold ($0.50$ under both models). Frozen at commit

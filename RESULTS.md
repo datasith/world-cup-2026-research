@@ -398,3 +398,34 @@ while Algeria–Austria and Canada–Switzerland rise; Brazil–Scotland and Net
 cross-group cases. Expected and correct: R11 supersedes R4/R5 as the registered set.
 
 **Freeze status:** predictions locked; ready for the OSF registration (`FREEZE_CHECKLIST.md`).
+
+---
+
+## R12 — Decomposition re-run at the converged budget (N=400) for a single primary number (2026-06-18)
+
+**Trigger:** the re-review (panel run `results/reviews/20260618_121208/`) flagged that the manuscript
+mixed multiplier values across runs/budgets — abstract 1.69 (R9, N=160), convergence 1.64 (R8, N=400),
+V_adv depth 1.55 (R10, N=160, different 32-baseline seed). All are Monte-Carlo noise in the 32-team
+baseline (ρ32 ranged 0.152–0.171 across seeds). **Fix:** re-run the 3-arm factorial at the freeze
+budget (N=400, inner=150, seeded bracket, cluster bootstrap) so the headline multiplier *and* its
+decomposition come from one converged run. Artifact: `results/decomposition.json` (now N=400; the
+N=160 version is in git history at R9).
+
+**Command:** `uv run python scripts/run_decomposition.py --snapshots 400 --inner 150 --margin 0.05`
+
+| Arm | ρ | cross-group share |
+|-----|---:|------------------:|
+| A — 48 top-2 + best-third (real) | 0.263 [0.258, 0.269] | **0.479** |
+| B — 48 top-2 only | 0.153 [0.148, 0.157] | 0.000 |
+| C — 32 top-2 (baseline) | 0.159 [0.153, 0.165] | 0.000 |
+
+**Primary numbers (used throughout the manuscript):**
+- Overall multiplier ρ(A)/ρ(C) = **1.66 [1.59, 1.73]**
+- Best-third-rule effect ρ(A)/ρ(B) = **1.72 [1.66, 1.79]**
+- Field + group-count effect ρ(B)/ρ(C) = **0.96 [0.92, 1.01]** (includes 1 → no detectable effect)
+- Cross-group share = **48%** (rule) vs 0% (both top-2-only arms)
+
+**Reading:** consistent with R8's convergence number (1.64 [1.58, 1.71], overlapping CI) and with the
+R9 story (1.72 × 0.96 = 1.66, internally consistent). The manuscript abstract/results/figures now cite
+**only these N=400 numbers**; R7–R10 multiplier figures are superseded for the headline (kept as the
+robustness/convergence/sensitivity record). Figures 1–2 regenerated from this artifact.
