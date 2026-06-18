@@ -168,6 +168,39 @@ measured magnitude. The trilemma is the aspirational generalization; **the paper
 (“increases”, not “breaks”).** Lineage: Gibbard–Satterthwaite / Duggan–Schwartz; relate but do not
 assert equivalence.
 
+### 4.3 Equilibrium treatment of the group finale (addressing reviewer R1)
+
+The primary analysis is **decision-theoretic**: a team's advancement-optimal action when all other
+matches are sampled from the fixed strength model. But a group's two final-matchday matches are
+played simultaneously and all four teams are strategic, so we also study the finale as a
+simultaneous-move game and ask whether the manipulability flag — and the cross-group share, the
+headline structural claim — is invariant to the solution concept.
+
+**Game.** Players: the four teams of a group at MD3. Each chooses a target result for its own match,
+$a_i\in\{$WIN,DRAW,LOSE$\}$ (§2). The two matches are **resolved** from the targets by: if the two
+teams in a match desire a common result (one targets WIN and the other LOSE toward the same side, or
+both target DRAW), that result is realized deterministically (a minimal scoreline) — the
+collusion-feasible / mutual-interest case (the Gijón mechanism, which the coarse single-team action
+space could not represent); otherwise the targets conflict and the match is a genuine contest sampled
+from the strength model. Payoffs are $V_{\text{adv}}$ (expected knockout rounds won) with both group
+matches pinned by the profile and all other groups sampled.
+
+**Solution and reporting.** We compute pure-strategy Nash equilibria by best-response dynamics from
+the all-WIN profile (`equilibrium.solve_group`); profiles that cycle are flagged as having no pure NE.
+A state is *equilibrium-manipulable* for $t$ if $t$'s equilibrium action $\neq$ WIN. The structural
+claim is robust iff the cross-group share persists under this notion; we will report the equilibrium
+manipulability rate and cross-group share against the decision-theoretic baseline.
+
+**Status (increment 1).** The machinery is implemented and unit-tested (`equilibrium.py`,
+`engine.value_under_profile`). First end-to-end runs expose two issues that must be resolved before
+the comparison is trustworthy: (i) Monte-Carlo payoff noise at modest `n_inner` makes best-response
+dynamics cycle (raise `n_inner`, or smooth/require a significant-improvement threshold); (ii) the
+deterministic mutual-draw resolution creates a strong "everyone draws" basin (realize a mutual result
+only under *strict* mutual preference, and make contests not uniformly dominated). The honest interim
+position therefore remains that the reported results are **best-response (decision-theoretic)
+manipulability**, stated as such; the equilibrium analysis is in progress and will be reported as a
+robustness section once (i)–(ii) are addressed.
+
 ## 5. Empirical test (this month — the live differentiator)
 
 - **Publicly time-stamp** (Zenodo DOI + signed git tag, before MD3; arXiv note secondary): the explicit list of *theoretically manipulable*

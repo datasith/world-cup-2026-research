@@ -99,12 +99,15 @@ class SimEngine:
         return _FORCE[home_target]
 
     def _simulate_remainder(self, state: DecisionState,
-                            team_score: tuple[int, int]) -> tuple[int, bool]:
+                            team_score: tuple[int, int] | None,
+                            extra_fixed: dict | None = None) -> tuple[int, bool, bool, bool]:
         """One full sub-simulation.
 
-        Returns ``(knockout_depth, qualified_via_best_third)``: rounds the team
-        wins in the knockout, and whether it qualified as a best-third-placed team
-        (only possible in the 48-team format -- this is the cross-group route)."""
+        Returns ``(knockout_depth, qualified, champion, qualified_via_best_third)``.
+        ``team_score`` pins the team's own MD3 match (None to leave it to ``extra_fixed``
+        or sampling). ``extra_fixed`` pins additional MD3 matches by (home,away)->score --
+        used by the equilibrium solver to fix the *other* same-group match per a strategy
+        profile (equilibrium.py)."""
         results_by_group: list[list[MatchResult]] = []
         th, ta = self._team_md3_match(state)
         for gi, teams in enumerate(self.groups):
@@ -116,7 +119,12 @@ class SimEngine:
                         hg, ag = state.fixed[(h, a)]
                     elif (a, h) in state.fixed:                     # ... order-insensitive
                         ag, hg = state.fixed[(a, h)]
-                    elif gi == state.group_index and (h, a) == (th, ta):  # decision match
+                    elif extra_fixed and (h, a) in extra_fixed:     # profile-pinned MD3 match
+                        hg, ag = extra_fixed[(h, a)]
+                    elif extra_fixed and (a, h) in extra_fixed:
+                        ag, hg = extra_fixed[(a, h)]
+                    elif (gi == state.group_index and (h, a) == (th, ta)
+                          and team_score is not None):              # decision match
                         hg, ag = team_score
                     else:                                            # everything else sampled
                         hg, ag = self.sampler.sample(h, a, neutral=True, rng=self.rng)
@@ -206,6 +214,18 @@ class SimEngine:
         engine's configured ``objective``. ``assess`` is the efficient single-pass path."""
         h, a = self._team_md3_match(state)
         return self._evaluate_action(state, h, a, team == h, target_result)[self.objective]
+
+    def value_under_profile(self, team: str, state: DecisionState,
+                            md3_results: dict, n_inner: int | None = None) -> float:
+        """Mean V_adv (knockout rounds won) for ``team`` when *both* MD3 matches of its
+        group are pinned to ``md3_results`` ((home,away)->score) and all other groups are
+        sampled. The strategic primitive for the equilibrium solver (equilibrium.py)."""
+        n = n_inner or self.n_inner
+        total = 0.0
+        for _ in range(n):
+            depth, _q, _c, _v = self._simulate_remainder(state, None, extra_fixed=md3_results)
+            total += depth
+        return total / n
 
     def assess(self, team: str, state: DecisionState, min_delta: float = 0.05,
                q3_threshold: float = 0.05) -> ManipResult:
