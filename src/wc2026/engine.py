@@ -59,15 +59,21 @@ class SimEngine:
 
     def __init__(self, groups: list[list[str]], spec: FormatSpec,
                  sampler: MatchSampler, strength_rank: dict[str, int],
-                 n_inner: int = 300, seed: int = 0, objective: str = "depth"):
+                 n_inner: int = 300, seed: int = 0, objective: str = "depth",
+                 bracket: str = "seeded"):
         if objective not in self.OBJECTIVES:
             raise ValueError(f"objective must be one of {self.OBJECTIVES}")
+        if bracket not in ("seeded", "official"):
+            raise ValueError("bracket must be 'seeded' or 'official'")
         self.groups = groups
         self.spec = spec
         self.sampler = sampler
         self.strength_rank = strength_rank
         self.n_inner = n_inner
         self.objective = objective
+        # "seeded": strength-seeded 1-vs-N stand-in (R4-R10). "official": the real fixed
+        # 2026 R32->final bracket (bracket.py), valid only for the 12-group best-third format.
+        self.bracket = bracket
         self.rng = np.random.default_rng(seed)
 
     # --- helpers ---------------------------------------------------------
@@ -117,24 +123,45 @@ class SimEngine:
                     res.append(MatchResult(h, a, hg, ag))
             results_by_group.append(res)
 
-        # qualification
-        quals, thirds = [], []
+        # qualification (track group keys + finishing positions for the official bracket)
+        group_keys = "ABCDEFGHIJKL"
+        quals, thirds_bg = [], []          # thirds_bg: list of (group_key, TeamRecord)
+        winner, runner = {}, {}
         team_finished_third = False
         for gi, teams in enumerate(self.groups):
+            gk = group_keys[gi] if gi < len(group_keys) else str(gi)
             ranked = rank_group(teams, results_by_group[gi], rng=self.rng)
             for pos, rec in enumerate(ranked):
                 if pos < self.spec.advance_top:
                     quals.append(rec.team)
+                    if pos == 0:
+                        winner[gk] = rec.team
+                    elif pos == 1:
+                        runner[gk] = rec.team
                 elif pos == self.spec.advance_top and self.spec.best_thirds:
-                    thirds.append(rec)
+                    thirds_bg.append((gk, rec))
                     if rec.team == state.team:
                         team_finished_third = True
+        best_thirds = []
         if self.spec.best_thirds:
-            quals.extend(best_third_placed(thirds, self.spec.best_thirds))
+            best_thirds = best_third_placed([rec for _, rec in thirds_bg], self.spec.best_thirds)
+            quals.extend(best_thirds)
 
         if state.team not in quals:
             return 0, False, False, False        # depth, qualified, champion, via_third
         via_third = team_finished_third and state.team in quals
+
+        if self.bracket == "official" and self.spec.best_thirds and len(self.groups) == 12:
+            from . import bracket as bracket_mod
+            team_group = {rec.team: gk for gk, rec in thirds_bg}
+            qual_third_groups = [team_group[t] for t in best_thirds]
+            slot_group = bracket_mod.assign_thirds(qual_third_groups)
+            third_team_of_group = {team_group[t]: t for t in best_thirds}
+            third_slot_team = {s: third_team_of_group[g] for s, g in slot_group.items()}
+            leaf_teams = bracket_mod.build_leaf_teams(winner, runner, third_slot_team)
+            champ, depths = bracket_mod.play(leaf_teams, self.sampler, self.rng)
+            return depths.get(state.team, 0), True, champ == state.team, via_third
+
         seeded = sorted(quals, key=lambda t: self.strength_rank.get(t, 10**9))
         depth, champion = self._knockout_depth(seeded, state.team)
         return depth, True, champion, via_third

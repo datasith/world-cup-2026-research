@@ -74,6 +74,8 @@ def main():
     ap.add_argument("--inner", type=int, default=150)
     ap.add_argument("--margin", type=float, default=0.05)
     ap.add_argument("--seed", type=int, default=20260616)
+    ap.add_argument("--bracket", choices=["seeded", "official"], default="seeded",
+                    help="knockout geometry: strength-seeded stand-in or the real 2026 bracket")
     ap.add_argument("--model", choices=["elo", "poisson"], default="elo",
                     help="strength model: elo (primary) or poisson (robustness)")
     ap.add_argument("--out", type=str, default="results/r4_named.json")
@@ -101,7 +103,8 @@ def main():
     for s in range(args.snapshots):
         fixed = project_to_pre_md3(groups, fixed_real, sampler, rng)
         eng = SimEngine(groups, SPEC_48, sampler, strength_rank,
-                        n_inner=args.inner, seed=int(rng.integers(1 << 30)))
+                        n_inner=args.inner, seed=int(rng.integers(1 << 30)),
+                        bracket=args.bracket)
         for gi, teams in enumerate(groups):
             gk = group_keys[gi]
             md3 = group_matchdays(teams)[2]
@@ -158,7 +161,7 @@ def main():
             "description": "R4 projected MD3 manipulability, conditioned on results to date",
             "conditioned_through": "2026-06-16 (16 of 24 MD1 matches played; rest simulated)",
             "snapshots": n, "inner": args.inner, "margin": args.margin,
-            "strength_model": model_label, "seed": args.seed,
+            "strength_model": model_label, "seed": args.seed, "bracket": args.bracket,
         },
         "matches": matches,
         "teams": teams_report,
