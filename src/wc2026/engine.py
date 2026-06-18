@@ -53,14 +53,21 @@ class DecisionState:
 class SimEngine:
     """Engine consumed by manipulability.is_manipulable."""
 
+    #: selectable advancement-value functional V_adv (THEORY.md sec. 2). All are
+    #: estimated from the same sub-simulations; "depth" is the canonical definition.
+    OBJECTIVES = ("depth", "qualify", "champion")
+
     def __init__(self, groups: list[list[str]], spec: FormatSpec,
                  sampler: MatchSampler, strength_rank: dict[str, int],
-                 n_inner: int = 300, seed: int = 0):
+                 n_inner: int = 300, seed: int = 0, objective: str = "depth"):
+        if objective not in self.OBJECTIVES:
+            raise ValueError(f"objective must be one of {self.OBJECTIVES}")
         self.groups = groups
         self.spec = spec
         self.sampler = sampler
         self.strength_rank = strength_rank
         self.n_inner = n_inner
+        self.objective = objective
         self.rng = np.random.default_rng(seed)
 
     # --- helpers ---------------------------------------------------------
@@ -126,13 +133,14 @@ class SimEngine:
             quals.extend(best_third_placed(thirds, self.spec.best_thirds))
 
         if state.team not in quals:
-            return 0, False
+            return 0, False, False, False        # depth, qualified, champion, via_third
         via_third = team_finished_third and state.team in quals
         seeded = sorted(quals, key=lambda t: self.strength_rank.get(t, 10**9))
-        # expected knockout depth: replay bracket, count rounds the team survives
-        return self._knockout_depth(seeded, state.team), via_third
+        depth, champion = self._knockout_depth(seeded, state.team)
+        return depth, True, champion, via_third
 
-    def _knockout_depth(self, qualifiers_seeded: list[str], team: str) -> int:
+    def _knockout_depth(self, qualifiers_seeded: list[str], team: str) -> tuple[int, bool]:
+        """Return (rounds the team survives, whether it wins the whole bracket)."""
         from .simulator import _seed_bracket, _knockout_winner
         bracket = _seed_bracket(qualifiers_seeded)
         depth = 0
@@ -143,27 +151,34 @@ class SimEngine:
             if team in nxt:
                 depth += 1
             bracket = nxt
-        return depth
+        champion = len(bracket) == 1 and bracket[0] == team
+        return depth, champion
 
     # --- manipulability contract ----------------------------------------
     def _evaluate_action(self, state: DecisionState, h: str, a: str,
-                         team_is_home: bool, action: TargetResult) -> tuple[float, float]:
-        """Return (mean knockout depth, P[qualify via best-third]) for one action."""
-        depth_sum = 0.0
-        third_sum = 0
+                         team_is_home: bool, action: TargetResult) -> dict[str, float]:
+        """Estimate all V_adv functionals for one action from shared sub-simulations.
+
+        Returns means of: ``depth`` (knockout rounds won), ``qualify`` (P advance),
+        ``champion`` (P win the title), and ``q3`` (P qualify via best-third)."""
+        depth_sum = qual_sum = champ_sum = third_sum = 0.0
         for _ in range(self.n_inner):
             score = self._sample_conditioned(h, a, action, team_is_home)
-            depth, via_third = self._simulate_remainder(state, score)
+            depth, qualified, champion, via_third = self._simulate_remainder(state, score)
             depth_sum += depth
+            qual_sum += int(qualified)
+            champ_sum += int(champion)
             third_sum += int(via_third)
-        return depth_sum / self.n_inner, third_sum / self.n_inner
+        n = self.n_inner
+        return {"depth": depth_sum / n, "qualify": qual_sum / n,
+                "champion": champ_sum / n, "q3": third_sum / n}
 
     def advancement_value(self, team: str, state: DecisionState,
                           target_result: TargetResult) -> float:
-        """Generic-contract entry (manipulability.is_manipulable). ``assess`` is the
-        efficient single-pass path used in real runs and also measures cross-group."""
+        """Generic-contract entry (manipulability.is_manipulable): V_adv under the
+        engine's configured ``objective``. ``assess`` is the efficient single-pass path."""
         h, a = self._team_md3_match(state)
-        return self._evaluate_action(state, h, a, team == h, target_result)[0]
+        return self._evaluate_action(state, h, a, team == h, target_result)[self.objective]
 
     def assess(self, team: str, state: DecisionState, min_delta: float = 0.05,
                q3_threshold: float = 0.05) -> ManipResult:
@@ -181,7 +196,8 @@ class SimEngine:
         values: dict[TargetResult, float] = {}
         q3: dict[TargetResult, float] = {}
         for action in TargetResult:
-            values[action], q3[action] = self._evaluate_action(state, h, a, team_is_home, action)
+            res = self._evaluate_action(state, h, a, team_is_home, action)
+            values[action], q3[action] = res[self.objective], res["q3"]
         adv_action = max(values, key=values.get)
         win_val = values[TargetResult.WIN]
         delta = max(0.0, values[adv_action] - win_val)

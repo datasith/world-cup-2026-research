@@ -318,3 +318,42 @@ qualifiers) + bye-padded knockout brackets (`simulator._seed_bracket`). Artifact
 **Net:** strongest single result for the paper's mechanism claim — it converts "expansion correlates
 with manipulability" into "the best-third rule *causes* it, and uniquely creates the cross-group,
 simultaneity-proof variety." Closes reviewer finding C3.
+
+---
+
+## R10 — V_adv specification sensitivity + pinned definition (2026-06-17)
+
+**Trigger:** reviewer C1 (R1 critical, R2 critical) — `V_adv` and the action space were listed *open*
+in THEORY §6 while every number depended on them, and RESULTS vs THEORY described Δ differently.
+**Done (pinning):** THEORY §2 now fixes a single canonical `V_adv` = **expected knockout rounds won**
+(0 if eliminated; this subsumes "P(advance)" and "bracket-path strength"), the action space
+$\{$WIN,DRAW,LOSE$\}$→conditioned scorelines, and a decision-theoretic (fixed-opponent) model.
+**Done (range, per R1):** re-ran the 32-vs-48 multiplier under three `V_adv` functionals, all from
+the same sub-simulations. Command:
+`uv run python scripts/run_vadv_sensitivity.py --official --snapshots 160 --inner 150`. Artifact:
+`results/vadv_sensitivity.json`.
+
+| V_adv | ρ(32) | ρ(48) | cross-group(48) | multiplier (95% CI) |
+|-------|------:|------:|----------------:|--------------------:|
+| **depth** (rounds won; canonical) | 0.171 | 0.266 | 0.487 | **1.55 [1.47, 1.65]** |
+| qualify (P advance) | 0.000 | 0.000 | — | — (no manipulable states) |
+| champion (P win title) | 0.021 | 0.012 | 0.319 | 0.59 [0.45, 0.76] |
+
+**Reading (honest — this refines the claim rather than just confirming it):**
+- **Canonical `depth`:** multiplier **1.55**, CI excludes 1.0, exactly matching the R8 convergence
+  curve at N=160. The headline is robust under the pinned definition.
+- **`qualify` → 0 in *both* formats:** under a pure "will I advance?" objective with coarse W/D/L
+  actions, performing better never *hurts* your own qualification, so the advancement-optimal action
+  is essentially always WIN. **The manipulation is therefore not about the qualification threshold —
+  it is about the downstream seeding / bracket path.** This is the mechanism: the best-third rule
+  perturbs *which* bracket slot a team lands in (cross-group), not *whether* it qualifies. A genuine
+  threshold-tank (Gijón) needs within-WIN scoreline targeting, which the coarse action space cannot
+  represent (THEORY §6 open task).
+- **`champion`:** manipulable states are rare (1–2% of decisions, tens of states) and dominated by
+  *strong* teams' bracket tweaks; best-third (weak) teams have ~0 title odds so their cross-group
+  manipulability doesn't register here. The estimate is **underpowered** and the point <1 rests on a
+  handful of states — reported for completeness, not relied upon.
+
+**Conclusion:** per R1's "report the range," the headline holds under the canonical `depth` objective
+and the alternatives *clarify the mechanism* (path-, not threshold-, driven). C1 closed; the
+finer-action-space (scoreline-targeting) and equilibrium treatments remain logged as open in THEORY §6.

@@ -24,16 +24,37 @@ a distribution over results. This converts $M$ into a stochastic process we can 
 ## 2. Manipulable match-states
 
 Consider the decision point of a team $t$ entering a match $m$ in a given tournament state $s$
-(scores so far, other groups' standings). Let $a^\*_{\text{win}}(t,s)$ be the action (target
-result) that maximizes $t$'s probability of *winning match $m$*, and let $a^\*_{\text{adv}}(t,s)$ be
-the action that maximizes $t$'s *expected tournament progression* (probability-weighted value of
-advancing, and of advancing into a weaker bracket path).
+(scores so far, other groups' standings).
+
+**Action space (pinned).** The action set is the coarse target-result space
+$\mathcal{A}=\{\text{WIN},\text{DRAW},\text{LOSE}\}$. An action is realized by sampling the match
+scoreline from the strength model *conditioned* on that result (engine `_sample_conditioned`); it
+is a target over result distributions, not an exact score. $a^\*_{\text{win}}(t,s)\equiv\text{WIN}$
+by construction (targeting a win maximizes $\Pr[t\text{ wins }m]$). *Limitation:* this coarse space
+does not represent within-WIN **scoreline targeting** (the Gijón collusion pattern needs a finer
+action space); see §6.
+
+**Opponent model (pinned).** $V_{\text{adv}}$ is a **decision-theoretic best response**: all other
+matches (including the simultaneous same-group match and other groups) are sampled from the *fixed*
+strength model, not played strategically. So a "manipulable state" is a property of $t$'s argmax
+against fixed opponents, **not** a Nash equilibrium of the group-finale game (see §6 / open tasks).
+
+**Advancement value $V_{\text{adv}}$ (pinned — single definition).** Conditioning $m$ on action
+$a$, Monte-Carlo-simulate the remainder of the tournament; then
+$$V_{\text{adv}}(t,s,a) \;=\; \mathbb{E}\big[\text{knockout rounds $t$ wins}\big],$$
+counting $0$ if $t$ fails to advance. This single functional **subsumes** "probability of advancing"
+(a non-qualifier scores $0$) **and** "advancing into a weaker bracket path" (an easier draw yields
+more expected rounds), so it is the canonical $V_{\text{adv}}$ used for all reported $\rho$, $\Delta$
+and multiplier numbers. Two alternative functionals — $V^{\text{qual}}=\Pr[t\text{ advances}]$ and
+$V^{\text{champ}}=\Pr[t\text{ wins the title}]$ — are reported as a **robustness range** in
+RESULTS.md R10 (the conclusions are reported against, not assumed invariant to, the choice).
 
 > **Definition (manipulable state).** State $s$ is **manipulable for team $t$** if
 > $a^\*_{\text{adv}}(t,s) \neq a^\*_{\text{win}}(t,s)$ — i.e. $t$'s advancement-optimal action is
 > *not* to maximize its chance of winning the match. The **magnitude** of manipulability is
 > $\Delta(t,s) = V_{\text{adv}}\big(a^\*_{\text{adv}}\big) - V_{\text{adv}}\big(a^\*_{\text{win}}\big) \ge 0$,
-> the progression value a team forgoes by "honestly" trying to win.
+> the progression value a team forgoes by "honestly" trying to win. ($\Delta$ is in the units of the
+> chosen $V_{\text{adv}}$: expected knockout rounds for the canonical definition.)
 
 Special cases of interest:
 - **Tanking:** $a^\*_{\text{adv}}$ is to lose or draw (e.g. to avoid a strong knockout opponent or
@@ -83,7 +104,14 @@ is structural, not incidental. A formal proof of a restricted version would be a
   as such.
 
 ## 6. Open theory tasks
-- [ ] Operationalize $V_{\text{adv}}$ (progression value incl. bracket-path strength).
-- [ ] Define the action space realistically (teams target *result distributions*, not exact scores).
+- [x] **Operationalize $V_{\text{adv}}$** — pinned in §2 as expected knockout rounds won (canonical),
+  with $V^{\text{qual}}$ and $V^{\text{champ}}$ as a reported robustness range (RESULTS.md R10).
+- [x] **Define the action space** — pinned in §2 as $\{$WIN,DRAW,LOSE$\}$ target results mapped to
+  conditioned scoreline distributions, with the decision-theoretic opponent model stated.
+- [ ] **Finer action space for scoreline targeting** (within-WIN Gijón collusion) — the coarse W/D/L
+  set cannot represent it; needed to capture the collusion-feasible special case fully.
+- [ ] **Equilibrium treatment** — promote the decision-theoretic best response to a (Bayes-)Nash
+  equilibrium of the simultaneous group-finale game, or state explicitly that results are
+  best-response manipulability (currently the latter).
 - [ ] Pin the breadth threshold in the trilemma; relate to (#groups, group size, #wildcards).
 - [ ] Decide whether to attempt a restricted formal impossibility proof.

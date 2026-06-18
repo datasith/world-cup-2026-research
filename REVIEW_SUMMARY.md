@@ -17,9 +17,10 @@
 
 ## Consensus findings (flagged by ≥2 reviewers — highest priority)
 
-### C1. The central objects (`V_adv`, "manipulable state", action space) are under-specified — **R1 (critical), R2 (critical)**
+### C1. The central objects (`V_adv`, "manipulable state", action space) are under-specified — **R1 (critical), R2 (critical)** — ✅ **Done (R10)**
 Every reported number (ρ, multiplier, cross-group share, named P(manip)) is a function of `V_adv` and the action space, but `THEORY.md §6` lists "operationalize V_adv" and "define the action space" as *open*. There's also a definitional clash: `RESULTS.md R1 caveat 5` says Δ = "expected knockout rounds won," while `THEORY.md §2` says "probability-weighted advancement + bracket-path strength" — different functionals.
 **Fix:** give one closed-form `V_adv` (terminal bracket-node values + path weighting + action family), use it everywhere, and report sensitivity to ≥2 specifications (rounds-won vs win-prob-weighted).
+**Done (THEORY §2 + RESULTS R10):** pinned canonical `V_adv` = expected knockout rounds won (subsumes P(advance) + bracket-path); action space {WIN,DRAW,LOSE}→conditioned scorelines; decision-theoretic opponent model — all stated explicitly, §6 open-tasks updated. Sensitivity run under depth/qualify/champion: headline robust under canonical `depth` (1.55 [1.47,1.65]); `qualify`→0 reveals the manipulation is **path/seeding-, not threshold-, driven**; `champion` underpowered. Remaining (still open in §6): finer action space for within-WIN scoreline targeting; equilibrium (vs best-response) treatment.
 
 ### C2. The "trilemma" is a conjecture but the **title asserts it as fact** — **R1 (critical), R2 (critical)**
 `THEORY.md §4` labels it *Conjecture* with an undefined breadth threshold (`§6` open); the title says expansion "breaks the strategyproofness of the group stage." R1 notes it isn't even obviously an impossibility as stated.
@@ -110,7 +111,8 @@ Likelihoods: **R1 0.50 (med)** · **R2 0.78 (med)** · **R3 0.85 (high)**. All t
 7. Fix the N=2 passivity baseline + add an H3 power calculation (C8).
 
 **Do for the paper to be theory-credible (the hard core):**
-8. Pin `V_adv` with one definition + sensitivity (C1).
+8. ✅ **Done (R10)** — pinned `V_adv` (canonical = expected knockout rounds won) + 3-objective
+   sensitivity; headline robust; mechanism shown path-driven not threshold-driven.
 9. Prove the restricted cross-group impossibility proposition; relabel/soften the trilemma + title (C2).
 10. ✅ **Done (R9)** — factorial decomposition isolating the best-third rule: the rule carries the
     multiplier; field-size + group-count alone contributes ~nothing; cross-group manipulability

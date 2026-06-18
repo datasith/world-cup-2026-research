@@ -45,7 +45,7 @@ def md12_snapshot(groups, sampler, rng):
 
 
 def evaluate_format(spec, field, strength_rank, sampler, n_snapshots, n_inner,
-                    min_delta, seed, groups=None):
+                    min_delta, seed, groups=None, objective="depth"):
     """Return per-state (manipulable, cross_group, snapshot_id) arrays for the format.
 
     ``snapshot_id`` records which Monte-Carlo snapshot each state came from. States
@@ -62,7 +62,7 @@ def evaluate_format(spec, field, strength_rank, sampler, n_snapshots, n_inner,
     for s in range(n_snapshots):
         fixed = md12_snapshot(groups, sampler, rng)
         eng = SimEngine(groups, spec, sampler, strength_rank,
-                        n_inner=n_inner, seed=int(rng.integers(1 << 30)))
+                        n_inner=n_inner, seed=int(rng.integers(1 << 30)), objective=objective)
         for gi, teams in enumerate(groups):
             md3 = group_matchdays(teams)[2]
             for team in teams:
@@ -113,6 +113,8 @@ def ratio_ci(num, snum, den, sden, n_boot=2000, alpha=0.05, rng=None):
         boots.append(rn / rd if rd > 0 else np.inf)
     point = num.mean() / den.mean() if den.mean() > 0 else np.inf
     finite = [b for b in boots if np.isfinite(b)]
+    if not finite:                       # denominator rate ~0 in every resample
+        return point, float("nan"), float("nan")
     lo, hi = np.percentile(finite, [100 * alpha / 2, 100 * (1 - alpha / 2)])
     return point, lo, hi
 
@@ -125,6 +127,8 @@ def main():
     ap.add_argument("--seed", type=int, default=7)
     ap.add_argument("--official", action="store_true",
                     help="use the official 2026 draw for the 48-team arm")
+    ap.add_argument("--objective", choices=["depth", "qualify", "champion"], default="depth",
+                    help="V_adv functional: knockout rounds won / P(qualify) / P(champion)")
     args = ap.parse_args()
 
     print("[1/3] fitting Elo on history ...")
@@ -145,16 +149,17 @@ def main():
     print("[2/3] evaluating 32-team format ...")
     f32, r32 = build_field(model, 32)
     m32, c32, s32 = evaluate_format(SPEC_32, f32, r32, sampler, args.snapshots, args.inner,
-                                    args.margin, args.seed)
+                                    args.margin, args.seed, objective=args.objective)
 
     print("[3/3] evaluating 48-team format ...")
     m48, c48, s48 = evaluate_format(SPEC_48, field48, r48, sampler, args.snapshots, args.inner,
-                                    args.margin, args.seed + 1, groups=official_groups)
+                                    args.margin, args.seed + 1, groups=official_groups,
+                                    objective=args.objective)
 
     boot = np.random.default_rng(args.seed + 99)
     print("\n=== manipulability (final-matchday decisions; 95% cluster-bootstrap CIs) ===")
     print(f"snapshots={args.snapshots} inner={args.inner} margin={args.margin} "
-          f"(CIs resample whole snapshots)")
+          f"objective={args.objective} (CIs resample whole snapshots)")
     for label, m, c, s in (("32-team", m32, c32, s32), ("48-team", m48, c48, s48)):
         rho, rlo, rhi = bootstrap_ci(m, s, rng=boot)
         # cross-group share = P(cross-group | manipulable)

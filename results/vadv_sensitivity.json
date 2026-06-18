@@ -1,0 +1,74 @@
+{
+  "meta": {
+    "snapshots": 160,
+    "inner": 150,
+    "margin": 0.05,
+    "seed": 7,
+    "official": true
+  },
+  "by_objective": [
+    {
+      "objective": "depth",
+      "rho32": 0.171484375,
+      "rho32_ci": [
+        0.162890625,
+        0.180078125
+      ],
+      "rho48": 0.26588541666666665,
+      "rho48_ci": [
+        0.25767903645833334,
+        0.27447916666666666
+      ],
+      "cross_group_share_48": 0.48677766895200786,
+      "multiplier": 1.5504935459377371,
+      "multiplier_ci": [
+        1.466627282491944,
+        1.6453048054621409
+      ],
+      "n_manip32": 878,
+      "n_manip48": 2042
+    },
+    {
+      "objective": "qualify",
+      "rho32": 0.0,
+      "rho32_ci": [
+        0.0,
+        0.0
+      ],
+      "rho48": 0.0,
+      "rho48_ci": [
+        0.0,
+        0.0
+      ],
+      "cross_group_share_48": 0.0,
+      "multiplier": Infinity,
+      "multiplier_ci": [
+        NaN,
+        NaN
+      ],
+      "n_manip32": 0,
+      "n_manip48": 0
+    },
+    {
+      "objective": "champion",
+      "rho32": 0.0208984375,
+      "rho32_ci": [
+        0.0169921875,
+        0.024609375
+      ],
+      "rho48": 0.012239583333333333,
+      "rho48_ci": [
+        0.010026041666666667,
+        0.014453125
+      ],
+      "cross_group_share_48": 0.3191489361702128,
+      "multiplier": 0.5856697819314642,
+      "multiplier_ci": [
+        0.45110318531371163,
+        0.7619047619047619
+      ],
+      "n_manip32": 107,
+      "n_manip48": 94
+    }
+  ]
+}
