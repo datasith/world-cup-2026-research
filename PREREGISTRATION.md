@@ -4,7 +4,7 @@
 48 teams breaks the strategyproofness of the group stage.*
 **Authors:** datasith et al. (California Institute of Technology)
 **Protocol drafted (frozen, pre-data):** 2026-06-16 — **before Matchday 2 (MD2) is played.**
-**Freeze commit:** `ea3086323bb74afa21e96600e177d854ad5cac7a` (tag `freeze-2026-06-18`) · **Zenodo DOI:** `<filled on release>` · **arXiv (secondary):** `<filled on posting>`
+**Freeze commit:** `ea3086323bb74afa21e96600e177d854ad5cac7a` (tag `freeze-2026-06-18`) · **Zenodo DOI:** `10.5281/zenodo.20750579` · **arXiv (secondary):** `<filled if posted>`
 **Code:** https://github.com/datasith/world-cup-2026
 
 > The scientific value of this document is that it fixes the model, the predictions, and
