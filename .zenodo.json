@@ -1,0 +1,33 @@
+{
+  "title": "Pre-stated predictions: manipulability of the 2026 FIFA World Cup group finale",
+  "description": "Frozen, prospective predictions and analysis code for a study of strategic manipulability in the 48-team 2026 FIFA World Cup group stage. Conditioned on all 24 Matchday-1 results with Matchday 2 and Matchday 3 unplayed, this archives the named Matchday-3 matches the model flags as manipulable (the robust set), the locked scoring rule, and the simulation/theory code. The archive timestamps these predictions before the outcomes they predict. See PREREGISTRATION.md for the full protocol and RESULTS.md (R11) for the registered prediction set.",
+  "upload_type": "software",
+  "access_right": "open",
+  "license": "cc-by-4.0",
+  "creators": [
+    {
+      "name": "Zabala, TODO-given-name",
+      "affiliation": "California Institute of Technology",
+      "orcid": "TODO-0000-0000-0000-0000"
+    }
+  ],
+  "keywords": [
+    "mechanism design",
+    "strategyproofness",
+    "tournament design",
+    "manipulability",
+    "FIFA World Cup 2026",
+    "best-third-placed rule",
+    "Monte Carlo simulation",
+    "prospective prediction",
+    "natural experiment",
+    "sports analytics"
+  ],
+  "related_identifiers": [
+    {
+      "identifier": "https://github.com/datasith/worldcup-2026-research",
+      "relation": "isSupplementTo",
+      "scheme": "url"
+    }
+  ]
+}

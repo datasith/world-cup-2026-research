@@ -1,8 +1,10 @@
-# Freeze checklist — OSF pre-registration (after MD1, 2026-06-17)
+# Freeze checklist — public prospective timestamp (after MD1, 2026-06-17)
 
 Step-by-step to lock the live prediction. The **scientific value is the timestamp**: the model,
-predictions, and scoring rule must be registered *before* MD2/MD3 are played. Everything technical
-is prepared; the OSF registration itself is a manual step you perform on osf.io (I cannot post there).
+predictions, and scoring rule must be made public *before* MD2/MD3 are played. We use a **dated arXiv
+note + a signed git tag + a Zenodo DOI** (not OSF, which is little used in this field); the SHA-256
+digests give content integrity regardless of venue. The arXiv and Zenodo steps are manual (your
+accounts); everything else is prepared.
 
 ---
 
@@ -37,32 +39,36 @@ git rev-parse HEAD          # <- this is the FREEZE COMMIT HASH
 git tag freeze-2026-06-17 && git push --tags   # optional, human-friendly handle
 ```
 
-Tag + push **before** registering, so the OSF record can point at an existing public commit.
+Tag + push **before** posting, so arXiv/Zenodo can point at an existing public commit.
 
-## 3. Create the OSF registration (manual, on osf.io)
+## 3. Establish the public timestamp (arXiv + Zenodo)
 
-1. Sign in at <https://osf.io> → **Create new project** ("WC2026 manipulability — pre-registration").
-2. In the project, **Add-ons / link the GitHub repo** (or upload `PREREGISTRATION.md` +
-   `results/r4_freeze_elo.json` + `results/r4_freeze_poisson.json` directly as files).
-3. Left sidebar → **Registrations** → **New registration** → choose the
-   **"OSF Preregistration"** (or **"Open-Ended Registration"**) template.
-4. In the registration form, paste / attach:
-   - the full text of `PREREGISTRATION.md`,
-   - the **freeze commit hash** from step 2 and the GitHub URL at that commit, e.g.
-     `https://github.com/datasith/worldcup-2026-research/tree/<hash>`,
-   - the two frozen artifact files (the named predictions).
-5. Set an **embargo** only if you want it private until publication; otherwise register public so
-   the timestamp is immediately verifiable.
-6. Submit. OSF issues a **registration DOI** (e.g. `10.17605/OSF.IO/XXXXX`) and a frozen timestamp.
+### 3a. arXiv predictions note (the primary, backdate-proof timestamp)
+1. Build `paper/arxiv_predictions.tex` → PDF (`pdflatex arxiv_predictions.tex`); confirm it names the
+   robust-set matches, the scoring rule, the freeze commit, and the two SHA-256 digests.
+2. Submit at <https://arxiv.org/submit> — category **stat.AP** (cross-list **physics.soc-ph** and/or
+   **econ.GN**). Source upload (the `.tex`) is preferred over PDF-only.
+3. arXiv moderation can take 1–2 business days; submit **now** so it posts before MD3 (~June 23–27).
+   The arXiv submission datestamp is the unfakeable public timestamp.
+
+### 3b. Zenodo DOI (immutable archived snapshot of the artifacts)
+1. One-time: sign in at <https://zenodo.org> with GitHub/ORCID → **Settings → GitHub** → toggle the
+   repo `datasith/worldcup-2026-research` **ON** (this installs the release webhook).
+2. Edit `.zenodo.json` to fill your name + ORCID (currently placeholders), commit, push.
+3. Cut a GitHub release **on the freeze tag**: `gh release create freeze-2026-06-18 --title "Freeze: pre-registered MD3 predictions" --notes "see PREREGISTRATION.md"` (or via the GitHub UI). Zenodo
+   auto-archives that release and mints a **version DOI** (plus a concept DOI).
+   - Requires the repo to be **public**. If it must stay private, instead use Zenodo **New upload**
+     and attach `results/r4_freeze_elo.json`, `results/r4_freeze_poisson.json`, `PREREGISTRATION.md`
+     manually → publish → DOI.
 
 ## 4. Record the identifiers back in the repo
 
-Edit the `PREREGISTRATION.md` §0 header:
+Edit the `PREREGISTRATION.md` §0 header (and the manuscript's Prospective-predictions paragraph):
 ```
-**Freeze commit:** <hash>  ·  **OSF DOI:** 10.17605/OSF.IO/XXXXX
+**Freeze commit:** ea3086323... (tag freeze-2026-06-18) · **arXiv:** 2506.XXXXX · **Zenodo DOI:** 10.5281/zenodo.XXXXXXX
 ```
 ```bash
-git add PREREGISTRATION.md && git commit -m "Record OSF DOI + freeze hash" && git push
+git add PREREGISTRATION.md paper/main.tex && git commit -m "Record arXiv id + Zenodo DOI + freeze hash" && git push
 ```
 (This commit comes *after* the freeze; it only annotates, it does not change predictions.)
 
@@ -78,8 +84,10 @@ git add PREREGISTRATION.md && git commit -m "Record OSF DOI + freeze hash" && gi
 ### Notes / caveats to keep visible
 - Freezing after MD1 means **MD2 and MD3 are both unobserved** — predictions are a genuine
   two-matchday-ahead forecast (stronger anti-leakage; wider intervals). Disclosed in §6.
-- The OSF DOI is what reviewers cite as proof of pre-registration; the git hash is the
-  machine-verifiable companion. Both are needed.
-- If you prefer a lighter-weight timestamp than OSF, an alternative is to `git tag` + push and
-  additionally post the artifact hash somewhere timestamped (e.g. an OSF file, or a tweet/permalink).
-  OSF is the standard reviewers expect.
+- The **arXiv datestamp** is the primary proof the predictions predate the outcomes (third-party,
+  cannot be backdated); the **Zenodo DOI** gives a citable, immutable artifact snapshot; the **signed
+  git tag + SHA-256 digests** are the machine-verifiable companions. We deliberately do not use OSF
+  (low adoption in this field); the integrity guarantee does not depend on the venue.
+- Note for submission: under single-blind review (Nature default) author identity is visible anyway,
+  so a public arXiv note is not a conflict; if opting into double-blind, anonymize the manuscript and
+  be aware the public note makes true anonymity imperfect (still permitted).

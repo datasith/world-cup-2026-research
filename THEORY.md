@@ -170,7 +170,7 @@ assert equivalence.
 
 ## 5. Empirical test (this month — the live differentiator)
 
-- **Pre-register** (OSF, before MD3, ~2026-06-24): the explicit list of *theoretically manipulable*
+- **Publicly time-stamp** (arXiv preprint + signed git tag, before MD3): the explicit list of *theoretically manipulable*
   group-finale states the simulator flags, and the result each implicated team would "want."
 - **Observe** MD3: did implicated teams play toward the manipulation-optimal result? Use live
   win-probability volatility / shot-rate / pressing intensity as passivity proxies.

@@ -1,0 +1,98 @@
+% =====================================================================
+% Short, dated predictions note for arXiv — the public, third-party
+% time-stamp of our prospective predictions (posted before MD2/MD3).
+% Build: pdflatex arxiv_predictions.tex
+% =====================================================================
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,booktabs,hyperref}
+\hypersetup{colorlinks=true, allcolors=blue!60!black}
+\title{\bfseries Game's gone: pre-registered manipulability in the 2026 World Cup\\
+\large\normalfont\itshape pre-stated predictions for the group finale}
+\author{datasith \\ \small California Institute of Technology}
+\date{\today}
+\begin{document}
+\maketitle
+
+\begin{abstract}
+\noindent
+Before Matchday 2 and Matchday 3 of the 2026 FIFA World Cup are played, we state the matches our
+model flags as \emph{manipulable} --- final-group-stage decisions in which a team's
+advancement-optimal action is not to maximize its chance of winning. The purpose of this note is to
+place those predictions, and the rule for scoring them, on the public record with a verifiable
+timestamp. The expanded 48-team format advances the eight best third-placed teams, which we find
+raises final-matchday manipulability by roughly $1.7\times$ relative to the 32-team format and,
+uniquely, creates \emph{cross-group} manipulability that simultaneous kickoffs cannot remove. We name
+the five Matchday-3 matches most likely to contain a manipulable team and commit, in advance, to how
+we will evaluate them after the group stage concludes.
+\end{abstract}
+
+\section{Setup}
+A team's final group match is a \emph{manipulable state} when the action maximizing its expected
+knockout progression $V_{\mathrm{adv}}$ (expected knockout rounds won; $0$ if eliminated) differs from
+the action maximizing its probability of winning that match. We simulate the full tournament from the
+official 2026 draw under two independent team-strength models --- a time-varying Elo model and a
+hierarchical Bayesian Poisson goals model --- conditioning on all $24$ real Matchday-1 results, with
+Matchday 2 and Matchday 3 unplayed. For each team's Matchday-3 decision we condition its match on each
+target result (win/draw/lose), simulate the remainder of the tournament through the official Round-of-32
+bracket, and compare advancement values. A flagged incentive is \emph{cross-group} when the
+advancement-optimal action qualifies the team via the best-third pool, i.e.\ depends on other groups.
+
+\section{What the simulation finds}
+Final-matchday manipulability is markedly higher under 48 teams: the expansion multiplier is
+$\rho_{48}/\rho_{32}=1.69$ (95\% CI $[1.59,1.80]$).\footnote{The multiplier and its decomposition are
+estimated in a matched-strength simulation; the named Matchday-3 predictions below additionally use the
+official 2026 Round-of-32 bracket. Full methods, robustness, and code are in the repository at the
+commit below.} A factorial decomposition attributes this almost entirely to the best-third rule
+($\rho_A/\rho_B=1.72$, $[1.63,1.81]$, holding field, group count, and draw fixed), not the larger field
+or group count ($\rho_B/\rho_C=0.98$, $[0.92,1.06]$). Cross-group manipulability is present in $49\%$ of
+manipulable 48-team states and is identically $0\%$ under 32 teams. A restricted theorem explains why:
+group qualification is monotone in own performance (no threshold-tanking), so manipulability is
+path-valued, and the best-third rule injects a cross-group advancement channel that within-group
+simultaneity cannot neutralize.
+
+\section{The predictions (frozen before MD2/MD3)}
+Cross-model agreement on per-match $P(\text{manipulable})$ is Spearman $\rho_s = 0.964$. The
+\textbf{registered robust set} (matches with $P(\text{manipulable})\ge 0.50$ under \emph{both} models):
+
+\begin{center}
+\begin{tabular}{llcc}
+\toprule
+Group & Match & $P(\text{manip})$ elo/pois & $P(\text{cross})$ elo/pois \\
+\midrule
+C & Brazil vs Scotland        & 56\% / 78\% & 29\% / 36\% \\
+B & Canada vs Switzerland     & 57\% / 74\% & 28\% / 41\% \\
+A & Czech Republic vs Mexico  & 55\% / 67\% & 16\% / 22\% \\
+J & Algeria vs Austria        & 54\% / 65\% & \textbf{39\% / 51\%} \\
+F & Netherlands vs Sweden     & 56\% / 58\% & 35\% / 40\% \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent
+\textbf{Registered cross-group teams} ($P(\text{cross\_group})\ge 0.20$ under both models): Algeria,
+Austria (Group~J), Sweden, Netherlands, Japan (Group~F). Algeria--Austria is the strongest cross-group
+match; Group~F is the cross-group hotspot.
+
+\section{How we will score these (committed in advance)}
+\textbf{Primary (behavior-independent).} H1: the multiplier's 95\% CI excludes $1$. H2: the cross-group
+share is positive under 48 teams and zero under 32. Both are decided by the frozen computation and the
+realized final standings; no team behavior is required.
+
+\textbf{Secondary (behavioral, explicitly confoundable).} For the robust set we will compare each
+implicated team's Matchday-3 passivity (shot rate, pressing intensity, in-play win-probability
+volatility, standardized against a strength-matched historical baseline) using a pre-specified composite
+index with Benjamini--Hochberg correction. By our pre-set power rule the expected number of realized
+robust manipulable matches is $E=2.76<3$, so this endpoint is reported as descriptive/illustrative only;
+the behavior-independent endpoints carry the test.
+
+\section{Integrity}
+The model, predictions, and scoring rule are fixed at repository commit
+\texttt{ea3086323bb74afa21e96600e177d854ad5cac7a} (tag \texttt{freeze-2026-06-18}). The two frozen
+prediction artifacts have SHA-256 digests
+\texttt{b831d36027ebba4287c2dc7544d1f86cfe64228f4b7842a8a4f8f68c51e439c1} (Elo) and
+\texttt{50783eb83565e674e428a04d4c8979f16f3fa3c1dcece54fedfafe8ba85faebd} (Poisson). The arXiv
+submission date of this note is the public timestamp establishing that these predictions predate
+Matchday 2 and Matchday 3.
+
+\end{document}

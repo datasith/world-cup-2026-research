@@ -4,7 +4,7 @@
 48 teams breaks the strategyproofness of the group stage.*
 **Authors:** datasith et al. (California Institute of Technology)
 **Protocol drafted (frozen, pre-data):** 2026-06-16 — **before Matchday 2 (MD2) is played.**
-**Freeze commit:** `<filled at OSF submission>` · **OSF DOI:** `<filled at OSF submission>`
+**Freeze commit:** `ea3086323bb74afa21e96600e177d854ad5cac7a` (tag `freeze-2026-06-18`) · **arXiv:** `<filled on posting>` · **Zenodo DOI:** `<filled on release>`
 **Code:** https://github.com/datasith/world-cup-2026
 
 > The scientific value of this document is that it fixes the model, the predictions, and
@@ -108,8 +108,11 @@ produced by the freeze run (§6)** conditioned on all results available at freez
   conditions on every MD1 result recorded in `data/draw_2026.json` at freeze time and simulates all
   unplayed MD1/MD2 continuations; if MD1 is not fully recorded, that is disclosed (RESULTS R4: 16/24).
 - **Procedure:** (a) ensure `data/draw_2026.json` holds all available MD1 results; (b) run the
-  locked command under both models; (c) commit the artifact + this protocol; (d) push and create the
-  OSF registration referencing the freeze commit hash; (e) record hash + DOI in §0 header.
+  locked command under both models; (c) commit + signed-tag the freeze and push; (d) establish the
+  public timestamp — post the dated arXiv predictions note (`paper/arxiv_predictions.tex`) and cut a
+  GitHub release so Zenodo archives the artifacts and mints a DOI; (e) record the freeze hash, arXiv
+  id, and Zenodo DOI in the §0 header. *(We use arXiv + Zenodo + the signed tag rather than OSF, which
+  has low adoption in this field; the SHA-256 digests provide content integrity regardless of venue.)*
 - **Locked command:**
   `uv run python scripts/run_r4_named.py --bracket official --model elo --snapshots 400 --inner 150 --margin 0.05 --out results/r4_freeze_elo.json`
   `uv run python scripts/run_r4_named.py --bracket official --model poisson --snapshots 400 --inner 150 --margin 0.05 --out results/r4_freeze_poisson.json`

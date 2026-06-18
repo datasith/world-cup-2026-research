@@ -1,9 +1,9 @@
 # World Cup 2026 — Research Design Plan
 
-**Working title (placeholder):** *The price of expansion is manipulability: the best-third rule, not
-the larger field, increases group-stage manipulability in the 48-team World Cup.* (Softened from
+**Title:** *Game's gone: pre-registered manipulability in the 2026 World Cup* (subtitle: *the
+best-third rule, not the larger field, increases group-stage manipulability*). Softened from
 "breaks the strategyproofness" per reviewer R1 — we prove a restricted cross-group existence result,
-THEORY §4.1, and measure the increase, R9; we do not prove a general impossibility.)
+THEORY §4.1, and measure the increase, R9; we do not prove a general impossibility.
 
 Lead result is the game-theoretic **manipulability / strategyproofness** analysis (angle #4),
 instrumented by the entropy/predictability machinery and tested live this month. Formal
@@ -113,5 +113,7 @@ See `data/README.md` for the source catalog and licensing notes.
 ## 6. Open decisions (for the user)
 1. Anchor angle: A-lead triad (recommended) vs. single sharp angle?
 2. Primary target journal: design-for Nature Human Behaviour/PNAS (recommended) vs. flagship-first?
-3. Do we commit to a public **pre-registration** (OSF) of the live predictions? (Big credibility win.)
+3. Public **prospective time-stamp** of the live predictions via a dated arXiv note + signed git tag
+   + Zenodo DOI, rather than OSF (low adoption in our field); the content hashes give integrity. (Big
+   credibility win.)
 4. Strength backbone: Elo-first (fast) vs. Bayesian Poisson-first (more defensible)?
