@@ -86,9 +86,10 @@ noise band) is reported at {0.03, 0.05, 0.08}; conclusions must not hinge on one
 
 ## 5. The predictions (frozen artifact)
 
-The named MD3 predictions are the ranked `matches` and `teams` arrays in the frozen artifact
-`results/r4_named.json` (regenerated and re-frozen post-MD2; see §6). Each carries
-`p_manipulable` and `p_cross_group`. The **registered prediction set** is, at freeze time:
+The named MD3 predictions are the ranked `matches` and `teams` arrays in the frozen artifacts
+`results/r4_freeze_elo.json` and `results/r4_freeze_poisson.json` (official bracket, ≥400 snapshots;
+produced by the §6 command). Each carries `p_manipulable` and `p_cross_group`. The **registered
+prediction set** is, at freeze time:
 
 - **Match-level:** the ranking of all 24 MD3 matches by P(manipulable), and the named subset
   with P(manipulable) ≥ 0.50 under both models (the *robust* set).
@@ -110,7 +111,8 @@ produced by the freeze run (§6)** conditioned on all results available at freez
   locked command under both models; (c) commit the artifact + this protocol; (d) push and create the
   OSF registration referencing the freeze commit hash; (e) record hash + DOI in §0 header.
 - **Locked command:**
-  `uv run python scripts/run_r4_named.py --bracket official --model {elo,poisson} --snapshots 400 --inner 150 --margin 0.05`
+  `uv run python scripts/run_r4_named.py --bracket official --model elo --snapshots 400 --inner 150 --margin 0.05 --out results/r4_freeze_elo.json`
+  `uv run python scripts/run_r4_named.py --bracket official --model poisson --snapshots 400 --inner 150 --margin 0.05 --out results/r4_freeze_poisson.json`
 
 ## 7. Scoring rule (fixed before data)
 
