@@ -44,9 +44,23 @@ they do **not** depend on how teams behave). H3 adds named, in-tournament predic
 - **Primary strength model:** time-varying Elo, full-history fit (`src/wc2026/fit_elo.py`),
   Elo→Poisson scoreline sampler (`EloSampler`, base_goals=1.35, spread=0.95).
 - **Robustness model (co-primary for H3 stability):** hierarchical Bayesian Poisson
-  (Dixon–Coles style, `src/wc2026/bayesian.py`), `PoissonSampler`.
+  (`src/wc2026/bayesian.py`, non-centered, 4 chains), `PoissonSampler`. *Calibration note (C7):*
+  the current Poisson is **independent** (no Dixon–Coles low-score ρ), which underestimates draw
+  probabilities; both models' goal parameters are not yet fit to goal-level data. We commit to
+  reporting out-of-sample calibration (Brier / log-loss / RPS, plus draw-cell calibration) in the
+  manuscript and to checking that the named predictions are unchanged under a ρ-corrected refit;
+  this is a stated limitation, and the freeze locks the models *as implemented*.
+- **Knockout bracket:** the **official 2026 R32→final bracket** (`src/wc2026/bracket.py`,
+  `--bracket official`), not the strength-seeded stand-in, so V_adv reflects the real bracket
+  geometry (this is load-bearing for the cross-group/path mechanism; THEORY §4.1).
 - **Simulator:** Monte-Carlo over the bracket; format and draw are the swapped variables.
   Official 2026 draw: `data/draw_2026.json`. Official matchday schedule used for MD ordering.
+  *Information regime (C6):* a team's MD3 decision is evaluated at its **pre-match information set**
+  — cross-group results already completed under the official schedule are known; the simultaneous
+  same-group match is not. The static pre-match regime is the registered one; sensitivity to a
+  full-live-information regime is a stated limitation (the schedule's temporal asymmetry across
+  groups is precisely why cross-group dependencies are observable and not removed by within-group
+  simultaneity).
 - **Determinism:** all runs use fixed seeds (default `--seed 20260616`); the frozen artifact
   records its seed, snapshot, inner, and margin parameters in its `meta` block.
 - **Monte-Carlo budget at freeze:** snapshots ≥ 400, inner ≥ 150 — convergence-justified: the
@@ -81,19 +95,22 @@ The named MD3 predictions are the ranked `matches` and `teams` arrays in the fro
 - **Team-level:** the named teams with P(cross_group) ≥ 0.20 — the simultaneity-proof cases,
   which are the mechanism's signature and the sharpest novelty.
 
-The early (pre-MD2) projection recorded in RESULTS.md R4 is **not** the registered set; it is
-disclosed as a preliminary projection. The registered set is the post-MD2 re-run (§6), which
-conditions on real MD1+MD2 results so that only MD3 outcomes remain uncertain.
+Early projections in RESULTS.md R4/R11 are preliminary; the **registered set is the artifact
+produced by the freeze run (§6)** conditioned on all results available at freeze time.
 
 ## 6. Freeze timing and procedure
 
-- **Window:** after MD2 completes and before MD3 kicks off (~2026-06-23/24). This is the
-  lowest-variance freeze — all of MD1 and MD2 are then real, only MD3 is uncertain.
-- **Procedure:** (a) update `data/draw_2026.json` with real MD2 results; (b) run the locked
-  command under both models; (c) commit the artifact + this protocol; (d) push and create the
+- **Window (amended 2026-06-17, §9):** **after Matchday 1, before Matchday 2** (~2026-06-17/18).
+  This trades the lowest-variance freeze (post-MD2) for **maximal lead time** — MD2 *and* MD3 are
+  unobserved at freeze, so the named predictions are a genuinely prospective two-matchday-ahead
+  forecast (a stronger anti-leakage guarantee, at the cost of wider intervals). The simulator
+  conditions on every MD1 result recorded in `data/draw_2026.json` at freeze time and simulates all
+  unplayed MD1/MD2 continuations; if MD1 is not fully recorded, that is disclosed (RESULTS R4: 16/24).
+- **Procedure:** (a) ensure `data/draw_2026.json` holds all available MD1 results; (b) run the
+  locked command under both models; (c) commit the artifact + this protocol; (d) push and create the
   OSF registration referencing the freeze commit hash; (e) record hash + DOI in §0 header.
 - **Locked command:**
-  `uv run python scripts/run_r4_named.py --model {elo,poisson} --snapshots 400 --inner 150 --margin 0.05`
+  `uv run python scripts/run_r4_named.py --bracket official --model {elo,poisson} --snapshots 400 --inner 150 --margin 0.05`
 
 ## 7. Scoring rule (fixed before data)
 
@@ -105,16 +122,28 @@ real draw/results; **no team behavior is required.** This is the rigorous core o
 **Secondary (corroborating, behavior-based, H3).** For each robust named match, classify the
 implicated team's MD3 performance as *consistent* / *inconsistent* / *non-diagnostic* with the
 manipulation-optimal action, using **pre-specified passivity proxies**: in-play win-probability
-volatility, shot rate, and pressing intensity (PPDA) relative to that team's own tournament
-baseline, evaluated **only once the team's advancement-optimal target is non-winning and the
-match is live at the decision point.** Report the count of confirmed vs. falsified named
-predictions and a rank correlation (Spearman) between P(manipulable) and an ex-post incentive
-indicator. The secondary endpoint is reported as **corroborating evidence, explicitly
-confoundable** (see §8) — it does not gate the paper's main claim.
+volatility, shot rate, and pressing intensity (PPDA), evaluated **only once the team's
+advancement-optimal target is non-winning and the match is live at the decision point.**
 
-**A single pre-registered, then realized, manipulation event** (a top-ranked team visibly
-playing for a non-winning result that its frozen incentive predicted) is the headline
-illustration, framed as illustration, not as the test.
+*Baseline (fixed; C8 — replaces the earlier "own tournament baseline").* A team's MD1+MD2 in this
+tournament is only **N=2 matches**, far too few to define a null. Instead each proxy is standardized
+against a **historical/strength-matched baseline**: the distribution of that proxy for teams of
+comparable strength (Elo bin) in competitive internationals over the prior 2–3 years, with opponent
+strength and game-state as covariates. The test statistic is a single **pre-registered composite
+passivity index** (mean of the standardized proxies); match-level tests use **Benjamini–Hochberg FDR
+control** across the robust set.
+
+*Power (fixed; C8).* The behavioral test is powered only if enough manipulable MD3 matches are
+actually *realized*. We pre-compute, from the frozen artifact, the **expected number of realized
+robust manipulable matches** $E=\sum_{m\in\text{robust}}P(\text{manip}_m)$ and its distribution over
+continuations; **if $E<3$ the behavioral endpoint is declared underpowered and reported as
+descriptive/illustrative only** (the primary, behavior-independent endpoint carries the paper). The
+realized $E$ from the freeze run is recorded in RESULTS R11.
+
+Report the count of confirmed vs. falsified named predictions and a rank correlation (Spearman)
+between P(manipulable) and an ex-post incentive indicator. The secondary endpoint is **corroborating,
+explicitly confoundable** (§8) and does not gate the main claim. A single pre-registered, then
+realized, manipulation event is the headline **illustration**, not the test.
 
 ## 8. Confounds and limitations (declared in advance)
 
@@ -122,9 +151,14 @@ illustration, framed as illustration, not as the test.
   behavior endpoint is secondary and the manipulable-state *count* is primary.
 - Strength-model error propagates to projected standings; mitigated by the dual-model
   robustness rule (§4) and by conditioning on real results at freeze (§6).
-- Best-third tie-breaks and FIFA's exact disciplinary/lots rules are implemented as specified
-  in `formats.py`; any deviation discovered is logged in §9, not silently corrected.
-- Monte-Carlo noise: reported with bootstrap CIs; budget raised if CIs are too wide (§3).
+- Best-third tie-breaks: group ranking uses points, GD, GF, head-to-head, then a seeded coin
+  (`formats.py`); the R32 third-place→slot assignment uses the official candidate sets
+  (`bracket.py`). **Fair-play / disciplinary tie-breaks are not simulated** (cards unmodelled) —
+  a stated limitation; any deviation discovered is logged in §9, not silently corrected.
+- Information regime is the static pre-match set (C6, §3); live in-play dynamics are not modelled.
+- Strength models: independent Poisson (no Dixon–Coles ρ) and hand-set Elo→goals mapping; calibration
+  to be reported and the named set re-checked under a ρ-corrected refit (C7, §3).
+- Monte-Carlo noise: reported with cluster-bootstrap CIs; budget raised if CIs are too wide (§3).
 
 ## 9. Amendment log
 
@@ -135,3 +169,11 @@ Any change after 2026-06-16 is dated and justified here; pre-data text above is 
   Justification: a convergence study (RESULTS.md R8) showed low-snapshot estimates are noisy and the
   per-state bootstrap mis-specifies the resampling unit. Both changes are pre-MD2 (no MD2/MD3 outcome
   data exist yet) and only make the analysis more conservative; no hypothesis or prediction changed.
+- **2026-06-17 (reviewer-driven, all pre-MD2):** (a) §6 freeze window moved to **after MD1, before
+  MD2** for maximal lead time (predictions become a two-matchday-ahead forecast). (b) §3 knockout
+  switched to the **official R32→final bracket** (`bracket.py`) from the strength-seeded stand-in.
+  (c) §7 passivity baseline changed from the N=2 "own tournament" baseline to a **historical
+  strength-matched** baseline + composite index + BH-FDR, and a **power rule** added ($E<3$ ⇒
+  behavioral endpoint descriptive only). (d) §3 calibration (Dixon–Coles ρ) and information-regime
+  limitations declared. None of these change the hypotheses or the prediction *targets*; they make the
+  geometry exact and the scoring more conservative, before any MD2/MD3 data exist.
