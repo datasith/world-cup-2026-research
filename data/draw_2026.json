@@ -1,9 +1,9 @@
 {
   "_provenance": {
     "source": "FIFA Final Draw (2025-12-05, Washington DC); compositions and matchday-1 results cross-checked via CBS Sports and Wikipedia per-group pages",
-    "retrieved": "2026-06-16",
+    "retrieved": "2026-06-17",
     "team_names": "normalized to martj42/international_results spellings (USA->United States, Czechia->Czech Republic, Cabo Verde->Cape Verde, Curacao->Curacao with cedilla)",
-    "notes": "Group ordering lists the Pot-1 seed first; intra-group positions (A1..A4) and the official matchday schedule are a pending refinement. Playoff winners resolved: Czech Republic (A), Bosnia and Herzegovina (B), Turkey (D), Iraq (I), DR Congo (K).",
+    "notes": "Group ordering lists the Pot-1 seed first; intra-group positions (A1..A4) and the official matchday schedule are a pending refinement. Playoff winners resolved: Czech Republic (A), Bosnia and Herzegovina (B), Turkey (D), Iraq (I), DR Congo (K). | 2026-06-17: completed MD1 to 24/24 (groups I,J,K,L added from Wikipedia per-group pages); fixed Group J intra-group order to [Argentina,Algeria,Austria,Jordan] so derived MD1 (Arg-Alg, Aut-Jor) matches the real fixtures (MD3 pairings unchanged).",
     "schedule_source": "MD3 from Wikipedia per-group pages (A,I,J,K,L direct; B-H derived as the third K4 matching from played MD1 + Al Jazeera MD2, each validated). Groups reordered to FIFA positional order [pos1..pos4] so MD1={1-2,3-4}, MD2={1-3,2-4}, MD3={1-4,2-3]."
   },
   "groups": {
@@ -63,8 +63,8 @@
     ],
     "J": [
       "Argentina",
-      "Austria",
       "Algeria",
+      "Austria",
       "Jordan"
     ],
     "K": [
@@ -207,6 +207,70 @@
       "away": "Uruguay",
       "hg": 1,
       "ag": 1,
+      "matchday": 1
+    },
+    {
+      "group": "I",
+      "home": "France",
+      "away": "Senegal",
+      "hg": 3,
+      "ag": 1,
+      "matchday": 1
+    },
+    {
+      "group": "I",
+      "home": "Norway",
+      "away": "Iraq",
+      "hg": 4,
+      "ag": 1,
+      "matchday": 1
+    },
+    {
+      "group": "J",
+      "home": "Argentina",
+      "away": "Algeria",
+      "hg": 3,
+      "ag": 0,
+      "matchday": 1
+    },
+    {
+      "group": "J",
+      "home": "Austria",
+      "away": "Jordan",
+      "hg": 3,
+      "ag": 1,
+      "matchday": 1
+    },
+    {
+      "group": "K",
+      "home": "Portugal",
+      "away": "DR Congo",
+      "hg": 1,
+      "ag": 1,
+      "matchday": 1
+    },
+    {
+      "group": "K",
+      "home": "Uzbekistan",
+      "away": "Colombia",
+      "hg": 1,
+      "ag": 3,
+      "matchday": 1
+    },
+    {
+      "group": "L",
+      "home": "England",
+      "away": "Croatia",
+      "hg": 4,
+      "ag": 2,
+      "matchday": 1
+    },
+    {
+      "group": "L",
+      "home": "Ghana",
+      "away": "Panama",
+      "hg": 1,
+      "ag": 0,
       "matchday": 1
     }
   ],
