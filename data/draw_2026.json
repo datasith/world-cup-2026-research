@@ -1,9 +1,9 @@
 {
   "_provenance": {
     "source": "FIFA Final Draw (2025-12-05, Washington DC); compositions and matchday-1 results cross-checked via CBS Sports and Wikipedia per-group pages",
-    "retrieved": "2026-06-17",
+    "retrieved": "2026-06-29",
     "team_names": "normalized to martj42/international_results spellings (USA->United States, Czechia->Czech Republic, Cabo Verde->Cape Verde, Curacao->Curacao with cedilla)",
-    "notes": "Group ordering lists the Pot-1 seed first; intra-group positions (A1..A4) and the official matchday schedule are a pending refinement. Playoff winners resolved: Czech Republic (A), Bosnia and Herzegovina (B), Turkey (D), Iraq (I), DR Congo (K). | 2026-06-17: completed MD1 to 24/24 (groups I,J,K,L added from Wikipedia per-group pages); fixed Group J intra-group order to [Argentina,Algeria,Austria,Jordan] so derived MD1 (Arg-Alg, Aut-Jor) matches the real fixtures (MD3 pairings unchanged).",
+    "notes": "Group ordering lists the Pot-1 seed first; intra-group positions (A1..A4) and the official matchday schedule are a pending refinement. Playoff winners resolved: Czech Republic (A), Bosnia and Herzegovina (B), Turkey (D), Iraq (I), DR Congo (K). | 2026-06-17: completed MD1 to 24/24 (groups I,J,K,L added from Wikipedia per-group pages); fixed Group J intra-group order to [Argentina,Algeria,Austria,Jordan] so derived MD1 (Arg-Alg, Aut-Jor) matches the real fixtures (MD3 pairings unchanged). | 2026-06-29: added MD2+MD3 (48 matches) from Wikipedia per-group pages; matchdays assigned by fixture structure and validated against reported final points.",
     "schedule_source": "MD3 from Wikipedia per-group pages (A,I,J,K,L direct; B-H derived as the third K4 matching from played MD1 + Al Jazeera MD2, each validated). Groups reordered to FIFA positional order [pos1..pos4] so MD1={1-2,3-4}, MD2={1-3,2-4}, MD3={1-4,2-3]."
   },
   "groups": {
@@ -272,6 +272,390 @@
       "hg": 1,
       "ag": 0,
       "matchday": 1
+    },
+    {
+      "group": "A",
+      "home": "Czech Republic",
+      "away": "South Africa",
+      "hg": 1,
+      "ag": 1,
+      "matchday": 2
+    },
+    {
+      "group": "A",
+      "home": "Mexico",
+      "away": "South Korea",
+      "hg": 1,
+      "ag": 0,
+      "matchday": 2
+    },
+    {
+      "group": "A",
+      "home": "Czech Republic",
+      "away": "Mexico",
+      "hg": 0,
+      "ag": 3,
+      "matchday": 3
+    },
+    {
+      "group": "A",
+      "home": "South Africa",
+      "away": "South Korea",
+      "hg": 1,
+      "ag": 0,
+      "matchday": 3
+    },
+    {
+      "group": "B",
+      "home": "Switzerland",
+      "away": "Bosnia and Herzegovina",
+      "hg": 4,
+      "ag": 1,
+      "matchday": 2
+    },
+    {
+      "group": "B",
+      "home": "Canada",
+      "away": "Qatar",
+      "hg": 6,
+      "ag": 0,
+      "matchday": 2
+    },
+    {
+      "group": "B",
+      "home": "Switzerland",
+      "away": "Canada",
+      "hg": 2,
+      "ag": 1,
+      "matchday": 3
+    },
+    {
+      "group": "B",
+      "home": "Bosnia and Herzegovina",
+      "away": "Qatar",
+      "hg": 3,
+      "ag": 1,
+      "matchday": 3
+    },
+    {
+      "group": "C",
+      "home": "Scotland",
+      "away": "Morocco",
+      "hg": 0,
+      "ag": 1,
+      "matchday": 2
+    },
+    {
+      "group": "C",
+      "home": "Brazil",
+      "away": "Haiti",
+      "hg": 3,
+      "ag": 0,
+      "matchday": 2
+    },
+    {
+      "group": "C",
+      "home": "Scotland",
+      "away": "Brazil",
+      "hg": 0,
+      "ag": 3,
+      "matchday": 3
+    },
+    {
+      "group": "C",
+      "home": "Morocco",
+      "away": "Haiti",
+      "hg": 4,
+      "ag": 2,
+      "matchday": 3
+    },
+    {
+      "group": "D",
+      "home": "United States",
+      "away": "Australia",
+      "hg": 2,
+      "ag": 0,
+      "matchday": 2
+    },
+    {
+      "group": "D",
+      "home": "Turkey",
+      "away": "Paraguay",
+      "hg": 0,
+      "ag": 1,
+      "matchday": 2
+    },
+    {
+      "group": "D",
+      "home": "Turkey",
+      "away": "United States",
+      "hg": 3,
+      "ag": 2,
+      "matchday": 3
+    },
+    {
+      "group": "D",
+      "home": "Paraguay",
+      "away": "Australia",
+      "hg": 0,
+      "ag": 0,
+      "matchday": 3
+    },
+    {
+      "group": "E",
+      "home": "Germany",
+      "away": "Ivory Coast",
+      "hg": 2,
+      "ag": 1,
+      "matchday": 3
+    },
+    {
+      "group": "E",
+      "home": "Ecuador",
+      "away": "Curaçao",
+      "hg": 0,
+      "ag": 0,
+      "matchday": 3
+    },
+    {
+      "group": "E",
+      "home": "Curaçao",
+      "away": "Ivory Coast",
+      "hg": 0,
+      "ag": 2,
+      "matchday": 2
+    },
+    {
+      "group": "E",
+      "home": "Ecuador",
+      "away": "Germany",
+      "hg": 2,
+      "ag": 1,
+      "matchday": 2
+    },
+    {
+      "group": "F",
+      "home": "Netherlands",
+      "away": "Sweden",
+      "hg": 5,
+      "ag": 1,
+      "matchday": 3
+    },
+    {
+      "group": "F",
+      "home": "Tunisia",
+      "away": "Japan",
+      "hg": 0,
+      "ag": 4,
+      "matchday": 3
+    },
+    {
+      "group": "F",
+      "home": "Japan",
+      "away": "Sweden",
+      "hg": 1,
+      "ag": 1,
+      "matchday": 2
+    },
+    {
+      "group": "F",
+      "home": "Tunisia",
+      "away": "Netherlands",
+      "hg": 1,
+      "ag": 3,
+      "matchday": 2
+    },
+    {
+      "group": "G",
+      "home": "Belgium",
+      "away": "Iran",
+      "hg": 0,
+      "ag": 0,
+      "matchday": 2
+    },
+    {
+      "group": "G",
+      "home": "New Zealand",
+      "away": "Egypt",
+      "hg": 1,
+      "ag": 3,
+      "matchday": 2
+    },
+    {
+      "group": "G",
+      "home": "Egypt",
+      "away": "Iran",
+      "hg": 1,
+      "ag": 1,
+      "matchday": 3
+    },
+    {
+      "group": "G",
+      "home": "New Zealand",
+      "away": "Belgium",
+      "hg": 1,
+      "ag": 5,
+      "matchday": 3
+    },
+    {
+      "group": "H",
+      "home": "Spain",
+      "away": "Saudi Arabia",
+      "hg": 4,
+      "ag": 0,
+      "matchday": 3
+    },
+    {
+      "group": "H",
+      "home": "Uruguay",
+      "away": "Cape Verde",
+      "hg": 2,
+      "ag": 2,
+      "matchday": 3
+    },
+    {
+      "group": "H",
+      "home": "Cape Verde",
+      "away": "Saudi Arabia",
+      "hg": 0,
+      "ag": 0,
+      "matchday": 2
+    },
+    {
+      "group": "H",
+      "home": "Uruguay",
+      "away": "Spain",
+      "hg": 0,
+      "ag": 1,
+      "matchday": 2
+    },
+    {
+      "group": "I",
+      "home": "France",
+      "away": "Iraq",
+      "hg": 3,
+      "ag": 0,
+      "matchday": 2
+    },
+    {
+      "group": "I",
+      "home": "Norway",
+      "away": "Senegal",
+      "hg": 3,
+      "ag": 2,
+      "matchday": 2
+    },
+    {
+      "group": "I",
+      "home": "Norway",
+      "away": "France",
+      "hg": 1,
+      "ag": 4,
+      "matchday": 3
+    },
+    {
+      "group": "I",
+      "home": "Senegal",
+      "away": "Iraq",
+      "hg": 5,
+      "ag": 0,
+      "matchday": 3
+    },
+    {
+      "group": "J",
+      "home": "Argentina",
+      "away": "Austria",
+      "hg": 2,
+      "ag": 0,
+      "matchday": 2
+    },
+    {
+      "group": "J",
+      "home": "Jordan",
+      "away": "Algeria",
+      "hg": 1,
+      "ag": 2,
+      "matchday": 2
+    },
+    {
+      "group": "J",
+      "home": "Algeria",
+      "away": "Austria",
+      "hg": 3,
+      "ag": 3,
+      "matchday": 3
+    },
+    {
+      "group": "J",
+      "home": "Jordan",
+      "away": "Argentina",
+      "hg": 1,
+      "ag": 3,
+      "matchday": 3
+    },
+    {
+      "group": "K",
+      "home": "Portugal",
+      "away": "Uzbekistan",
+      "hg": 5,
+      "ag": 0,
+      "matchday": 2
+    },
+    {
+      "group": "K",
+      "home": "Colombia",
+      "away": "DR Congo",
+      "hg": 1,
+      "ag": 0,
+      "matchday": 2
+    },
+    {
+      "group": "K",
+      "home": "Colombia",
+      "away": "Portugal",
+      "hg": 0,
+      "ag": 0,
+      "matchday": 3
+    },
+    {
+      "group": "K",
+      "home": "DR Congo",
+      "away": "Uzbekistan",
+      "hg": 3,
+      "ag": 1,
+      "matchday": 3
+    },
+    {
+      "group": "L",
+      "home": "England",
+      "away": "Ghana",
+      "hg": 0,
+      "ag": 0,
+      "matchday": 2
+    },
+    {
+      "group": "L",
+      "home": "Panama",
+      "away": "Croatia",
+      "hg": 0,
+      "ag": 1,
+      "matchday": 2
+    },
+    {
+      "group": "L",
+      "home": "Panama",
+      "away": "England",
+      "hg": 0,
+      "ag": 2,
+      "matchday": 3
+    },
+    {
+      "group": "L",
+      "home": "Croatia",
+      "away": "Ghana",
+      "hg": 2,
+      "ag": 1,
+      "matchday": 3
     }
   ],
   "schedule": {
