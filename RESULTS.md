@@ -479,3 +479,32 @@ confoundable (the pre-registered limitation).
 **Verdict:** the pre-registered live test lands — a frozen, timestamped, two-matchday-ahead model
 named the manipulable group-finale matches, 4/5 of its robust set realized, and its signature
 cross-group cases (Canada–Switzerland, Algeria–Austria) were the most manipulable matches of the round.
+
+---
+
+## R14 — Equilibrium robustness (preliminary): cross-group manipulability survives the game (2026-06-29)
+
+**Addresses R1's central concern** — the headline is *decision-theoretic* (a team's best response vs
+sampled opponents), but the finale is a simultaneous-move game. We re-solve each group's MD3 as a game
+(`scripts/run_equilibrium.py`, best-response dynamics with a significance margin, `equilibrium.py`),
+at the real pre-MD3 state, official bracket, Elo, inner=200. Artifact: `results/equilibrium.json`.
+
+**Result:** **8 of 12 groups reach a pure Nash equilibrium**; the structural claim **holds under the
+equilibrium notion** — cross-group (best-third) manipulability is present in equilibria, not just a
+best-response artifact. Equilibrium-cross-group teams: **Brazil (C), Senegal (I), Algeria (J),
+Croatia (L)** (cross-group share among equilibrium-manipulable teams ≈ 0.21, i.e. >0).
+
+**Honest caveats (why this is robustness, not the headline):**
+- **4 groups have no pure NE** (F, H, I, J cycle) → those need a mixed-strategy / fictitious-play
+  treatment; their rows are last-iterate, not true equilibria, so the aggregate rate (0.40) and share
+  (0.21) are contaminated and should not be quoted as precise.
+- The equilibrium cross-group share appears **attenuated** vs the decision-theoretic estimate — the
+  mechanism persists but the game can wash out some best-response incentives (mutual-interest
+  resolution, opponents also deviating).
+- At the *real* pre-MD3 state several groups are already decided, so some non-WIN equilibrium actions
+  are near-indifference (path/seeding), not best-third manipulation.
+
+**Takeaway:** the cross-group mechanism is **robust to making the finale a game** (the qualitative claim
+R1 asked about survives); a clean quantitative equilibrium share awaits increment 3 (mixed strategies
+for the no-pure-NE groups + a state matched to the decision-theoretic comparison). The paper's headline
+remains the decision-theoretic decomposition (R12); §4.3 / R14 are the equilibrium robustness.

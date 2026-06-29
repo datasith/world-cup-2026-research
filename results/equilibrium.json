@@ -1,0 +1,448 @@
+{
+  "meta": {
+    "inner": 200,
+    "min_improve": 0.03,
+    "seed": 11,
+    "state": "real pre-MD3 (MD1+MD2)",
+    "pure_NE_groups": 8
+  },
+  "equilibrium_manip_rate": 0.3958333333333333,
+  "equilibrium_cross_group_share": 0.21052631578947367,
+  "n_teams": 48,
+  "n_manip": 19,
+  "n_cross": 4,
+  "teams": [
+    {
+      "group": "A",
+      "team": "Mexico",
+      "action": "win",
+      "manipulable": false,
+      "cross_group": false,
+      "q3": 0.0,
+      "status": "pure_NE"
+    },
+    {
+      "group": "A",
+      "team": "South Africa",
+      "action": "win",
+      "manipulable": false,
+      "cross_group": false,
+      "q3": 0.0,
+      "status": "pure_NE"
+    },
+    {
+      "group": "A",
+      "team": "South Korea",
+      "action": "win",
+      "manipulable": false,
+      "cross_group": false,
+      "q3": 0.0,
+      "status": "pure_NE"
+    },
+    {
+      "group": "A",
+      "team": "Czech Republic",
+      "action": "win",
+      "manipulable": false,
+      "cross_group": false,
+      "q3": 0.0,
+      "status": "pure_NE"
+    },
+    {
+      "group": "B",
+      "team": "Canada",
+      "action": "lose",
+      "manipulable": true,
+      "cross_group": false,
+      "q3": 0.0,
+      "status": "pure_NE"
+    },
+    {
+      "group": "B",
+      "team": "Bosnia and Herzegovina",
+      "action": "win",
+      "manipulable": false,
+      "cross_group": false,
+      "q3": 0.0,
+      "status": "pure_NE"
+    },
+    {
+      "group": "B",
+      "team": "Qatar",
+      "action": "win",
+      "manipulable": false,
+      "cross_group": false,
+      "q3": 0.0,
+      "status": "pure_NE"
+    },
+    {
+      "group": "B",
+      "team": "Switzerland",
+      "action": "draw",
+      "manipulable": true,
+      "cross_group": false,
+      "q3": 0.0,
+      "status": "pure_NE"
+    },
+    {
+      "group": "C",
+      "team": "Brazil",
+      "action": "lose",
+      "manipulable": true,
+      "cross_group": true,
+      "q3": 1.0,
+      "status": "pure_NE"
+    },
+    {
+      "group": "C",
+      "team": "Morocco",
+      "action": "draw",
+      "manipulable": true,
+      "cross_group": false,
+      "q3": 0.0,
+      "status": "pure_NE"
+    },
+    {
+      "group": "C",
+      "team": "Haiti",
+      "action": "draw",
+      "manipulable": true,
+      "cross_group": false,
+      "q3": 0.0,
+      "status": "pure_NE"
+    },
+    {
+      "group": "C",
+      "team": "Scotland",
+      "action": "win",
+      "manipulable": false,
+      "cross_group": false,
+      "q3": 0.0,
+      "status": "pure_NE"
+    },
+    {
+      "group": "D",
+      "team": "United States",
+      "action": "win",
+      "manipulable": false,
+      "cross_group": false,
+      "q3": 0.0,
+      "status": "pure_NE"
+    },
+    {
+      "group": "D",
+      "team": "Paraguay",
+      "action": "win",
+      "manipulable": false,
+      "cross_group": false,
+      "q3": 0.0,
+      "status": "pure_NE"
+    },
+    {
+      "group": "D",
+      "team": "Australia",
+      "action": "win",
+      "manipulable": false,
+      "cross_group": false,
+      "q3": 0.0,
+      "status": "pure_NE"
+    },
+    {
+      "group": "D",
+      "team": "Turkey",
+      "action": "win",
+      "manipulable": false,
+      "cross_group": false,
+      "q3": 0.0,
+      "status": "pure_NE"
+    },
+    {
+      "group": "E",
+      "team": "Germany",
+      "action": "win",
+      "manipulable": false,
+      "cross_group": false,
+      "q3": 0.0,
+      "status": "pure_NE"
+    },
+    {
+      "group": "E",
+      "team": "Cura\u00e7ao",
+      "action": "win",
+      "manipulable": false,
+      "cross_group": false,
+      "q3": 0.0,
+      "status": "pure_NE"
+    },
+    {
+      "group": "E",
+      "team": "Ecuador",
+      "action": "win",
+      "manipulable": false,
+      "cross_group": false,
+      "q3": 0.0,
+      "status": "pure_NE"
+    },
+    {
+      "group": "E",
+      "team": "Ivory Coast",
+      "action": "win",
+      "manipulable": false,
+      "cross_group": false,
+      "q3": 0.0,
+      "status": "pure_NE"
+    },
+    {
+      "group": "F",
+      "team": "Netherlands",
+      "action": "draw",
+      "manipulable": true,
+      "cross_group": false,
+      "q3": 0.0,
+      "status": "no_pure_NE"
+    },
+    {
+      "group": "F",
+      "team": "Japan",
+      "action": "win",
+      "manipulable": false,
+      "cross_group": false,
+      "q3": 0.0,
+      "status": "no_pure_NE"
+    },
+    {
+      "group": "F",
+      "team": "Tunisia",
+      "action": "draw",
+      "manipulable": true,
+      "cross_group": false,
+      "q3": 0.0,
+      "status": "no_pure_NE"
+    },
+    {
+      "group": "F",
+      "team": "Sweden",
+      "action": "lose",
+      "manipulable": true,
+      "cross_group": false,
+      "q3": 0.0,
+      "status": "no_pure_NE"
+    },
+    {
+      "group": "G",
+      "team": "Belgium",
+      "action": "win",
+      "manipulable": false,
+      "cross_group": false,
+      "q3": 0.0,
+      "status": "pure_NE"
+    },
+    {
+      "group": "G",
+      "team": "Egypt",
+      "action": "win",
+      "manipulable": false,
+      "cross_group": false,
+      "q3": 0.0,
+      "status": "pure_NE"
+    },
+    {
+      "group": "G",
+      "team": "Iran",
+      "action": "win",
+      "manipulable": false,
+      "cross_group": false,
+      "q3": 0.0,
+      "status": "pure_NE"
+    },
+    {
+      "group": "G",
+      "team": "New Zealand",
+      "action": "win",
+      "manipulable": false,
+      "cross_group": false,
+      "q3": 0.0,
+      "status": "pure_NE"
+    },
+    {
+      "group": "H",
+      "team": "Spain",
+      "action": "win",
+      "manipulable": false,
+      "cross_group": false,
+      "q3": 0.0,
+      "status": "no_pure_NE"
+    },
+    {
+      "group": "H",
+      "team": "Cape Verde",
+      "action": "win",
+      "manipulable": false,
+      "cross_group": false,
+      "q3": 0.0,
+      "status": "no_pure_NE"
+    },
+    {
+      "group": "H",
+      "team": "Uruguay",
+      "action": "draw",
+      "manipulable": true,
+      "cross_group": false,
+      "q3": 0.0,
+      "status": "no_pure_NE"
+    },
+    {
+      "group": "H",
+      "team": "Saudi Arabia",
+      "action": "draw",
+      "manipulable": true,
+      "cross_group": false,
+      "q3": 0.0,
+      "status": "no_pure_NE"
+    },
+    {
+      "group": "I",
+      "team": "France",
+      "action": "lose",
+      "manipulable": true,
+      "cross_group": false,
+      "q3": 0.0,
+      "status": "no_pure_NE"
+    },
+    {
+      "group": "I",
+      "team": "Senegal",
+      "action": "draw",
+      "manipulable": true,
+      "cross_group": true,
+      "q3": 0.73,
+      "status": "no_pure_NE"
+    },
+    {
+      "group": "I",
+      "team": "Iraq",
+      "action": "win",
+      "manipulable": false,
+      "cross_group": false,
+      "q3": 0.0,
+      "status": "no_pure_NE"
+    },
+    {
+      "group": "I",
+      "team": "Norway",
+      "action": "win",
+      "manipulable": false,
+      "cross_group": false,
+      "q3": 0.0,
+      "status": "no_pure_NE"
+    },
+    {
+      "group": "J",
+      "team": "Argentina",
+      "action": "draw",
+      "manipulable": true,
+      "cross_group": false,
+      "q3": 0.0,
+      "status": "no_pure_NE"
+    },
+    {
+      "group": "J",
+      "team": "Algeria",
+      "action": "draw",
+      "manipulable": true,
+      "cross_group": true,
+      "q3": 0.985,
+      "status": "no_pure_NE"
+    },
+    {
+      "group": "J",
+      "team": "Austria",
+      "action": "draw",
+      "manipulable": true,
+      "cross_group": false,
+      "q3": 0.0,
+      "status": "no_pure_NE"
+    },
+    {
+      "group": "J",
+      "team": "Jordan",
+      "action": "draw",
+      "manipulable": true,
+      "cross_group": false,
+      "q3": 0.0,
+      "status": "no_pure_NE"
+    },
+    {
+      "group": "K",
+      "team": "Portugal",
+      "action": "win",
+      "manipulable": false,
+      "cross_group": false,
+      "q3": 0.0,
+      "status": "pure_NE"
+    },
+    {
+      "group": "K",
+      "team": "DR Congo",
+      "action": "win",
+      "manipulable": false,
+      "cross_group": false,
+      "q3": 0.0,
+      "status": "pure_NE"
+    },
+    {
+      "group": "K",
+      "team": "Uzbekistan",
+      "action": "win",
+      "manipulable": false,
+      "cross_group": false,
+      "q3": 0.0,
+      "status": "pure_NE"
+    },
+    {
+      "group": "K",
+      "team": "Colombia",
+      "action": "win",
+      "manipulable": false,
+      "cross_group": false,
+      "q3": 0.0,
+      "status": "pure_NE"
+    },
+    {
+      "group": "L",
+      "team": "England",
+      "action": "draw",
+      "manipulable": true,
+      "cross_group": false,
+      "q3": 0.0,
+      "status": "pure_NE"
+    },
+    {
+      "group": "L",
+      "team": "Croatia",
+      "action": "draw",
+      "manipulable": true,
+      "cross_group": true,
+      "q3": 1.0,
+      "status": "pure_NE"
+    },
+    {
+      "group": "L",
+      "team": "Ghana",
+      "action": "draw",
+      "manipulable": true,
+      "cross_group": false,
+      "q3": 0.0,
+      "status": "pure_NE"
+    },
+    {
+      "group": "L",
+      "team": "Panama",
+      "action": "win",
+      "manipulable": false,
+      "cross_group": false,
+      "q3": 0.0,
+      "status": "pure_NE"
+    }
+  ]
+}
