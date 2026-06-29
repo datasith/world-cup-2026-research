@@ -108,24 +108,44 @@ class GoogleProvider:
             from google.genai import types
         except ImportError as e:
             raise ProviderError("pip install google-genai") from e
+        import os
+        import random
         import time
-        client = genai.Client(api_key=key)
-        cfg = types.GenerateContentConfig(
+
+        # Gemini 3.x are *thinking* models. On a large bundle the unbounded thinking pass
+        # can run ~150s+; the server then sheds the long request as "503 UNAVAILABLE
+        # (high demand)" — a misleading message for what is really a request-duration limit
+        # (verified: trivial prompts return in ~1s; only the long full-bundle call 503s, and
+        # only when it drifts past ~100s). Two defenses: (1) cap the thinking budget so calls
+        # bias toward fast completions; (2) a high client timeout + patient, jittered retry so
+        # a slow-but-valid completion isn't cut and transient sheds get another window.
+        think_budget = int(os.environ.get("REVIEW_GOOGLE_THINKING_BUDGET", "2048"))
+        attempts = int(os.environ.get("REVIEW_GOOGLE_RETRIES", "6"))
+        client = genai.Client(
+            api_key=key,
+            http_options=types.HttpOptions(timeout=600_000),  # ms; don't cut a slow-but-OK call
+        )
+        cfg_kwargs = dict(
             system_instruction=system,
             temperature=temperature,
             max_output_tokens=max_tokens,
             response_mime_type="application/json" if json_mode else "text/plain",
         )
-        # Gemini 3.x are thinking models; retry transient 5xx/UNAVAILABLE with backoff.
+        if think_budget >= 0 and hasattr(types, "ThinkingConfig"):
+            cfg_kwargs["thinking_config"] = types.ThinkingConfig(thinking_budget=think_budget)
+        cfg = types.GenerateContentConfig(**cfg_kwargs)
+
         last = None
-        for attempt in range(4):
+        for attempt in range(attempts):
             try:
                 resp = client.models.generate_content(model=model, contents=user, config=cfg)
             except Exception as e:  # noqa: BLE001
                 last = e
                 msg = str(e)
                 if any(s in msg for s in ("503", "UNAVAILABLE", "500", "overloaded", "429")):
-                    time.sleep(2 * (attempt + 1))
+                    # server-side load-shed / deadline: back off (capped, jittered) and retry.
+                    if attempt < attempts - 1:
+                        time.sleep(min(30.0, 4.0 * (2 ** attempt)) + random.uniform(0, 3))
                     continue
                 raise ProviderError(f"google call failed: {e}") from e
             text = resp.text or ""
@@ -138,7 +158,7 @@ class GoogleProvider:
             raise ProviderError(
                 f"google returned empty text (finish_reason={fr}); "
                 f"raise max_tokens (thinking budget may be exhausting it)")
-        raise ProviderError(f"google call failed after retries: {last}")
+        raise ProviderError(f"google call failed after {attempts} retries: {last}")
 
 
 class MockProvider:
