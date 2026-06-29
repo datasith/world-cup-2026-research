@@ -32,6 +32,11 @@ paper/main.pdf
 
 # OS / editor
 .DS_Store
+.scratch.md
+
+# Local-only session handoff (kept on disk, never tracked)
+HANDOFF.md
+.HANDOFF.md.bak
 
 # transient run logs
 results/_*.log
