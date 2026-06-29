@@ -216,16 +216,18 @@ class SimEngine:
         return self._evaluate_action(state, h, a, team == h, target_result)[self.objective]
 
     def value_under_profile(self, team: str, state: DecisionState,
-                            md3_results: dict, n_inner: int | None = None) -> float:
-        """Mean V_adv (knockout rounds won) for ``team`` when *both* MD3 matches of its
-        group are pinned to ``md3_results`` ((home,away)->score) and all other groups are
-        sampled. The strategic primitive for the equilibrium solver (equilibrium.py)."""
+                            md3_results: dict, n_inner: int | None = None) -> dict:
+        """Mean V_adv and best-third rate for ``team`` when *both* MD3 matches of its group
+        are pinned to ``md3_results`` ((home,away)->score) and all other groups are sampled.
+        Returns {'depth': mean knockout rounds won, 'q3': P(qualify via best-third)}. The
+        strategic primitive for the equilibrium solver (equilibrium.py)."""
         n = n_inner or self.n_inner
-        total = 0.0
+        total = third = 0.0
         for _ in range(n):
-            depth, _q, _c, _v = self._simulate_remainder(state, None, extra_fixed=md3_results)
+            depth, _q, _c, via_third = self._simulate_remainder(state, None, extra_fixed=md3_results)
             total += depth
-        return total / n
+            third += int(via_third)
+        return {"depth": total / n, "q3": third / n}
 
     def assess(self, team: str, state: DecisionState, min_delta: float = 0.05,
                q3_threshold: float = 0.05) -> ManipResult:

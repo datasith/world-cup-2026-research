@@ -56,12 +56,14 @@ def _resolve_group(md3, profile, sampler, rng) -> dict:
 
 
 def solve_group(engine: SimEngine, group_index: int, teams: list[str], fixed: dict,
-                n_inner: int = 120, max_iter: int = 12, seed: int = 0):
+                n_inner: int = 200, max_iter: int = 12, min_improve: float = 0.03, seed: int = 0):
     """Best-response dynamics for a group's MD3 game.
 
-    Returns (profile, status) where profile maps team -> equilibrium TargetResult and status
-    is 'pure_NE' (fixed point reached) or 'no_pure_NE' (cycled within max_iter). Stochastic:
-    payoffs are Monte-Carlo, so a clean fixed point is not guaranteed; raise n_inner for stability.
+    Returns (profile, status). A team deviates from its current action only if some alternative
+    beats it by more than ``min_improve`` (in V_adv = knockout rounds) -- a significance margin
+    tied to Monte-Carlo noise that prevents payoff noise from causing endless flip-flopping and
+    keeps WIN "sticky" (a team is flagged manipulable only on a clear gain, mirroring the
+    decision-theoretic margin). Status is 'pure_NE' (fixed point) or 'no_pure_NE' (cycled).
     """
     rng = np.random.default_rng(seed)
     md3 = group_matchdays(teams)[2]
@@ -71,19 +73,38 @@ def solve_group(engine: SimEngine, group_index: int, teams: list[str], fixed: di
     for _ in range(max_iter):
         changed = False
         for team in teams:
-            best_t, best_v = profile[team], float("-inf")
+            vals = {}
             for cand in TargetResult:
                 trial = dict(profile); trial[team] = cand
                 md3_results = _resolve_group(md3, trial, sampler=engine.sampler, rng=rng)
-                v = engine.value_under_profile(team, ds[team], md3_results, n_inner=n_inner)
-                if v > best_v:
-                    best_v, best_t = v, cand
-            if best_t is not profile[team]:
-                profile[team] = best_t
+                vals[cand] = engine.value_under_profile(team, ds[team], md3_results, n_inner=n_inner)["depth"]
+            best = max(vals, key=vals.get)
+            if best is not profile[team] and vals[best] > vals[profile[team]] + min_improve:
+                profile[team] = best
                 changed = True
         if not changed:
             return profile, "pure_NE"
     return profile, "no_pure_NE"
+
+
+def classify(engine: SimEngine, group_index: int, teams: list[str], fixed: dict,
+             profile: dict, n_inner: int = 200, q3_threshold: float = 0.05, seed: int = 1):
+    """Given an equilibrium profile, return per-team (manipulable, cross_group) flags.
+
+    A team is equilibrium-manipulable if its equilibrium action != WIN; cross-group if, under the
+    equilibrium profile, it qualifies via the best-third pool with probability > q3_threshold."""
+    rng = np.random.default_rng(seed)
+    md3 = group_matchdays(teams)[2]
+    md3_results = _resolve_group(md3, profile, sampler=engine.sampler, rng=rng)
+    out = {}
+    for t in teams:
+        manip = profile[t] is not TargetResult.WIN
+        q3 = 0.0
+        if manip:
+            ds = DecisionState(fixed=fixed, group_index=group_index, team=t, md3=md3)
+            q3 = engine.value_under_profile(t, ds, md3_results, n_inner=n_inner)["q3"]
+        out[t] = {"manipulable": manip, "cross_group": manip and q3 > q3_threshold, "q3": q3}
+    return out
 
 
 def equilibrium_manipulable(profile: dict) -> list[str]:

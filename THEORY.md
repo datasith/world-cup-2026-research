@@ -191,15 +191,18 @@ A state is *equilibrium-manipulable* for $t$ if $t$'s equilibrium action $\neq$ 
 claim is robust iff the cross-group share persists under this notion; we will report the equilibrium
 manipulability rate and cross-group share against the decision-theoretic baseline.
 
-**Status (increment 1).** The machinery is implemented and unit-tested (`equilibrium.py`,
-`engine.value_under_profile`). First end-to-end runs expose two issues that must be resolved before
-the comparison is trustworthy: (i) Monte-Carlo payoff noise at modest `n_inner` makes best-response
-dynamics cycle (raise `n_inner`, or smooth/require a significant-improvement threshold); (ii) the
-deterministic mutual-draw resolution creates a strong "everyone draws" basin (realize a mutual result
-only under *strict* mutual preference, and make contests not uniformly dominated). The honest interim
-position therefore remains that the reported results are **best-response (decision-theoretic)
-manipulability**, stated as such; the equilibrium analysis is in progress and will be reported as a
-robustness section once (i)–(ii) are addressed.
+**Status (increment 2).** Solver hardened: best-response dynamics now switches a team's action only on
+a **significant improvement** (`min_improve`, tied to Monte-Carlo noise), which removes the
+noise-driven cycling and the spurious "everyone-draws" basin of increment 1 and keeps WIN sticky
+(a team is flagged manipulable only on a clear gain). `classify` reports per-team equilibrium
+manipulability + cross-group status; `run_equilibrium.py` sweeps all groups at the real pre-MD3 state.
+**Preliminary finding:** the hardened solver reaches **pure Nash equilibria** in several groups (e.g.
+Group J), and — the point R1 raised — **cross-group manipulability persists under the equilibrium
+notion** (e.g. Group B's Bosnia is equilibrium-manipulable *and* cross-group, q3≈1), so the structural
+claim is not merely a decision-theoretic artifact. Remaining (increment 3): some groups have **no pure
+NE** (cycle → need mixed-strategy / fictitious-play handling), and the full equilibrium-vs-decision-
+theoretic cross-group-share comparison is being computed (`results/equilibrium.json`). The headline
+results stay the decision-theoretic estimate; the equilibrium analysis is reported as robustness.
 
 ## 5. Empirical test (this month — the live differentiator)
 
