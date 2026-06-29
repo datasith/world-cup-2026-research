@@ -1,0 +1,244 @@
+{
+  "meta": {
+    "md2_recorded": 24,
+    "md3_recorded": 24,
+    "snapshots": 40,
+    "inner": 150,
+    "margin": 0.05,
+    "preliminary": false
+  },
+  "per_model": {
+    "elo": {
+      "spearman_frozen_vs_realized": 0.4755694081770248,
+      "brier_frozen_vs_realizedbinary": 0.21583151041666668
+    },
+    "poisson": {
+      "spearman_frozen_vs_realized": 0.45425156284320006,
+      "brier_frozen_vs_realizedbinary": 0.15511171875
+    }
+  },
+  "matches": [
+    {
+      "group": "A",
+      "match": "Czech Republic vs Mexico",
+      "frozen_p_manip": 0.60875,
+      "realized_p_manip": 0.5625,
+      "realized_p_cross": 0.0
+    },
+    {
+      "group": "A",
+      "match": "South Africa vs South Korea",
+      "frozen_p_manip": 0.48874999999999996,
+      "realized_p_manip": 0.2875,
+      "realized_p_cross": 0.2875
+    },
+    {
+      "group": "B",
+      "match": "Bosnia and Herzegovina vs Qatar",
+      "frozen_p_manip": 0.1725,
+      "realized_p_manip": 0.0,
+      "realized_p_cross": 0.0
+    },
+    {
+      "group": "B",
+      "match": "Canada vs Switzerland",
+      "frozen_p_manip": 0.65375,
+      "realized_p_manip": 0.9875,
+      "realized_p_cross": 0.0
+    },
+    {
+      "group": "C",
+      "match": "Brazil vs Scotland",
+      "frozen_p_manip": 0.67,
+      "realized_p_manip": 0.6625000000000001,
+      "realized_p_cross": 0.3375
+    },
+    {
+      "group": "C",
+      "match": "Haiti vs Morocco",
+      "frozen_p_manip": 0.32875,
+      "realized_p_manip": 0.5375,
+      "realized_p_cross": 0.175
+    },
+    {
+      "group": "D",
+      "match": "Australia vs Paraguay",
+      "frozen_p_manip": 0.3025,
+      "realized_p_manip": 0.4375,
+      "realized_p_cross": 0.1875
+    },
+    {
+      "group": "D",
+      "match": "Turkey vs United States",
+      "frozen_p_manip": 0.29125,
+      "realized_p_manip": 0.525,
+      "realized_p_cross": 0.0
+    },
+    {
+      "group": "E",
+      "match": "Cura\u00e7ao vs Ecuador",
+      "frozen_p_manip": 0.15375,
+      "realized_p_manip": 0.7749999999999999,
+      "realized_p_cross": 0.7749999999999999
+    },
+    {
+      "group": "E",
+      "match": "Germany vs Ivory Coast",
+      "frozen_p_manip": 0.405,
+      "realized_p_manip": 0.2625,
+      "realized_p_cross": 0.075
+    },
+    {
+      "group": "F",
+      "match": "Japan vs Tunisia",
+      "frozen_p_manip": 0.36625,
+      "realized_p_manip": 0.925,
+      "realized_p_cross": 0.925
+    },
+    {
+      "group": "F",
+      "match": "Netherlands vs Sweden",
+      "frozen_p_manip": 0.5675,
+      "realized_p_manip": 0.525,
+      "realized_p_cross": 0.3125
+    },
+    {
+      "group": "G",
+      "match": "Belgium vs New Zealand",
+      "frozen_p_manip": 0.24,
+      "realized_p_manip": 0.23750000000000002,
+      "realized_p_cross": 0.23750000000000002
+    },
+    {
+      "group": "G",
+      "match": "Egypt vs Iran",
+      "frozen_p_manip": 0.27625,
+      "realized_p_manip": 0.375,
+      "realized_p_cross": 0.2375
+    },
+    {
+      "group": "H",
+      "match": "Cape Verde vs Uruguay",
+      "frozen_p_manip": 0.3175,
+      "realized_p_manip": 0.2875,
+      "realized_p_cross": 0.2875
+    },
+    {
+      "group": "H",
+      "match": "Saudi Arabia vs Spain",
+      "frozen_p_manip": 0.38749999999999996,
+      "realized_p_manip": 0.41250000000000003,
+      "realized_p_cross": 0.225
+    },
+    {
+      "group": "I",
+      "match": "France vs Norway",
+      "frozen_p_manip": 0.4525,
+      "realized_p_manip": 0.3125,
+      "realized_p_cross": 0.0
+    },
+    {
+      "group": "I",
+      "match": "Iraq vs Senegal",
+      "frozen_p_manip": 0.10250000000000001,
+      "realized_p_manip": 0.0,
+      "realized_p_cross": 0.0
+    },
+    {
+      "group": "J",
+      "match": "Algeria vs Austria",
+      "frozen_p_manip": 0.5925,
+      "realized_p_manip": 0.9625,
+      "realized_p_cross": 0.9625
+    },
+    {
+      "group": "J",
+      "match": "Argentina vs Jordan",
+      "frozen_p_manip": 0.4975,
+      "realized_p_manip": 0.4,
+      "realized_p_cross": 0.0
+    },
+    {
+      "group": "K",
+      "match": "Colombia vs Portugal",
+      "frozen_p_manip": 0.43374999999999997,
+      "realized_p_manip": 0.38749999999999996,
+      "realized_p_cross": 0.0
+    },
+    {
+      "group": "K",
+      "match": "DR Congo vs Uzbekistan",
+      "frozen_p_manip": 0.065,
+      "realized_p_manip": 0.0,
+      "realized_p_cross": 0.0
+    },
+    {
+      "group": "L",
+      "match": "Croatia vs Ghana",
+      "frozen_p_manip": 0.33625000000000005,
+      "realized_p_manip": 0.25,
+      "realized_p_cross": 0.2
+    },
+    {
+      "group": "L",
+      "match": "England vs Panama",
+      "frozen_p_manip": 0.4525,
+      "realized_p_manip": 0.0,
+      "realized_p_cross": 0.0
+    }
+  ],
+  "h3_robust_set": {
+    "n_robust": 5,
+    "n_confirmed_realized": 4,
+    "robust_matches": [
+      {
+        "group": "A",
+        "match": "Czech Republic vs Mexico",
+        "frozen_elo": 0.5475,
+        "frozen_pois": 0.67,
+        "realized_elo": 0.55,
+        "realized_pois": 0.575,
+        "confirmed": true
+      },
+      {
+        "group": "B",
+        "match": "Canada vs Switzerland",
+        "frozen_elo": 0.57,
+        "frozen_pois": 0.7375,
+        "realized_elo": 0.975,
+        "realized_pois": 1.0,
+        "confirmed": true
+      },
+      {
+        "group": "C",
+        "match": "Brazil vs Scotland",
+        "frozen_elo": 0.555,
+        "frozen_pois": 0.785,
+        "realized_elo": 0.675,
+        "realized_pois": 0.65,
+        "confirmed": true
+      },
+      {
+        "group": "F",
+        "match": "Netherlands vs Sweden",
+        "frozen_elo": 0.555,
+        "frozen_pois": 0.58,
+        "realized_elo": 0.675,
+        "realized_pois": 0.375,
+        "confirmed": false
+      },
+      {
+        "group": "J",
+        "match": "Algeria vs Austria",
+        "frozen_elo": 0.535,
+        "frozen_pois": 0.65,
+        "realized_elo": 0.925,
+        "realized_pois": 1.0,
+        "confirmed": true
+      }
+    ]
+  },
+  "behavioral": {
+    "note": "no passivity data supplied; behavioral endpoint is descriptive only per the pre-registered power rule (E=2.76<3)"
+  }
+}

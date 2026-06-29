@@ -195,8 +195,8 @@ def main():
 
     # print summary
     print("\n=== LIVE-TEST SCORING ===")
-    print("H1/H2 (behavior-independent, from the frozen analysis): multiplier 1.69 [1.59,1.80] "
-          "(CI excludes 1) -> H1 supported; cross-group share 49% (48) vs 0% (32) -> H2 supported.")
+    print("H1/H2 (behavior-independent, from the frozen analysis): multiplier 1.66 [1.59,1.73] "
+          "(CI excludes 1) -> H1 supported; cross-group share 48% (48) vs 0% (32) -> H2 supported.")
     print(f"\nH3 robust set: {len(confirmed)}/{len(robust)} frozen-robust matches realized-manipulable")
     for r in report["h3_robust_set"]["robust_matches"]:
         flag = "OK" if r["confirmed"] else "no"

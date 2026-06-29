@@ -429,3 +429,53 @@ N=160 version is in git history at R9).
 R9 story (1.72 × 0.96 = 1.66, internally consistent). The manuscript abstract/results/figures now cite
 **only these N=400 numbers**; R7–R10 multiplier figures are superseded for the headline (kept as the
 robustness/convergence/sensitivity record). Figures 1–2 regenerated from this artifact.
+
+---
+
+## R13 — LIVE-TEST SCORING: frozen predictions vs the realized group stage (2026-06-29)
+
+**The payoff.** The group stage is complete (all 24 MD2 + 24 MD3 results loaded and verified vs final
+standings). We score the frozen predictions (R11, registered after MD1) against reality.
+`scripts/run_scoring.py` conditions on the **real MD1+MD2** and re-evaluates the manipulability
+incentive at each team's *true* MD3 decision point (official bracket, both models, 40 snapshots ×
+150 inner). Artifact: `results/scoring.json`.
+
+**H1/H2 (computational estimands, behavior-independent):** unchanged by realization — multiplier
+1.66 [1.59,1.73] (>1), cross-group share 48% (48-team) vs 0% (32-team). Established by the frozen
+computation; the group stage does not bear on them.
+
+**H3 — the prospective named predictions. Registered robust set (P≥0.50 both models at freeze) vs
+realized manipulability given real standings:**
+
+| Match | frozen elo/pois | realized elo/pois | confirmed? |
+|-------|:---:|:---:|:---:|
+| Canada vs Switzerland (B) | 57/74% | **98/100%** | ✅ |
+| Algeria vs Austria (J) | 54/65% | **92/100%** | ✅ (finished **3–3**, both to 4 pts) |
+| Brazil vs Scotland (C) | 56/78% | 68/65% | ✅ |
+| Czech Republic vs Mexico (A) | 55/67% | 55/57% | ✅ |
+| Netherlands vs Sweden (F) | 56/58% | 68/38% | ✖ (split: elo yes, poisson no) |
+
+**4 of 5** registered robust predictions were realized-manipulable (the structural incentive genuinely
+existed at MD3 given the real standings); the two strongest cross-group calls — **Canada–Switzerland
+(99%)** and **Algeria–Austria (96%, 96% cross-group)** — were near-certain, and Algeria–Austria
+actually ended in a high-scoring **3–3 mutual-benefit draw** that carried both teams forward (Austria
+2nd, Algeria 3rd via the best-third pool). Rank agreement frozen-vs-realized: **Spearman ≈ 0.46–0.48**
+(positive but moderate — expected, since the freeze was a noisier *two-matchday-ahead* forecast and
+conditioning on real MD2 sharpens which states are live); Brier 0.16–0.22.
+
+**The cross-group mechanism manifested in reality.** The highest *realized* cross-group incentives were
+Algeria–Austria (96%), **Japan–Tunisia (92%)** and **Curaçao–Ecuador (77%)** — all driven by the
+best-third pool being decisive (these last two were *under*-predicted at the pre-MD2 freeze, 37% and
+15%, then became strongly manipulable once real standings were known). Conversely some frozen calls
+dissolved by MD3 (e.g. England–Panama 45%→0%, once qualification was settled). The eight best-third
+teams that actually advanced (Bosnia, Paraguay, Ecuador, Sweden, Senegal, Algeria, DR Congo, Ghana)
+confirm the cross-group qualification channel was live and outcome-determining.
+
+**Behavioral endpoint:** descriptive only, per the pre-registered power rule (E=2.76<3) and absent
+match-event/passivity data. We therefore claim the **structural incentive was present and correctly
+anticipated**, not that teams demonstrably acted on it; Algeria–Austria's 3–3 is suggestive but
+confoundable (the pre-registered limitation).
+
+**Verdict:** the pre-registered live test lands — a frozen, timestamped, two-matchday-ahead model
+named the manipulable group-finale matches, 4/5 of its robust set realized, and its signature
+cross-group cases (Canada–Switzerland, Algeria–Austria) were the most manipulable matches of the round.
