@@ -141,9 +141,9 @@ to* $M_{48}$; it is **not** a claim that $M_{32}$ is manipulation-free. Path/see
 simultaneity-irreducible. What the best-third rule adds is a qualification channel (3rd place) whose
 *availability* and *bracket slot* are cross-group functions, so the manipulable states it creates are
 cross-group by construction. The *magnitude* of the difference is the empirical contribution:
-cross-group-manipulable share is identically $0$ under $M_{32}$ and $\approx 0.49$ under $M_{48}$
-(R9), and the best-third rule alone accounts for essentially the whole multiplier (R9: $1.72$ of the
-$1.69$, field/groups/draw held fixed).
+cross-group-manipulable share is identically $0$ under $M_{32}$ and $\approx 0.48$ under $M_{48}$
+(R12, N=400), and the best-third rule alone accounts for essentially the whole multiplier ($1.72$ of
+the $1.66$, field/groups/draw held fixed).
 
 **Remark (could simultaneity be lifted to fix this?).** Eliminating the Proposition-2 incentive would
 require synchronizing *all* groups that feed a common best-third pool into one tournament-wide

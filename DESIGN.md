@@ -94,7 +94,8 @@ accuracy for breadth at a measurable cost in manipulability; the 2026 expansion 
 ## 4. Methods sketch
 
 - **Team strength model:** two independent families — time-varying Elo, and a hierarchical
-  Bayesian Poisson (Dixon-Coles style) goals model — fit to historical internationals →
+  Bayesian Poisson goals model (independent; the Dixon–Coles low-score correction is not yet
+  implemented — Tier 3 calibration TODO) — fit to historical internationals →
   calibrated match-outcome and scoreline probabilities. Both are implemented; results are
   reported under each for robustness. Emphasis on **calibration and proper scoring (Brier,
   log-loss, RPS)**, not raw accuracy. (No separate gradient-boosted/neural "ML layer" is used;

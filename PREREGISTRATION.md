@@ -184,3 +184,13 @@ Any change after 2026-06-16 is dated and justified here; pre-data text above is 
   behavioral endpoint descriptive only). (d) §3 calibration (Dixon–Coles ρ) and information-regime
   limitations declared. None of these change the hypotheses or the prediction *targets*; they make the
   geometry exact and the scoring more conservative, before any MD2/MD3 data exist.
+- **2026-06-30 (post-data, framing only — no pre-data text altered):** the **manuscript** claim is
+  stated as the best-third rule *increases* manipulability and *creates a cross-group channel*, rather
+  than the pre-data study title's "*breaks* the strategyproofness." This reflects the restricted result
+  actually obtained (THEORY §4.1 Proposition 2 is an **existence** result for an $M_{48}$-unique
+  cross-group manipulable state, **not** an impossibility/strategyproofness-breaking theorem); the
+  trilemma remains an explicitly labelled conjecture (§4.2). The frozen pre-data study title above is
+  **left unchanged** as the immutable record of the original directional hypothesis; this entry records
+  that the hypothesis was *refined, not edited post hoc*. No hypothesis, prediction, or scoring rule
+  changed. Headline numbers are standardized to the converged N=400 run (RESULTS R12): multiplier
+  **1.66 [1.59, 1.73]**, cross-group share **48%**.
