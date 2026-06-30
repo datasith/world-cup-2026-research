@@ -245,9 +245,17 @@ remainder against the fixed strength model (a decision-theoretic best response, 
 and set $V_{\mathrm{adv}}$ to expected knockout rounds won (zero if eliminated; this subsumes
 advancement probability and bracket-path strength). A state is manipulable when the
 $V_{\mathrm{adv}}$-maximising action is not WIN by more than a noise margin; it is cross-group when
-the advancement-optimal action qualifies the team via the best-third pool. Estimands, the cluster
-bootstrap, the convergence-justified budget, and the full pre-registration protocol are given in the
-Supplementary Information.
+the advancement-optimal action qualifies the team via the best-third pool. The remainder of the
+tournament --- including every other group's final matchday and the team's own group's other final
+match --- is \emph{integrated over by Monte-Carlo, not observed}: the team chooses its action under
+the same simultaneous, no-cross-group-information set that the post-Gij\'on fix is designed to
+enforce. The reported cross-group share is therefore the conservative, fully-simultaneous bound: a
+team is flagged only when its advancement-optimal action beats WIN while averaging over other groups'
+unknown results. The real staggered Matchday-3 schedule, under which some groups' finales are already
+decided at a later team's kickoff, relaxes this information set and can only make such incentives
+sharper; we treat the simultaneous bound as the headline and quantify the staggered regime as an
+extension. Estimands, the cluster bootstrap, the convergence-justified budget, and the full
+pre-registration protocol are given in the Supplementary Information.
 \paragraph{Pre-registration.} The model, predictions and scoring rule were fixed and time-stamped
 before the group finale; the protocol, frozen prediction artifact and analysis code are public.
 
