@@ -4,7 +4,8 @@
     "retrieved": "2026-06-29",
     "team_names": "normalized to martj42/international_results spellings (USA->United States, Czechia->Czech Republic, Cabo Verde->Cape Verde, Curacao->Curacao with cedilla)",
     "notes": "Group ordering lists the Pot-1 seed first; intra-group positions (A1..A4) and the official matchday schedule are a pending refinement. Playoff winners resolved: Czech Republic (A), Bosnia and Herzegovina (B), Turkey (D), Iraq (I), DR Congo (K). | 2026-06-17: completed MD1 to 24/24 (groups I,J,K,L added from Wikipedia per-group pages); fixed Group J intra-group order to [Argentina,Algeria,Austria,Jordan] so derived MD1 (Arg-Alg, Aut-Jor) matches the real fixtures (MD3 pairings unchanged). | 2026-06-29: added MD2+MD3 (48 matches) from Wikipedia per-group pages; matchdays assigned by fixture structure and validated against reported final points.",
-    "schedule_source": "MD3 from Wikipedia per-group pages (A,I,J,K,L direct; B-H derived as the third K4 matching from played MD1 + Al Jazeera MD2, each validated). Groups reordered to FIFA positional order [pos1..pos4] so MD1={1-2,3-4}, MD2={1-3,2-4}, MD3={1-4,2-3]."
+    "schedule_source": "MD3 from Wikipedia per-group pages (A,I,J,K,L direct; B-H derived as the third K4 matching from played MD1 + Al Jazeera MD2, each validated). Groups reordered to FIFA positional order [pos1..pos4] so MD1={1-2,3-4}, MD2={1-3,2-4}, MD3={1-4,2-3].",
+    "md3_schedule_source": "Final-matchday (MD3) DATES per group, retrieved 2026-06-30 and cross-checked across two independent sources that agree on the group->day assignment: en.wikipedia.org/wiki/2026_FIFA_World_Cup and ESPN (espn.com/soccer 2026 WC fixtures). Day tiers: {A,B,C}=2026-06-24, {D,E,F}=2026-06-25, {G,H,I}=2026-06-26, {J,K,L}=2026-06-27. Within-group matches kick off simultaneously (FIFA post-Gijon rule). Within-day kickoff TIMES across groups were not reliably sourced, so same-day groups are treated as simultaneous (no mutual information) -- a conservative lower bound on cross-group information; the staggered regime conditions a group only on STRICTLY-earlier-day groups."
   },
   "groups": {
     "A": [
@@ -669,7 +670,8 @@
           "South Africa",
           "South Korea"
         ]
-      ]
+      ],
+      "md3_date": "2026-06-24"
     },
     "B": {
       "md3": [
@@ -681,7 +683,8 @@
           "Canada",
           "Switzerland"
         ]
-      ]
+      ],
+      "md3_date": "2026-06-24"
     },
     "C": {
       "md3": [
@@ -693,7 +696,8 @@
           "Haiti",
           "Morocco"
         ]
-      ]
+      ],
+      "md3_date": "2026-06-24"
     },
     "D": {
       "md3": [
@@ -705,7 +709,8 @@
           "Australia",
           "Paraguay"
         ]
-      ]
+      ],
+      "md3_date": "2026-06-25"
     },
     "E": {
       "md3": [
@@ -717,7 +722,8 @@
           "Germany",
           "Ivory Coast"
         ]
-      ]
+      ],
+      "md3_date": "2026-06-25"
     },
     "F": {
       "md3": [
@@ -729,7 +735,8 @@
           "Netherlands",
           "Sweden"
         ]
-      ]
+      ],
+      "md3_date": "2026-06-25"
     },
     "G": {
       "md3": [
@@ -741,7 +748,8 @@
           "Egypt",
           "Iran"
         ]
-      ]
+      ],
+      "md3_date": "2026-06-26"
     },
     "H": {
       "md3": [
@@ -753,7 +761,8 @@
           "Saudi Arabia",
           "Spain"
         ]
-      ]
+      ],
+      "md3_date": "2026-06-26"
     },
     "I": {
       "md3": [
@@ -765,7 +774,8 @@
           "France",
           "Norway"
         ]
-      ]
+      ],
+      "md3_date": "2026-06-26"
     },
     "J": {
       "md3": [
@@ -777,7 +787,8 @@
           "Argentina",
           "Jordan"
         ]
-      ]
+      ],
+      "md3_date": "2026-06-27"
     },
     "K": {
       "md3": [
@@ -789,7 +800,8 @@
           "DR Congo",
           "Uzbekistan"
         ]
-      ]
+      ],
+      "md3_date": "2026-06-27"
     },
     "L": {
       "md3": [
@@ -801,7 +813,8 @@
           "England",
           "Panama"
         ]
-      ]
+      ],
+      "md3_date": "2026-06-27"
     }
   }
 }
