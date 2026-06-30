@@ -150,6 +150,67 @@ def assess_regime(model_name, draw, args, regime: str):
     return label, out
 
 
+def sample_md3_world(draw, sampler, rng) -> dict:
+    """Sample one realized MD3 for every group (each group's two final matches)."""
+    world = {}
+    for teams in draw["groups"]:
+        for (h, a) in group_matchdays(teams)[2]:
+            world[(h, a)] = sampler.sample(h, a, neutral=True, rng=rng)
+    return world
+
+
+def assess_format(model_name, draw, args, regime: str):
+    """Format-level estimand (the 48% definition): average manipulability over simulated
+    MD1-2 snapshots. For 'staggered', within each snapshot a realized MD3 is sampled and
+    each team conditions on the MD3 of all strictly-earlier-kickoff groups; 'simultaneous'
+    conditions on MD1-2 only. Returns per-(team,snapshot) manip/cross arrays + day-tier tags."""
+    from scripts.run_manipulability import md12_snapshot
+    sampler, strength_of, _ = build_model(model_name, data.load_results(), args.seed)
+    groups = draw["groups"]
+    cond = group_tiers(draw, args.granularity)
+    day = group_tiers(draw, "date")
+    strength_rank = {t: i for i, t in enumerate(
+        sorted([t for g in groups for t in g], key=strength_of, reverse=True))}
+    rng = np.random.default_rng(args.seed)
+    manip, cross, tier, snap = [], [], [], []
+    for s in range(args.snapshots):
+        md12 = md12_snapshot(groups, sampler, rng)
+        md3_world = sample_md3_world(draw, sampler, rng) if regime == "staggered" else {}
+        eng = SimEngine(groups, SPEC_48, sampler, strength_rank,
+                        n_inner=args.inner, seed=int(rng.integers(1 << 30)), bracket="official")
+        for gi, teams in enumerate(groups):
+            md3_pairs = group_matchdays(teams)[2]
+            if regime == "staggered":
+                earlier = [gj for gj in range(len(groups)) if cond[gj] < cond[gi]]
+                fixed = {**md12, **md3_fixed_for_groups({"groups": groups}, md3_world, earlier)}
+            else:
+                fixed = md12
+            for team in teams:
+                r = eng.assess(team, DecisionState(fixed=fixed, group_index=gi, team=team, md3=md3_pairs),
+                               min_delta=args.margin)
+                manip.append(float(r.manipulable))
+                cross.append(float(r.manipulable and r.cross_group))
+                tier.append(day[gi])
+                snap.append(s)
+    return np.array(manip), np.array(cross), np.array(tier), np.array(snap)
+
+
+def cluster_boot_share(manip, cross, snap, n_boot=2000, seed=0):
+    """Cluster bootstrap (resample snapshots) for cross-group share = sum(cross)/sum(manip)."""
+    rng = np.random.default_rng(seed)
+    snaps = np.unique(snap)
+    idx_by_snap = {s: np.where(snap == s)[0] for s in snaps}
+    point = cross.sum() / manip.sum() if manip.sum() else 0.0
+    boots = []
+    for _ in range(n_boot):
+        pick = rng.choice(snaps, size=len(snaps), replace=True)
+        sel = np.concatenate([idx_by_snap[s] for s in pick])
+        m = manip[sel].sum()
+        boots.append(cross[sel].sum() / m if m else 0.0)
+    lo, hi = np.percentile(boots, [2.5, 97.5])
+    return float(point), float(lo), float(hi)
+
+
 def summarize(out, threshold=0.5):
     """Overall and per-tier manipulability rate and cross-group share (match-level, P>=threshold)."""
     by_tier = defaultdict(lambda: {"manip": 0, "cross": 0, "n": 0})
@@ -169,6 +230,52 @@ def summarize(out, threshold=0.5):
     return {"overall": share(tot), "by_tier": {t: share(by_tier[t]) for t in sorted(by_tier)}}
 
 
+def run_format_mode(draw, args):
+    """Format-level estimand: simultaneous vs staggered cross-group share (the 48% number),
+    pooled over both models, with cluster-bootstrap CIs and a day-tier breakdown."""
+    DAY = ["Jun24", "Jun25", "Jun26", "Jun27"]
+    out = {"meta": {"mode": "format", "granularity": args.granularity, "snapshots": args.snapshots,
+                    "inner": args.inner, "margin": args.margin,
+                    "note": "simultaneous = headline (all other groups sampled, the 48% regime); "
+                            "staggered = each team conditions on sampled MD3 of all groups with "
+                            "strictly-earlier kickoff. Cross-group share over manipulable states."},
+           "regimes": {}}
+    pooled = {}
+    for regime in ("simultaneous", "staggered"):
+        M = C = T = S = None
+        for m in ("elo", "poisson"):
+            print(f"[format/{regime}] {m}: {args.snapshots}x{args.inner} ...")
+            man, cro, tie, snp = assess_format(m, draw, args, regime)
+            if M is None:
+                M, C, T, S = man, cro, tie, snp
+            else:  # pool models; offset snapshot ids so clusters stay distinct
+                M = np.concatenate([M, man]); C = np.concatenate([C, cro])
+                T = np.concatenate([T, tie]); S = np.concatenate([S, snp + args.snapshots])
+        pooled[regime] = (M, C, T, S)
+        rho = float(M.mean())
+        share, lo, hi = cluster_boot_share(M, C, S, seed=args.seed)
+        by_tier = {}
+        for t in sorted(set(T.tolist())):
+            mt, ct = M[T == t], C[T == t]
+            by_tier[DAY[t] if t < 4 else f"tier{t}"] = {
+                "manip_rate": float(mt.mean()),
+                "cross_share": float(ct.sum() / mt.sum()) if mt.sum() else 0.0}
+        out["regimes"][regime] = {"manip_rate": rho, "cross_share": share,
+                                  "cross_share_ci": [lo, hi], "by_tier": by_tier}
+
+    Path(args.out.replace(".json", "_format.json")).write_text(json.dumps(out, indent=2))
+    print("\n=== FORMAT-LEVEL CROSS-GROUP SHARE (the 48% estimand) ===")
+    for regime in ("simultaneous", "staggered"):
+        r = out["regimes"][regime]
+        print(f"  {regime:<13} manip rate {r['manip_rate']:.3f}  cross-group share "
+              f"{r['cross_share']:.1%}  95% CI [{r['cross_share_ci'][0]:.1%}, {r['cross_share_ci'][1]:.1%}]")
+    print("\n  cross-group share by day tier (simultaneous -> staggered):")
+    sim, stag = out["regimes"]["simultaneous"]["by_tier"], out["regimes"]["staggered"]["by_tier"]
+    for day in [d for d in DAY if d in sim]:
+        print(f"    {day}: {sim[day]['cross_share']:.0%} -> {stag[day]['cross_share']:.0%}")
+    print(f"\nfull report -> {args.out.replace('.json', '_format.json')}")
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--snapshots", type=int, default=60)
@@ -179,10 +286,17 @@ def main():
     ap.add_argument("--granularity", choices=("kickoff", "date"), default="kickoff",
                     help="staggered conditioning order: 'kickoff' (exact times, total order) "
                          "or 'date' (day tiers; same-day groups simultaneous, conservative)")
+    ap.add_argument("--mode", choices=("realized", "format"), default="realized",
+                    help="'realized': condition on real MD1-2 (exploitability audit of the actual "
+                         "tournament). 'format': average over simulated MD1-2 snapshots (the 48% "
+                         "estimand) -- the headline simultaneous-vs-staggered cross-group share.")
     args = ap.parse_args()
 
     draw = data.load_draw()
     n_md3 = sum(1 for r in draw["results"] if r.get("matchday") == 3)
+
+    if args.mode == "format":
+        return run_format_mode(draw, args)
     print(f"[data] MD3 recorded: {n_md3}/24 (staggered regime conditions on real earlier-tier MD3)")
 
     regimes = {}
