@@ -16,8 +16,11 @@ manipulability under two information sets:
 It reports, per regime and per day tier, the manipulability rate and cross-group share,
 and an exploitability audit: of the states flagged cross-group, how many have their
 deciding cross-group information already realized at kickoff (i.e. are *operationally*
-exploitable, not merely structurally present). Same-day groups are treated as
-simultaneous (conservative; within-day kickoff times were not reliably sourced).
+exploitable, not merely structurally present). The staggered conditioning order comes
+from the exact per-group MD3 kickoff times (schedule[g].md3_kickoff_et; FOX Sports
+broadcast schedule), a complete temporal order over the 12 finales (B<C<A, E<F<D, I<H<G,
+L<K<J). --granularity date falls back to day tiers (same-day groups simultaneous) as a
+conservative robustness check.
 
 Usage:
   uv run python scripts/run_info_regime.py --snapshots 60 --inner 150
@@ -42,12 +45,20 @@ from scripts.run_r4_named import build_model
 GROUP_KEYS = "ABCDEFGHIJKL"
 
 
-def group_tiers(draw) -> dict[int, int]:
-    """Map group index -> day tier (0..3) from schedule[g].md3_date (earlier date = lower tier)."""
+def group_tiers(draw, granularity="kickoff") -> dict[int, int]:
+    """Map group index -> temporal rank (earlier finale = lower rank).
+
+    granularity='kickoff' ranks by the exact MD3 kickoff time (a total order over the 12
+    group finales; same-day groups are correctly ordered) when md3_kickoff_et is present;
+    'date' ranks by day only (same-day groups tie -> treated as simultaneous, conservative).
+    A later-ranked group's staggered information set includes every strictly-lower-ranked
+    group, so finer granularity weakly enlarges that set."""
     sched = draw["schedule"]
-    dates = {gi: sched[GROUP_KEYS[gi]]["md3_date"] for gi in range(len(draw["groups"]))}
-    order = {d: r for r, d in enumerate(sorted(set(dates.values())))}
-    return {gi: order[dates[gi]] for gi in dates}
+    key = "md3_kickoff_et" if granularity == "kickoff" else "md3_date"
+    vals = {gi: sched[GROUP_KEYS[gi]].get(key) or sched[GROUP_KEYS[gi]]["md3_date"]
+            for gi in range(len(draw["groups"]))}
+    order = {v: r for r, v in enumerate(sorted(set(vals.values())))}
+    return {gi: order[vals[gi]] for gi in vals}
 
 
 def real_results_by_md(draw):
@@ -82,16 +93,17 @@ def assess_regime(model_name, draw, args, regime: str):
     (fixed = real MD1+MD2 + real MD3 of strictly-earlier-tier groups)."""
     sampler, strength_of, label = build_model(model_name, data.load_results(), args.seed)
     groups = draw["groups"]
-    tiers = group_tiers(draw)
+    cond = group_tiers(draw, args.granularity)   # conditioning order (fine: by kickoff time)
+    day = group_tiers(draw, "date")              # reporting bucket (coarse: 4 day tiers)
     md12, md3 = real_results_by_md(draw)
     strength_rank = {t: i for i, t in enumerate(
         sorted([t for g in groups for t in g], key=strength_of, reverse=True))}
 
-    # staggered: precompute the earlier-tier real-MD3 fixed block per tier
+    # staggered: precompute the strictly-earlier (by kickoff) real-MD3 fixed block per group
     earlier_fixed = {}
     for gi in range(len(groups)):
         if regime == "staggered":
-            earlier = [gj for gj in range(len(groups)) if tiers[gj] < tiers[gi]]
+            earlier = [gj for gj in range(len(groups)) if cond[gj] < cond[gi]]
             earlier_fixed[gi] = md3_fixed_for_groups(draw, md3, earlier)
         else:
             earlier_fixed[gi] = {}
@@ -115,7 +127,7 @@ def assess_regime(model_name, draw, args, regime: str):
                 if r.manipulable:
                     mk = (gk, tuple(sorted(match_of[team])))
                     match_name[mk] = f"{mk[1][0]} vs {mk[1][1]}"
-                    match_tier[mk] = tiers[gi]
+                    match_tier[mk] = day[gi]
                     man[mk] = True
                     if r.cross_group:
                         cross[mk] = True
@@ -131,7 +143,7 @@ def assess_regime(model_name, draw, args, regime: str):
         for p in group_matchdays(teams)[2]:
             mk = (gk, tuple(sorted(p)))
             match_name.setdefault(mk, f"{mk[1][0]} vs {mk[1][1]}")
-            match_tier.setdefault(mk, tiers[gi])
+            match_tier.setdefault(mk, day[gi])
             out[mk] = {"match": match_name[mk], "tier": match_tier[mk],
                        "p_manip": match_manip.get(mk, 0) / n,
                        "p_cross": match_cross.get(mk, 0) / n}
@@ -164,6 +176,9 @@ def main():
     ap.add_argument("--margin", type=float, default=0.05)
     ap.add_argument("--seed", type=int, default=20260616)
     ap.add_argument("--out", type=str, default="results/info_regime.json")
+    ap.add_argument("--granularity", choices=("kickoff", "date"), default="kickoff",
+                    help="staggered conditioning order: 'kickoff' (exact times, total order) "
+                         "or 'date' (day tiers; same-day groups simultaneous, conservative)")
     args = ap.parse_args()
 
     draw = data.load_draw()
@@ -197,8 +212,10 @@ def main():
 
     report = {"meta": {"snapshots": args.snapshots, "inner": args.inner, "margin": args.margin,
                        "md3_recorded": n_md3,
-                       "note": "simultaneous = headline (other groups sampled); staggered = condition "
-                               "on real earlier-day-tier MD3. Same-day groups treated simultaneous."},
+                       "granularity": args.granularity,
+                       "note": "simultaneous = headline (all other groups sampled); staggered = "
+                               "condition on real MD3 of all groups with strictly-earlier kickoff "
+                               f"({args.granularity} order). Reporting tiers are the 4 day buckets."},
               "simultaneous": regimes["simultaneous"]["summary"],
               "staggered": regimes["staggered"]["summary"],
               "exploitability_audit": audit}

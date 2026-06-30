@@ -5,7 +5,8 @@
     "team_names": "normalized to martj42/international_results spellings (USA->United States, Czechia->Czech Republic, Cabo Verde->Cape Verde, Curacao->Curacao with cedilla)",
     "notes": "Group ordering lists the Pot-1 seed first; intra-group positions (A1..A4) and the official matchday schedule are a pending refinement. Playoff winners resolved: Czech Republic (A), Bosnia and Herzegovina (B), Turkey (D), Iraq (I), DR Congo (K). | 2026-06-17: completed MD1 to 24/24 (groups I,J,K,L added from Wikipedia per-group pages); fixed Group J intra-group order to [Argentina,Algeria,Austria,Jordan] so derived MD1 (Arg-Alg, Aut-Jor) matches the real fixtures (MD3 pairings unchanged). | 2026-06-29: added MD2+MD3 (48 matches) from Wikipedia per-group pages; matchdays assigned by fixture structure and validated against reported final points.",
     "schedule_source": "MD3 from Wikipedia per-group pages (A,I,J,K,L direct; B-H derived as the third K4 matching from played MD1 + Al Jazeera MD2, each validated). Groups reordered to FIFA positional order [pos1..pos4] so MD1={1-2,3-4}, MD2={1-3,2-4}, MD3={1-4,2-3].",
-    "md3_schedule_source": "Final-matchday (MD3) DATES per group, retrieved 2026-06-30 and cross-checked across two independent sources that agree on the group->day assignment: en.wikipedia.org/wiki/2026_FIFA_World_Cup and ESPN (espn.com/soccer 2026 WC fixtures). Day tiers: {A,B,C}=2026-06-24, {D,E,F}=2026-06-25, {G,H,I}=2026-06-26, {J,K,L}=2026-06-27. Within-group matches kick off simultaneously (FIFA post-Gijon rule). Within-day kickoff TIMES across groups were not reliably sourced, so same-day groups are treated as simultaneous (no mutual information) -- a conservative lower bound on cross-group information; the staggered regime conditions a group only on STRICTLY-earlier-day groups."
+    "md3_schedule_source": "Final-matchday (MD3) DATES per group, retrieved 2026-06-30 and cross-checked across two independent sources that agree on the group->day assignment: en.wikipedia.org/wiki/2026_FIFA_World_Cup and ESPN (espn.com/soccer 2026 WC fixtures). Day tiers: {A,B,C}=2026-06-24, {D,E,F}=2026-06-25, {G,H,I}=2026-06-26, {J,K,L}=2026-06-27. Within-group matches kick off simultaneously (FIFA post-Gijon rule). Within-day kickoff TIMES across groups were not reliably sourced, so same-day groups are treated as simultaneous (no mutual information) -- a conservative lower bound on cross-group information; the staggered regime conditions a group only on STRICTLY-earlier-day groups.",
+    "md3_kickoff_source": "Per-group MD3 kickoff times (US Eastern Time) from the FOX Sports FIFA World Cup 2026 broadcast schedule (FOX_Sports_FIFA_World_Cup_2026_Broadcast_Schedule.pdf, official US broadcaster). Both matches in each group kick off simultaneously (verified). Gives a complete temporal order of the 12 group finales: B<C<A (Jun24), E<F<D (Jun25), I<H<G (Jun26), L<K<J (Jun27). Day assignments match the Wikipedia+ESPN cross-check. The staggered regime conditions each group on all groups with a strictly-earlier kickoff time."
   },
   "groups": {
     "A": [
@@ -671,7 +672,8 @@
           "South Korea"
         ]
       ],
-      "md3_date": "2026-06-24"
+      "md3_date": "2026-06-24",
+      "md3_kickoff_et": "2026-06-24T21:00"
     },
     "B": {
       "md3": [
@@ -684,7 +686,8 @@
           "Switzerland"
         ]
       ],
-      "md3_date": "2026-06-24"
+      "md3_date": "2026-06-24",
+      "md3_kickoff_et": "2026-06-24T15:00"
     },
     "C": {
       "md3": [
@@ -697,7 +700,8 @@
           "Morocco"
         ]
       ],
-      "md3_date": "2026-06-24"
+      "md3_date": "2026-06-24",
+      "md3_kickoff_et": "2026-06-24T18:00"
     },
     "D": {
       "md3": [
@@ -710,7 +714,8 @@
           "Paraguay"
         ]
       ],
-      "md3_date": "2026-06-25"
+      "md3_date": "2026-06-25",
+      "md3_kickoff_et": "2026-06-25T22:00"
     },
     "E": {
       "md3": [
@@ -723,7 +728,8 @@
           "Ivory Coast"
         ]
       ],
-      "md3_date": "2026-06-25"
+      "md3_date": "2026-06-25",
+      "md3_kickoff_et": "2026-06-25T16:00"
     },
     "F": {
       "md3": [
@@ -736,7 +742,8 @@
           "Sweden"
         ]
       ],
-      "md3_date": "2026-06-25"
+      "md3_date": "2026-06-25",
+      "md3_kickoff_et": "2026-06-25T19:00"
     },
     "G": {
       "md3": [
@@ -749,7 +756,8 @@
           "Iran"
         ]
       ],
-      "md3_date": "2026-06-26"
+      "md3_date": "2026-06-26",
+      "md3_kickoff_et": "2026-06-26T23:00"
     },
     "H": {
       "md3": [
@@ -762,7 +770,8 @@
           "Spain"
         ]
       ],
-      "md3_date": "2026-06-26"
+      "md3_date": "2026-06-26",
+      "md3_kickoff_et": "2026-06-26T20:00"
     },
     "I": {
       "md3": [
@@ -775,7 +784,8 @@
           "Norway"
         ]
       ],
-      "md3_date": "2026-06-26"
+      "md3_date": "2026-06-26",
+      "md3_kickoff_et": "2026-06-26T15:00"
     },
     "J": {
       "md3": [
@@ -788,7 +798,8 @@
           "Jordan"
         ]
       ],
-      "md3_date": "2026-06-27"
+      "md3_date": "2026-06-27",
+      "md3_kickoff_et": "2026-06-27T22:00"
     },
     "K": {
       "md3": [
@@ -801,7 +812,8 @@
           "Uzbekistan"
         ]
       ],
-      "md3_date": "2026-06-27"
+      "md3_date": "2026-06-27",
+      "md3_kickoff_et": "2026-06-27T19:30"
     },
     "L": {
       "md3": [
@@ -814,7 +826,8 @@
           "Panama"
         ]
       ],
-      "md3_date": "2026-06-27"
+      "md3_date": "2026-06-27",
+      "md3_kickoff_et": "2026-06-27T17:00"
     }
   }
 }
