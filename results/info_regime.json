@@ -1,0 +1,330 @@
+{
+  "meta": {
+    "snapshots": 60,
+    "inner": 150,
+    "margin": 0.05,
+    "md3_recorded": 24,
+    "granularity": "kickoff",
+    "note": "simultaneous = headline (all other groups sampled); staggered = condition on real MD3 of all groups with strictly-earlier kickoff (kickoff order). Reporting tiers are the 4 day buckets."
+  },
+  "simultaneous": {
+    "overall": {
+      "n_matches": 24,
+      "n_manip": 7,
+      "n_cross": 3,
+      "manip_rate": 0.2916666666666667,
+      "cross_share": 0.42857142857142855
+    },
+    "by_tier": {
+      "0": {
+        "n_matches": 6,
+        "n_manip": 3,
+        "n_cross": 0,
+        "manip_rate": 0.5,
+        "cross_share": 0.0
+      },
+      "1": {
+        "n_matches": 6,
+        "n_manip": 3,
+        "n_cross": 2,
+        "manip_rate": 0.5,
+        "cross_share": 0.6666666666666666
+      },
+      "2": {
+        "n_matches": 6,
+        "n_manip": 0,
+        "n_cross": 0,
+        "manip_rate": 0.0,
+        "cross_share": 0.0
+      },
+      "3": {
+        "n_matches": 6,
+        "n_manip": 1,
+        "n_cross": 1,
+        "manip_rate": 0.16666666666666666,
+        "cross_share": 1.0
+      }
+    }
+  },
+  "staggered": {
+    "overall": {
+      "n_matches": 24,
+      "n_manip": 6,
+      "n_cross": 3,
+      "manip_rate": 0.25,
+      "cross_share": 0.5
+    },
+    "by_tier": {
+      "0": {
+        "n_matches": 6,
+        "n_manip": 3,
+        "n_cross": 0,
+        "manip_rate": 0.5,
+        "cross_share": 0.0
+      },
+      "1": {
+        "n_matches": 6,
+        "n_manip": 2,
+        "n_cross": 2,
+        "manip_rate": 0.3333333333333333,
+        "cross_share": 1.0
+      },
+      "2": {
+        "n_matches": 6,
+        "n_manip": 0,
+        "n_cross": 0,
+        "manip_rate": 0.0,
+        "cross_share": 0.0
+      },
+      "3": {
+        "n_matches": 6,
+        "n_manip": 1,
+        "n_cross": 1,
+        "manip_rate": 0.16666666666666666,
+        "cross_share": 1.0
+      }
+    }
+  },
+  "exploitability_audit": [
+    {
+      "group": "A",
+      "match": "Czech Republic vs Mexico",
+      "tier": 0,
+      "sim_p_cross": 0.0,
+      "stag_p_cross": 0.0,
+      "sim_cross": false,
+      "stag_cross": false,
+      "delta_cross": 0.0
+    },
+    {
+      "group": "A",
+      "match": "South Africa vs South Korea",
+      "tier": 0,
+      "sim_p_cross": 0.24166666666666664,
+      "stag_p_cross": 0.29166666666666663,
+      "sim_cross": false,
+      "stag_cross": false,
+      "delta_cross": 0.04999999999999999
+    },
+    {
+      "group": "B",
+      "match": "Bosnia and Herzegovina vs Qatar",
+      "tier": 0,
+      "sim_p_cross": 0.0,
+      "stag_p_cross": 0.0,
+      "sim_cross": false,
+      "stag_cross": false,
+      "delta_cross": 0.0
+    },
+    {
+      "group": "B",
+      "match": "Canada vs Switzerland",
+      "tier": 0,
+      "sim_p_cross": 0.0,
+      "stag_p_cross": 0.0,
+      "sim_cross": false,
+      "stag_cross": false,
+      "delta_cross": 0.0
+    },
+    {
+      "group": "C",
+      "match": "Brazil vs Scotland",
+      "tier": 0,
+      "sim_p_cross": 0.31666666666666665,
+      "stag_p_cross": 0.35,
+      "sim_cross": false,
+      "stag_cross": false,
+      "delta_cross": 0.033333333333333326
+    },
+    {
+      "group": "C",
+      "match": "Haiti vs Morocco",
+      "tier": 0,
+      "sim_p_cross": 0.20833333333333331,
+      "stag_p_cross": 0.2583333333333333,
+      "sim_cross": false,
+      "stag_cross": false,
+      "delta_cross": 0.04999999999999999
+    },
+    {
+      "group": "D",
+      "match": "Australia vs Paraguay",
+      "tier": 1,
+      "sim_p_cross": 0.20833333333333331,
+      "stag_p_cross": 0.09166666666666667,
+      "sim_cross": false,
+      "stag_cross": false,
+      "delta_cross": -0.11666666666666664
+    },
+    {
+      "group": "D",
+      "match": "Turkey vs United States",
+      "tier": 1,
+      "sim_p_cross": 0.0,
+      "stag_p_cross": 0.0,
+      "sim_cross": false,
+      "stag_cross": false,
+      "delta_cross": 0.0
+    },
+    {
+      "group": "E",
+      "match": "Cura\u00e7ao vs Ecuador",
+      "tier": 1,
+      "sim_p_cross": 0.75,
+      "stag_p_cross": 0.8416666666666667,
+      "sim_cross": true,
+      "stag_cross": true,
+      "delta_cross": 0.09166666666666667
+    },
+    {
+      "group": "E",
+      "match": "Germany vs Ivory Coast",
+      "tier": 1,
+      "sim_p_cross": 0.058333333333333334,
+      "stag_p_cross": 0.20833333333333334,
+      "sim_cross": false,
+      "stag_cross": false,
+      "delta_cross": 0.15000000000000002
+    },
+    {
+      "group": "F",
+      "match": "Japan vs Tunisia",
+      "tier": 1,
+      "sim_p_cross": 0.925,
+      "stag_p_cross": 0.9083333333333333,
+      "sim_cross": true,
+      "stag_cross": true,
+      "delta_cross": -0.01666666666666672
+    },
+    {
+      "group": "F",
+      "match": "Netherlands vs Sweden",
+      "tier": 1,
+      "sim_p_cross": 0.35833333333333334,
+      "stag_p_cross": 0.08333333333333333,
+      "sim_cross": false,
+      "stag_cross": false,
+      "delta_cross": -0.275
+    },
+    {
+      "group": "G",
+      "match": "Belgium vs New Zealand",
+      "tier": 2,
+      "sim_p_cross": 0.23333333333333334,
+      "stag_p_cross": 0.16666666666666669,
+      "sim_cross": false,
+      "stag_cross": false,
+      "delta_cross": -0.06666666666666665
+    },
+    {
+      "group": "G",
+      "match": "Egypt vs Iran",
+      "tier": 2,
+      "sim_p_cross": 0.22499999999999998,
+      "stag_p_cross": 0.15,
+      "sim_cross": false,
+      "stag_cross": false,
+      "delta_cross": -0.07499999999999998
+    },
+    {
+      "group": "H",
+      "match": "Cape Verde vs Uruguay",
+      "tier": 2,
+      "sim_p_cross": 0.25,
+      "stag_p_cross": 0.24166666666666667,
+      "sim_cross": false,
+      "stag_cross": false,
+      "delta_cross": -0.008333333333333331
+    },
+    {
+      "group": "H",
+      "match": "Saudi Arabia vs Spain",
+      "tier": 2,
+      "sim_p_cross": 0.25833333333333336,
+      "stag_p_cross": 0.125,
+      "sim_cross": false,
+      "stag_cross": false,
+      "delta_cross": -0.13333333333333336
+    },
+    {
+      "group": "I",
+      "match": "France vs Norway",
+      "tier": 2,
+      "sim_p_cross": 0.0,
+      "stag_p_cross": 0.0,
+      "sim_cross": false,
+      "stag_cross": false,
+      "delta_cross": 0.0
+    },
+    {
+      "group": "I",
+      "match": "Iraq vs Senegal",
+      "tier": 2,
+      "sim_p_cross": 0.0,
+      "stag_p_cross": 0.0,
+      "sim_cross": false,
+      "stag_cross": false,
+      "delta_cross": 0.0
+    },
+    {
+      "group": "J",
+      "match": "Algeria vs Austria",
+      "tier": 3,
+      "sim_p_cross": 0.9583333333333333,
+      "stag_p_cross": 0.9666666666666667,
+      "sim_cross": true,
+      "stag_cross": true,
+      "delta_cross": 0.008333333333333415
+    },
+    {
+      "group": "J",
+      "match": "Argentina vs Jordan",
+      "tier": 3,
+      "sim_p_cross": 0.0,
+      "stag_p_cross": 0.0,
+      "sim_cross": false,
+      "stag_cross": false,
+      "delta_cross": 0.0
+    },
+    {
+      "group": "K",
+      "match": "Colombia vs Portugal",
+      "tier": 3,
+      "sim_p_cross": 0.0,
+      "stag_p_cross": 0.0,
+      "sim_cross": false,
+      "stag_cross": false,
+      "delta_cross": 0.0
+    },
+    {
+      "group": "K",
+      "match": "DR Congo vs Uzbekistan",
+      "tier": 3,
+      "sim_p_cross": 0.0,
+      "stag_p_cross": 0.0,
+      "sim_cross": false,
+      "stag_cross": false,
+      "delta_cross": 0.0
+    },
+    {
+      "group": "L",
+      "match": "Croatia vs Ghana",
+      "tier": 3,
+      "sim_p_cross": 0.23333333333333334,
+      "stag_p_cross": 0.21666666666666667,
+      "sim_cross": false,
+      "stag_cross": false,
+      "delta_cross": -0.016666666666666663
+    },
+    {
+      "group": "L",
+      "match": "England vs Panama",
+      "tier": 3,
+      "sim_p_cross": 0.0,
+      "stag_p_cross": 0.0,
+      "sim_cross": false,
+      "stag_cross": false,
+      "delta_cross": 0.0
+    }
+  ]
+}

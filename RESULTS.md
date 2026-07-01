@@ -508,3 +508,50 @@ Croatia (L)** (cross-group share among equilibrium-manipulable teams ≈ 0.21, i
 R1 asked about survives); a clean quantitative equilibrium share awaits increment 3 (mixed strategies
 for the no-pure-NE groups + a state matched to the decision-theoretic comparison). The paper's headline
 remains the decision-theoretic decomposition (R12); §4.3 / R14 are the equilibrium robustness.
+
+---
+
+## R15 — Information regime: the cross-group share is invariant to the schedule (2026-07-01)
+
+**Addresses R1's blind spot / R3's suggested experiment** — "the all-groups-simultaneous counterfactual
+is never simulated to bound how much of the 48% is irreducible vs schedule-induced." Two findings.
+
+**(a) The headline already IS the simultaneous, no-information regime.** Code audit: in
+`engine._simulate_remainder`, `state.fixed` holds only MD1–2; at MD3 the decision team's own match is the
+evaluated action and *every* other match — all other groups' finales and the team's own group's other
+final — is Monte-Carlo **sampled, not observed**. So the reported 48% cross-group share is computed while
+integrating over other groups' unknown results: the conservative, no-cross-group-information bound that
+post-Gijón simultaneity is designed to enforce. Made explicit in `main.tex` Methods.
+
+**Real schedule (for the staggered regime).** Sourced per-group MD3 kickoff times from the FOX Sports 2026
+broadcast schedule (official US broadcaster), cross-checked for day assignment against Wikipedia + ESPN.
+Both matches within a group kick off simultaneously; the 12 finales form a **complete temporal order**:
+B<C<A (Jun 24), E<F<D (Jun 25), I<H<G (Jun 26), L<K<J (Jun 27) — note the within-day order is not
+alphabetical (host group A finishes last on Jun 24). Stored as `schedule[g].md3_kickoff_et` with
+provenance. A later group's staggered information set = the real MD3 of all strictly-earlier-kickoff groups.
+
+**(b) Format-level estimand (`run_info_regime.py --mode format`, 80 snapshots × 150 inner, both models
+pooled, cluster bootstrap over snapshots).** Simultaneous vs staggered cross-group share:
+
+| Regime | manip rate | cross-group share [95% CI] |
+|--------|-----------:|---------------------------:|
+| simultaneous (headline) | 0.235 | **48.3% [46.1, 50.6]** |
+| staggered (real schedule) | 0.247 | **49.9% [47.4, 52.6]** |
+
+The simultaneous arm **reproduces the R12 headline (48%)** — a pipeline validation. The staggered share is
+**statistically indistinguishable** (overlapping CIs; by day tier: Jun24 39→40, Jun25 57→57, Jun26 50→52,
+Jun27 50→52). *Correcting an earlier intuition:* conditioning on real earlier-group results does not
+monotonically sharpen the incentive — information can also **resolve** a cross-group state to certainty —
+and the net effect is null within noise. The mechanism is **neither created nor removed by the schedule**.
+
+**(c) Realized exploitability audit (`--mode realized`, 60 × 150, conditioning on the real MD1–2, and for
+the staggered arm the real earlier-kickoff MD3).** At the actual post-MD2 state the finale is largely
+resolved (7/24 matches live-manipulable, consistent with R13). The **same 3 matches are cross-group
+manipulable under both regimes** (0 flip): no match's cross-group status depends on whether its earlier
+groups' real MD3 is known. Sparse but stable — the realized cross-group set is regime-invariant too.
+
+**Verdict:** the 48% cross-group share is **structural, not a schedule artifact** — identical with zero
+schedule information and unchanged (within CI) when the real staggered schedule supplies it. This closes
+the "simultaneity counterfactual" concern (R1 blind spot, R3 experiment) directly. Artifacts:
+`results/info_regime_format.json`, `results/info_regime.json`. Same-day granularity available as a
+conservative robustness check (`--granularity date`).

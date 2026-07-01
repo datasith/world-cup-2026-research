@@ -1,0 +1,64 @@
+{
+  "meta": {
+    "mode": "format",
+    "granularity": "kickoff",
+    "snapshots": 80,
+    "inner": 150,
+    "margin": 0.05,
+    "note": "simultaneous = headline (all other groups sampled, the 48% regime); staggered = each team conditions on sampled MD3 of all groups with strictly-earlier kickoff. Cross-group share over manipulable states."
+  },
+  "regimes": {
+    "simultaneous": {
+      "manip_rate": 0.23528645833333334,
+      "cross_share": 0.4831211953514112,
+      "cross_share_ci": [
+        0.46109656362311346,
+        0.5059257625691819
+      ],
+      "by_tier": {
+        "Jun24": {
+          "manip_rate": 0.2828125,
+          "cross_share": 0.39226519337016574
+        },
+        "Jun25": {
+          "manip_rate": 0.2140625,
+          "cross_share": 0.5742092457420924
+        },
+        "Jun26": {
+          "manip_rate": 0.225,
+          "cross_share": 0.49537037037037035
+        },
+        "Jun27": {
+          "manip_rate": 0.21927083333333333,
+          "cross_share": 0.498812351543943
+        }
+      }
+    },
+    "staggered": {
+      "manip_rate": 0.246875,
+      "cross_share": 0.4994725738396624,
+      "cross_share_ci": [
+        0.4735188715026209,
+        0.5263254340038578
+      ],
+      "by_tier": {
+        "Jun24": {
+          "manip_rate": 0.27291666666666664,
+          "cross_share": 0.4026717557251908
+        },
+        "Jun25": {
+          "manip_rate": 0.24427083333333333,
+          "cross_share": 0.5650319829424307
+        },
+        "Jun26": {
+          "manip_rate": 0.2234375,
+          "cross_share": 0.5221445221445221
+        },
+        "Jun27": {
+          "manip_rate": 0.246875,
+          "cross_share": 0.5210970464135021
+        }
+      }
+    }
+  }
+}
